@@ -1,0 +1,7 @@
+# Modern-only target — drops legacy ES5 polyfills the storefront never needs.
+# Covers the browsers real traffic and the analytics/tag stack support.
+last 2 Chrome versions
+last 2 Safari versions
+last 2 Firefox versions
+last 2 Edge versions
+not dead

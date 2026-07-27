@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/ng-openapi-gen/ng-openapi-gen-schema.json",
+  "input": "http://localhost:5199/openapi/v1.json",
+  "output": "src/app/core/services/api",
+  "ignoreUnusedModels": false,
+  "__note": "Populate `includeTags` with the backend's storefront tag names once the v2.0 API exists, then run `npm run generate:api` (requires the API running at the input URL). Until then this file is a placeholder and the generated `core/services/api` folder stays empty."
+}
