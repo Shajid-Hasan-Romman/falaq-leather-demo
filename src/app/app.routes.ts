@@ -9,12 +9,6 @@ export const routes: Routes = [
       import('./layouts/main-layout/main-layout').then((m) => m.MainLayout),
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        loadComponent: () => import('./features/home/home').then((m) => m.Home),
-        title: 'Falaq v2.0',
-      },
-      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then((m) => m.NotFound),
