@@ -1,0 +1,89 @@
+<div class="bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">
+
+    <!-- Tabs -->
+    <div class="flex border-b border-[#E5E7EB]">
+
+        <button
+            class="px-6 py-4 text-sm font-medium transition"
+            [ngClass]="{
+                'text-[#65A30D] border-b-2 border-[#65A30D]': activeTab === 'description',
+                'text-gray-500': activeTab !== 'description'
+            }"
+            (click)="activeTab='description'">
+
+            Description
+
+        </button>
+
+        <button
+            class="px-6 py-4 text-sm font-medium transition"
+            [ngClass]="{
+                'text-[#65A30D] border-b-2 border-[#65A30D]': activeTab === 'review',
+                'text-gray-500': activeTab !== 'review'
+            }"
+            (click)="activeTab='review'">
+
+            Review (4)
+
+        </button>
+
+    </div>
+
+    <!-- Description -->
+    <div *ngIf="activeTab==='description'" class="p-8">
+
+        <h2 class="text-3xl font-bold text-[#65A30D] mb-6">
+            Product Details
+        </h2>
+
+        <p class="text-[#4B5563] leading-8 mb-8">
+            ঘরোয়া স্বাদের ঐতিহ্য বহনকারী আমাদের বোম্বাই মরিচের আচারটি
+            প্রিমিয়াম মানের মরিচ, খাঁটি সরিষার তেল এবং দেশি মসলার
+            মিশ্রণে প্রস্তুত করা হয়েছে। ভাত, খিচুড়ি, রুটি কিংবা
+            যেকোনো খাবারের সাথে এর স্বাদ আরও বাড়িয়ে তোলে।
+        </p>
+
+        <h3 class="text-xl font-semibold text-[#65A30D] mb-5">
+            Key Features:
+        </h3>
+
+        <div class="space-y-3">
+
+            <div
+                *ngFor="let item of features"
+                class="flex items-center gap-3">
+
+                <i class="fa-regular fa-circle-check text-[#65A30D]"></i>
+
+                <span class="text-[#4B5563]">
+                    {{ item }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <button
+            class="mt-8 px-5 py-2 border border-[#65A30D] rounded-lg text-[#65A30D] hover:bg-[#65A30D] hover:text-white transition">
+
+            Show More
+            <i class="fa-solid fa-angle-right ml-2"></i>
+
+        </button>
+
+    </div>
+
+    <!-- Review -->
+    <div *ngIf="activeTab==='review'" class="p-8">
+
+        <h2 class="text-2xl font-semibold">
+            Customer Reviews
+        </h2>
+
+        <p class="mt-4 text-gray-500">
+            No reviews yet.
+        </p>
+
+    </div>
+
+</div>

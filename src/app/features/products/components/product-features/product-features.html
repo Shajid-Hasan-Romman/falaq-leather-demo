@@ -1,0 +1,35 @@
+<div
+  class="w-full max-w-[1280px] h-[98px] border border-[#d7e0e9] rounded-md flex items-center bg-white">
+
+  <div
+    *ngFor="let feature of features; let last = last"
+    class="flex-1 flex items-center justify-center gap-4 px-8 relative">
+
+    <!-- Divider -->
+    <div
+      *ngIf="!last"
+      class="absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-gray-200">
+    </div>
+
+    <!-- Icon -->
+    <img
+      [src]="feature.icon"
+      [alt]="feature.title"
+      class="w-10 h-10 object-contain">
+
+    <!-- Text -->
+    <div>
+
+      <h3 class="font-semibold text-[15px] text-[#222]">
+        {{feature.title}}
+      </h3>
+
+      <p class="text-[13px] text-[#6B7280] mt-1">
+        {{feature.subtitle}}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

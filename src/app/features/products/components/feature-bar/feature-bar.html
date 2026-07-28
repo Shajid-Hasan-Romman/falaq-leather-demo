@@ -1,0 +1,43 @@
+<div
+    class="w-full bg-white border border-[#E8EDF3] rounded-2xl px-4 py-5">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div
+            *ngFor="let feature of features; let last = last"
+            class="flex items-center gap-4 py-3 lg:px-6"
+            [class.border-b]="!last"
+            [class.sm:border-b]="false"
+            [class.lg:border-b]="false"
+            [class.lg:border-r]="!last"
+            [class.border-[#EEF2F6]]="true">
+
+            <!-- Icon -->
+            <div
+                class="w-12 h-12 rounded-xl bg-[#EEF9E8] flex items-center justify-center shrink-0">
+
+                <i
+                    [class]="feature.icon"
+                    class="text-[#65A30D] text-lg">
+                </i>
+
+            </div>
+
+            <!-- Text -->
+            <div>
+
+                <h3 class="text-[18px] font-semibold text-[#1F2937]">
+                    {{ feature.title }}
+                </h3>
+
+                <p class="text-sm text-[#6B7280] mt-1 leading-5">
+                    {{ feature.description }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

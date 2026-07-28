@@ -1,0 +1,40 @@
+<!-- Main Image -->
+<div class="w-full mb-5">
+    <img
+        [src]="images[selectedImage]"
+        alt="Product"
+        class="w-full h-[520px] object-contain rounded-xl border border-[#E5E7EB]"
+    />
+</div>
+
+<!-- Thumbnail Gallery -->
+<div class="flex items-center gap-3">
+
+    <div
+        *ngFor="let image of images; let i = index"
+        (click)="selectImage(i)"
+        class="relative cursor-pointer rounded-md border transition-all duration-200"
+
+        [ngClass]="{
+            'border-[#6BAA15] border-2': selectedImage===i,
+            'border-[#E5E7EB] hover:border-[#6BAA15]': selectedImage!==i
+        }"
+    >
+
+        <img
+            [src]="image"
+            class="w-[74px] h-[74px] object-cover rounded-md p-1"
+        />
+
+        <!-- Selected Check Icon -->
+        <div
+            *ngIf="selectedImage===i"
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-[#6BAA15] flex items-center justify-center">
+
+            <i class="fa-solid fa-check text-white text-[10px]"></i>
+
+        </div>
+
+    </div>
+
+</div>
