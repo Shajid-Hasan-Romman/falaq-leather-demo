@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
 export class ProductGallery {
 
   selectedImage = 0;
+  isZoomed = false;
 
   images = [
     'image/Products/Mango.png',
@@ -18,8 +19,31 @@ export class ProductGallery {
     'image/Products/Mango-4.png',
   ];
 
-  selectImage(index: number) {
+  selectImage(index: number): void {
     this.selectedImage = index;
+    this.isZoomed = false;
+  }
+
+  prevImage(): void {
+    this.selectedImage =
+      this.selectedImage === 0
+        ? this.images.length - 1
+        : this.selectedImage - 1;
+
+    this.isZoomed = false;
+  }
+
+  nextImage(): void {
+    this.selectedImage =
+      this.selectedImage === this.images.length - 1
+        ? 0
+        : this.selectedImage + 1;
+
+    this.isZoomed = false;
+  }
+
+  toggleZoom(): void {
+    this.isZoomed = !this.isZoomed;
   }
 
 }

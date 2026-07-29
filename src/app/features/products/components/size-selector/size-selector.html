@@ -1,13 +1,14 @@
-<div class="flex flex-col lg:flex-row justify-between gap-10">
+<div class="flex flex-col lg:flex-row justify-between gap-8 lg:gap-10">
 
   <!-- Left -->
-  <div>
+  <div class="flex-1">
 
     <h3 class="text-lg font-semibold mb-4">
       Select Size
     </h3>
 
-    <div class="flex gap-4">
+    <!-- Size Buttons -->
+    <div class="flex flex-wrap gap-4">
 
       <button
         *ngFor="let size of sizes"
@@ -48,59 +49,63 @@
 
     </div>
 
-    <!-- Price -->
+    <!-- Price + Quantity -->
+    <div class="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
 
-    <div class="mt-8">
+      <!-- Subtotal -->
+      <div>
 
-      <h4 class="font-semibold mb-3">
-        Subtotal Price
-      </h4>
+        <h4 class="font-semibold mb-3">
+          Subtotal Price
+        </h4>
 
-      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 flex-wrap">
 
-        <span class="text-4xl font-bold text-green-600">
-          ৳{{ selectedSize.price | number }}
-        </span>
+          <span class="text-3xl sm:text-4xl font-bold text-green-600">
+            ৳{{ selectedSize.price | number }}
+          </span>
 
-        <span class="border border-blue-500 text-blue-600 rounded-md px-2 py-1 text-xs font-medium">
-          Save ৳200
-        </span>
+          <span
+            class="border border-blue-500 text-blue-600 rounded-md px-2 py-1 text-xs font-medium">
+            Save ৳200
+          </span>
+
+        </div>
 
       </div>
 
-    </div>
+      <!-- Quantity -->
+      <div>
 
-  </div>
+        <h3 class="text-lg font-semibold mb-3">
+          Quantity
+        </h3>
 
-  <!-- Quantity -->
+        <div class="flex items-center border rounded-xl px-3 py-2 gap-5 w-fit">
 
-  <div>
+          <button
+            (click)="decrease()"
+            class="w-10 h-10 border rounded-lg hover:bg-gray-100">
 
-    <h3 class="text-lg font-semibold mb-4">
-      Quantity
-    </h3>
+            <i class="fa-solid fa-minus"></i>
 
-    <div class="flex items-center border rounded-xl px-3 py-2 gap-5">
+          </button>
 
-      <button
-        (click)="decrease()"
-        class="w-10 h-10 border rounded-lg hover:bg-gray-100">
+          <span class="text-xl font-semibold text-green-600 min-w-[24px] text-center">
+            {{ quantity }}
+          </span>
 
-        <i class="fa-solid fa-minus"></i>
+          <button
+            (click)="increase()"
+            class="w-10 h-10 border rounded-lg hover:bg-gray-100">
 
-      </button>
+            <i class="fa-solid fa-plus"></i>
 
-      <span class="text-xl font-semibold text-green-600">
-        {{ quantity }}
-      </span>
+          </button>
 
-      <button
-        (click)="increase()"
-        class="w-10 h-10 border rounded-lg hover:bg-gray-100">
+        </div>
 
-        <i class="fa-solid fa-plus"></i>
-
-      </button>
+      </div>
 
     </div>
 

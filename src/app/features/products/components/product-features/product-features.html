@@ -1,32 +1,29 @@
 <div
-  class="w-full max-w-[1280px] h-[98px] border border-[#d7e0e9] rounded-md flex items-center bg-white">
+  class=" mx-auto bg-white border border-[2px] border-[#d7e0e9] rounded-3xl">
 
-  <div
-    *ngFor="let feature of features; let last = last"
-    class="flex-1 flex items-center justify-center gap-4 px-8 relative">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 
-    <!-- Divider -->
     <div
-      *ngIf="!last"
-      class="absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-gray-200">
-    </div>
+      *ngFor="let feature of features; let last = last"
+      class="relative flex items-center gap-4 p-5 lg:px-8 lg:py-7">
 
-    <!-- Icon -->
-    <img
-      [src]="feature.icon"
-      [alt]="feature.title"
-      class="w-10 h-10 object-contain">
 
-    <!-- Text -->
-    <div>
+      <!-- Icon -->
+      <img
+        [src]="feature.icon"
+        [alt]="feature.title"
+        class="w-10 h-10 shrink-0 object-contain" />
 
-      <h3 class="font-semibold text-[15px] text-[#222]">
-        {{feature.title}}
-      </h3>
+      <!-- Text -->
+      <div>
+        <h3 class="text-[15px] font-semibold text-[#222]">
+          {{ feature.title }}
+        </h3>
 
-      <p class="text-[13px] text-[#6B7280] mt-1">
-        {{feature.subtitle}}
-      </p>
+        <p class="mt-1 text-[13px] text-[#6B7280]">
+          {{ feature.subtitle }}
+        </p>
+      </div>
 
     </div>
 

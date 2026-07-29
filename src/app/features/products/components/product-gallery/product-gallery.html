@@ -1,37 +1,77 @@
-<!-- Main Image -->
-<div class="w-full mb-5">
-    <img
-        [src]="images[selectedImage]"
-        alt="Product"
-        class="w-full h-[520px] object-contain rounded-xl border border-[#E5E7EB]"
-    />
-</div>
+<div class="w-full max-w-[600px] mx-auto px-4 sm:px-0">
 
-<!-- Thumbnail Gallery -->
-<div class="flex items-center gap-3">
-
+    <!-- Main Image -->
     <div
-        *ngFor="let image of images; let i = index"
-        (click)="selectImage(i)"
-        class="relative cursor-pointer rounded-md border transition-all duration-200"
+        class="relative w-full aspect-square max-h-[600px] rounded-2xl border border-[#DFE3E8] bg-white overflow-hidden">
 
-        [ngClass]="{
-            'border-[#6BAA15] border-2': selectedImage===i,
-            'border-[#E5E7EB] hover:border-[#6BAA15]': selectedImage!==i
-        }"
-    >
+        <!-- Zoom Button -->
+        <button
+            (click)="toggleZoom()"
+            class="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-10 h-10 rounded-full bg-white border border-[#DFE3E8] shadow flex items-center justify-center hover:bg-gray-100 transition">
 
-        <img
-            [src]="image"
-            class="w-[74px] h-[74px] object-cover rounded-md p-1"
-        />
+            <i
+                class="fa-solid"
+                [ngClass]="isZoomed ? 'fa-magnifying-glass-minus' : 'fa-magnifying-glass-plus'">
+            </i>
 
-        <!-- Selected Check Icon -->
+        </button>
+
+        <!-- Left Arrow -->
+        <button
+            (click)="prevImage()"
+            class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-[#DFE3E8] shadow flex items-center justify-center hover:bg-gray-100">
+
+            <i class="fa-solid fa-chevron-left text-[#637381]"></i>
+
+        </button>
+
+        <!-- Right Arrow -->
+        <button
+            (click)="nextImage()"
+            class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-[#DFE3E8] shadow flex items-center justify-center hover:bg-gray-100">
+
+            <i class="fa-solid fa-chevron-right text-[#637381]"></i>
+
+        </button>
+
+        <!-- Main Image -->
         <div
-            *ngIf="selectedImage===i"
-            class="absolute bottom-1 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-[#6BAA15] flex items-center justify-center">
+            class="w-full h-full flex items-center justify-center overflow-hidden">
 
-            <i class="fa-solid fa-check text-white text-[10px]"></i>
+            <img
+                [src]="images[selectedImage]"
+                alt="Product"
+                class="max-w-full max-h-full object-contain transition-transform duration-300 cursor-pointer"
+                [class.scale-150]="isZoomed"
+                (click)="toggleZoom()" />
+
+        </div>
+
+    </div>
+
+    <!-- Thumbnail Gallery -->
+    <div class="mt-6 grid grid-cols-5 gap-3">
+
+        <div
+            *ngFor="let image of images; let i = index"
+            (click)="selectImage(i)"
+            class="relative cursor-pointer rounded-xl aspect-square transition-all duration-200"
+            [ngClass]="{
+                'border-2 border-[#62A403]': selectedImage === i,
+                'border border-[#E5E7EB] hover:border-[#62A403]': selectedImage !== i
+            }">
+
+            <img
+                [src]="image"
+                class="w-full h-full object-cover rounded-lg">
+
+            <div
+                *ngIf="selectedImage === i"
+                class="absolute bottom-2 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-[#62A403] flex items-center justify-center">
+
+                <i class="fa-solid fa-check text-white text-[10px]"></i>
+
+            </div>
 
         </div>
 
