@@ -7,7 +7,7 @@ interface ProductSize {
 
 @Component({
   selector: 'app-size-selector',
-  templateUrl: './size-selector.html',
+  templateUrl:'./size-selector.html',
   styleUrls: ['./size-selector.scss'],
   standalone: false
 })

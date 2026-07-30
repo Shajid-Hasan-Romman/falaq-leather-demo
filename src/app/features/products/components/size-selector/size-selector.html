@@ -15,10 +15,11 @@
         (click)="selectSize(size)"
         class="relative w-20 h-20 rounded-xl border transition-all duration-200 flex flex-col justify-center items-center"
         [ngClass]="{
-          'border-green-500 bg-green-50': selectedSize === size,
-          'border-gray-200 bg-white hover:border-green-300': selectedSize !== size
+          'border-[#44AC79] bg-green-50': selectedSize === size,
+          'border-gray-200 bg-white hover:border-[#44AC79]': selectedSize !== size
         }">
 
+        <!-- Selected Check -->
         <div
           *ngIf="selectedSize === size"
           class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-600 flex items-center justify-center">
@@ -27,6 +28,7 @@
 
         </div>
 
+        <!-- Size Name -->
         <span
           class="font-bold"
           [ngClass]="{
@@ -36,13 +38,15 @@
           {{ size.name }}
         </span>
 
+        <!-- Size Price -->
         <span
           class="text-sm mt-1"
           [ngClass]="{
             'text-green-600': selectedSize === size,
             'text-gray-500': selectedSize !== size
           }">
-          ৳{{ size.price | number }}
+          <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+          {{ size.price | number }}
         </span>
 
       </button>
@@ -61,13 +65,16 @@
 
         <div class="flex items-center gap-3 flex-wrap">
 
-          <span class="text-3xl sm:text-4xl font-bold text-green-600">
-            ৳{{ selectedSize.price | number }}
+          <span class="text-3xl sm:text-4xl font-bold text-[#62A403]">
+            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+            {{ selectedSize.price | number }}
           </span>
 
           <span
             class="border border-blue-500 text-blue-600 rounded-md px-2 py-1 text-xs font-medium">
-            Save ৳200
+            Save
+            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+            200
           </span>
 
         </div>
@@ -91,7 +98,7 @@
 
           </button>
 
-          <span class="text-xl font-semibold text-green-600 min-w-[24px] text-center">
+          <span class="text-xl font-semibold text-[#62A403] min-w-[24px] text-center">
             {{ quantity }}
           </span>
 
