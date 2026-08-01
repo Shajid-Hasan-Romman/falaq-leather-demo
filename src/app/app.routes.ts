@@ -2,12 +2,17 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    // Every page renders inside the main layout (header + footer). Features
-    // are lazy-loaded standalone components — features never import each other.
     path: '',
     loadComponent: () =>
       import('./layouts/main-layout/main-layout').then((m) => m.MainLayout),
     children: [
+      {
+        path: 'products',
+        loadChildren: () =>
+          import('./features/products/product.module').then(
+            (m) => m.ProductModule
+          ),
+      },
       {
         path: '**',
         loadComponent: () =>
@@ -15,5 +20,10 @@ export const routes: Routes = [
         title: 'Page not found · Falaq v2.0',
       },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'products/product-details',
+    pathMatch: 'full',
   },
 ];
