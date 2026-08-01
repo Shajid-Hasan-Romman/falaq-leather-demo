@@ -1,109 +1,161 @@
-<section class="bg-white py-12">
-  <div class="mx-auto w-full px-20">
+<section class="bg-white py-8 md:py-10 lg:py-12">
+  <div class="mx-auto w-full px-4 md:px-8 lg:px-12 xl:px-20">
 
-    <!-- Header -->
-    <div class="mb-8 flex items-end justify-between">
-
+    <!-- ===== MOBILE HEADER ===== -->
+    <div class="md:hidden flex items-start justify-between mb-5">
       <div>
-        <p
-          class="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[1.5px] text-[#69AE14]">
+        <p class="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#69AE14]">
+          <span class="flex gap-0.5">
+            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
+            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
+            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
+          </span>
+          Fresh From Our Farm
+        </p>
+        <h2 class="text-[18px] font-extrabold text-[#1F2937]">
+          Featured Products
+        </h2>
+      </div>
 
+      <button
+        id="exploreMoreBtn"
+        onclick="toggleMoreProducts()"
+        class="flex h-8 items-center gap-1.5 rounded-lg border border-[#69AE14] px-3 text-[12px] font-semibold text-[#69AE14] transition hover:bg-[#69AE14] hover:text-white">
+        Explore More
+        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+      </button>
+    </div>
+
+    <!-- ===== TABLET + DESKTOP HEADER (original - not touched) ===== -->
+    <div class="hidden md:flex mb-6 md:mb-8 items-end justify-between">
+      <div>
+        <p class="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[1.5px] text-[#69AE14]">
           <span class="flex gap-1">
             <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
             <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
             <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
           </span>
-
           Fresh From Our Farm
-
         </p>
-
-        <h2 class="text-[44px] font-extrabold leading-none text-[#1F2937]">
+        <h2 class="text-[36px] lg:text-[40px] xl:text-[44px] font-extrabold leading-none text-[#1F2937]">
           Featured Products
         </h2>
-
       </div>
 
       <button
-        class="flex h-[48px] items-center gap-2 rounded-lg border border-[#69AE14] px-7 text-[15px] font-semibold text-[#69AE14] transition hover:bg-[#69AE14] hover:text-white">
-
+        class="flex h-11 lg:h-[48px] items-center gap-2 rounded-lg border border-[#69AE14] px-6 lg:px-7 text-[14px] lg:text-[15px] font-semibold text-[#69AE14] transition hover:bg-[#69AE14] hover:text-white">
         Explore More
-
         <i class="fa-solid fa-arrow-right text-sm"></i>
-
       </button>
-
     </div>
 
-    <!-- Product Grid -->
-
-    <div class="grid grid-cols-4 gap-3">
-
+    <!-- ===== MOBILE GRID ===== -->
+    <div class="md:hidden grid grid-cols-2 gap-3" id="mobileProductGrid">
       @for(product of products; track $index){
+        <div 
+          class="product-card relative flex flex-col rounded-[14px] border border-[#ECECEC] bg-white p-3 min-h-[340px]
+                 {{ $index >= 4 ? 'hidden' : '' }}">
+          
+          <!-- Discount -->
+          <span class="absolute right-2 top-2 rounded-full bg-[#F15A29] px-2 py-0.5 text-[9px] font-semibold text-white">
+            {{product.discount}}
+          </span>
 
-      <div
-        class="relative flex h-[450px] w-[405px] flex-col rounded-[14px] border border-[#ECECEC] bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,.08)]">
+          <!-- Image -->
+          <div class="flex h-[140px] items-center justify-center">
+            <img [src]="product.image" [alt]="product.title"
+                 class="max-h-[140px] w-[140px] object-contain">
+          </div>
 
-        <!-- Discount -->
-
-        <span
-          class="absolute right-3 top-3 rounded-full bg-[#F15A29] px-2.5 py-1 text-[10px] font-semibold text-white">
-        
-          {{product.discount}}
-
-        </span>
-
-        <!-- Product Image -->
-
-        <div class="flex h-[200px] items-center justify-center">
-
-          <img
-            [src]="product.image"
-            [alt]="product.title"
-            class="max-h-[250px] w-[250px] object-cover transition duration-300 hover:scale-105">
-
-        </div>
-
-        <!-- Title -->
-
-        <h3 class="mt-15 min-h-[48px] text-[15px] font-medium leading-6 text-[#232323] line-clamp-2">
-        
+          <!-- Title -->
+          <h3 class="mt-3 min-h-[40px] text-[13px] font-medium leading-5 text-[#232323] line-clamp-2">
             {{ product.title }}
-        
-        </h3>
+          </h3>
 
-        <!-- Price -->
+          <!-- Price -->
+          <div class="mt-2 flex items-center gap-1.5">
+            <span class="flex items-center text-[16px] font-bold text-[#69AE14]">
+              <i class="fa-solid fa-bangladeshi-taka-sign mr-0.5 text-[12px]"></i>
+              {{ product.price }}
+            </span>
+            <span class="flex items-center text-[10px] text-[#B6B6B6] line-through">
+              <i class="fa-solid fa-bangladeshi-taka-sign mr-0.5 text-[8px]"></i>
+              {{ product.oldPrice }}
+            </span>
+          </div>
 
-        <div class="mt-3 flex items-center gap-2">
-        
-            <span class="flex items-center text-[22px] font-bold text-[#69AE14]">
-                <i class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[16px]"></i>
-                {{ product.price }}
-            </span>
-        
-            <span class="flex items-center text-[12px] text-[#B6B6B6] line-through">
-                <i class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[10px]"></i>
-                {{ product.oldPrice }}
-            </span>
-        
+          <!-- Button -->
+          <button class="mt-auto flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-[#69AE14] text-[12px] font-semibold text-white">
+            <i class="fa-solid fa-cart-shopping text-[11px]"></i>
+            Add to Cart
+          </button>
         </div>
-
-        <!-- Button -->
-  
-        <button
-          class="mt-auto flex h-[44px] w-full items-center justify-center gap-2 rounded-md bg-[#69AE14] text-[14px] font-semibold text-white transition duration-300 hover:bg-[#5A9613]">
-
-          <i class="fa-solid fa-cart-shopping text-[13px]"></i>
-
-          Add to Cart
-
-        </button>
-
-      </div>
-
       }
+    </div>
 
+    <!-- ===== TABLET + DESKTOP GRID (original - not touched) ===== -->
+    <div class="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-4 xl:gap-3">
+      @for(product of products; track $index){
+        <div class="relative flex flex-col rounded-[14px] border border-[#ECECEC] bg-white p-4 
+                    min-h-[420px] lg:min-h-[400px] xl:h-[450px]
+                    transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,.08)]">
+
+          <span class="absolute right-3 top-3 rounded-full bg-[#F15A29] px-2.5 py-1 text-[10px] font-semibold text-white">
+            {{product.discount}}
+          </span>
+
+          <div class="flex h-[180px] lg:h-[170px] xl:h-[200px] items-center justify-center">
+            <img [src]="product.image" [alt]="product.title"
+                 class="max-h-[200px] lg:max-h-[180px] xl:max-h-[250px] w-[200px] lg:w-[180px] xl:w-[250px] object-contain transition duration-300 hover:scale-105">
+          </div>
+
+          <h3 class="mt-6 lg:mt-5 xl:mt-15 min-h-[48px] text-[15px] font-medium leading-6 text-[#232323] line-clamp-2">
+            {{ product.title }}
+          </h3>
+
+          <div class="mt-3 flex items-center gap-2">
+            <span class="flex items-center text-[20px] xl:text-[22px] font-bold text-[#69AE14]">
+              <i class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[16px]"></i>
+              {{ product.price }}
+            </span>
+            <span class="flex items-center text-[12px] text-[#B6B6B6] line-through">
+              <i class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[10px]"></i>
+              {{ product.oldPrice }}
+            </span>
+          </div>
+
+          <button class="mt-auto flex h-11 lg:h-[42px] xl:h-[44px] w-full items-center justify-center gap-2 rounded-md bg-[#69AE14] text-[14px] font-semibold text-white transition duration-300 hover:bg-[#5A9613]">
+            <i class="fa-solid fa-cart-shopping text-[13px]"></i>
+            Add to Cart
+          </button>
+        </div>
+      }
     </div>
 
   </div>
 </section>
+
+<script>
+  let showingAll = false;
+
+  function toggleMoreProducts() {
+    const cards = document.querySelectorAll('.product-card');
+    const btn = document.getElementById('exploreMoreBtn');
+
+    if (!showingAll) {
+      // Show all cards
+      cards.forEach(card => card.classList.remove('hidden'));
+      btn.innerHTML = `Show Less <i class="fa-solid fa-arrow-up text-[10px]"></i>`;
+      showingAll = true;
+    } else {
+      // Hide cards after first 4
+      cards.forEach((card, index) => {
+        if (index >= 4) {
+          card.classList.add('hidden');
+        }
+      });
+      btn.innerHTML = `Explore More <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
+      showingAll = false;
+    }
+  }
+</script>
