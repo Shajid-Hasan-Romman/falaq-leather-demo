@@ -3,7 +3,6 @@
     <div class="mx-auto max-w-[1400px]">
 
         <!-- Heading -->
-
         <div class="flex items-center justify-center gap-2">
 
             <div class="flex gap-1">
@@ -25,60 +24,54 @@
         </div>
 
         <!-- Title -->
-        <h1 class="text-center text-[40px] font-bold my-6">Best Deals of the Week!</h1>
+        <h1 class="my-6 text-center text-[40px] font-bold">
+            Best Deals of the Week!
+        </h1>
 
         <!-- Cards -->
-
         <div class="grid grid-cols-2 gap-8">
 
-            <div *ngFor="let item of deals"
-                class="flex h-[300px] w-[630px] overflow-hidden rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:shadow-xl">
+            <div
+                *ngFor="let item of deals"
+                [routerLink]="['/products/product-details']"
+                class="flex h-[300px] w-[630px] cursor-pointer overflow-hidden rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:scale-[1.02] hover:shadow-xl">
 
                 <!-- Image -->
-
                 <div class="flex w-[230px] items-center justify-center">
-
-                    <img [src]="item.image" class="w-[190px] object-cover">
-
+                    <img
+                        [src]="item.image"
+                        [alt]="item.title"
+                        class="w-[190px] object-cover transition duration-300 hover:scale-105" />
                 </div>
 
                 <!-- Content -->
-
                 <div class="flex flex-1 flex-col justify-center pr-8">
 
                     <h3 class="text-[20px] font-bold leading-8 text-[#252525]">
-
-                        {{item.title}}
-
+                        {{ item.title }}
                     </h3>
 
                     <div class="mt-4 flex items-center gap-3">
 
                         <span class="text-[18px] font-bold text-[#74B72E]">
-
-                            ${{item.price}}
-
+                            ${{ item.price }}
                         </span>
 
                         <span class="text-[18px] text-gray-400 line-through">
-
-                            ${{item.oldPrice}}
-
+                            ${{ item.oldPrice }}
                         </span>
 
                     </div>
 
                     <p class="mt-4 text-[14px] leading-7 text-[#7A7A7A]">
-
-                        {{item.description}}
-
+                        {{ item.description }}
                     </p>
 
                     <button
-                        class="mt-6 flex h-[50px] w-[180px] items-center justify-center gap-3 rounded-md bg-[#74B72E] text-white font-semibold duration-300 hover:bg-[#5E9B27]">
+                        (click)="addToCart(item); $event.stopPropagation()"
+                        class="mt-6 flex h-[50px] w-[180px] items-center justify-center gap-3 rounded-md bg-[#74B72E] font-semibold text-white transition duration-300 hover:bg-[#5E9B27]">
 
                         <i class="fa-solid fa-cart-plus"></i>
-
                         Add to Cart
 
                     </button>

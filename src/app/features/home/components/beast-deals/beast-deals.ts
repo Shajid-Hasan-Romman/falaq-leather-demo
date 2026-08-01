@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Deal {
   image: string;
@@ -11,12 +11,13 @@ interface Deal {
 
 @Component({
   selector: 'app-beast-deals',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
   templateUrl: './beast-deals.html',
   styleUrl: './beast-deals.scss',
 })
 export class BeastDeals {
+
+  constructor(private router: Router) {}
 
   deals: Deal[] = [
     {
@@ -49,4 +50,22 @@ export class BeastDeals {
     }
   ];
 
+  // Navigate to product details using index
+  navigateToProduct(index: number) {
+    const product = this.deals[index];
+    this.router.navigate(['/product-details'], {
+      queryParams: {
+        id: index,
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        image: product.image
+      }
+    });
+  }
+
+  addToCart(item: Deal) {
+    console.log('Added to cart:', item);
+    // Your cart logic here
+  }
 }

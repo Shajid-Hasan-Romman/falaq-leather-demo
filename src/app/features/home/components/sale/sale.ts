@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sale',
-  imports: [],
+  standalone: false,
   templateUrl: './sale.html',
   styleUrl: './sale.scss',
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
-  imports: [],
+  standalone: false,
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-featured-products',
-  imports: [],
+  standalone: false,
   templateUrl: './featured-products.html',
   styleUrl: './featured-products.scss',
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-popular-organic',
-  imports: [],
+  standalone: false,
   templateUrl: './popular-organic.html',
   styleUrl: './popular-organic.scss',
 })
