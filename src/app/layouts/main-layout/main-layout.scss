@@ -1,0 +1,5 @@
+// Layout-specific styles. Prefer Tailwind utilities in the template; add
+// component-scoped rules here only when a utility isn't expressive enough.
+:host {
+  display: block;
+}
