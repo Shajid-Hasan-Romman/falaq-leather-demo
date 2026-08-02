@@ -1,19 +1,13 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Header } from './header/header';
-import { Footer } from './footer/footer';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './main-layout.html',
-  styleUrls: ['./main-layout.css'],
-  standalone: true,
-  imports: [
-    RouterOutlet,  // Import RouterOutlet instead of using router-outlet directly
-    Header,
-    Footer
-  ]
+  styleUrl: './main-layout.scss',
 })
 export class MainLayout {
-  // your component logic
+  protected readonly year = new Date().getFullYear();
 }

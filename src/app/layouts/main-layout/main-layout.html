@@ -1,5 +1,39 @@
-<app-header></app-header>
+<div class="flex min-h-screen flex-col">
+  <header class="sticky top-0 z-10 border-b border-border bg-surface/90 backdrop-blur">
+    <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
+      <a routerLink="/" class="flex items-center gap-2 font-bold text-ink">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand text-sm text-white">F</span>
+        <span>Falaq <span class="text-brand">v2.0</span></span>
+      </a>
+      <nav class="flex items-center gap-6 text-sm text-muted">
+        <a
+          routerLink="/"
+          routerLinkActive="text-ink font-semibold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="transition-colors hover:text-ink"
+          >Home</a
+        >
+        <a
+          href="https://angular.dev"
+          target="_blank"
+          rel="noreferrer"
+          class="transition-colors hover:text-ink"
+          >Docs</a
+        >
+      </nav>
+    </div>
+  </header>
 
-<router-outlet></router-outlet>
+  <main class="flex-1">
+    <router-outlet></router-outlet>
+  </main>
 
-<app-footer></app-footer>
+  <footer class="border-t border-border bg-surface">
+    <div
+      class="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-2 px-4 py-6 text-sm text-muted sm:flex-row"
+    >
+      <span>&copy; {{ year }} Falaq. All rights reserved.</span>
+      <span>Built with Angular 22 · SSR · Tailwind v4</span>
+    </div>
+  </footer>
+</div>
