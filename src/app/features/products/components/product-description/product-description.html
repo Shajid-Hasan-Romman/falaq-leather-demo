@@ -1,0 +1,91 @@
+<!-- product-tabs.component.html -->
+
+<div class=" bg-white border border-[#e4e7ee] rounded-3xl">
+
+    <!-- Tabs -->
+    <div class="flex border-b border-[#dde0e8] overflow-x-auto">
+
+        <button
+            class="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap"
+            [ngClass]="{
+                'text-[#62A403] border-b-2 border-[#62A403]': activeTab === 'description',
+                'text-gray-500': activeTab !== 'description'
+            }"
+            (click)="activeTab='description'">
+
+            Description
+
+        </button>
+
+        <button
+            class="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium transition whitespace-nowrap"
+            [ngClass]="{
+                'text-[#62A403] border-b-2 border-[#62A403]': activeTab === 'review',
+                'text-gray-500': activeTab !== 'review'
+            }"
+            (click)="activeTab='review'">
+
+            Review (4)
+
+        </button>
+
+    </div>
+
+    <!-- Description -->
+    <div *ngIf="activeTab==='description'" class="p-4 sm:p-6 md:p-8">
+
+        <h2 class="text-2xl sm:text-3xl font-bold text-[#62A403] mb-4 sm:mb-6">
+            Product Details
+        </h2>
+
+        <p class="text-sm sm:text-base text-[#4B5563] leading-6 sm:leading-8 mb-6 sm:mb-8">
+            ঘরোয়া স্বাদের ঐতিহ্য বহনকারী আমাদের বোম্বাই মরিচের আচারটি
+            প্রিমিয়াম মানের মরিচ, খাঁটি সরিষার তেল এবং দেশি মসলার
+            মিশ্রণে প্রস্তুত করা হয়েছে। ভাত, খিচুড়ি, রুটি কিংবা
+            যেকোনো খাবারের সাথে এর স্বাদ আরও বাড়িয়ে তোলে।
+        </p>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-[#62A403] mb-3 sm:mb-5">
+            Key Features:
+        </h3>
+
+        <div class="space-y-2 sm:space-y-3">
+
+            <div
+                *ngFor="let item of features"
+                class="flex items-center gap-2 sm:gap-3">
+
+                <i class="fa-regular fa-circle-check text-[#62A403] text-sm sm:text-base"></i>
+
+                <span class="text-sm sm:text-base text-[#4B5563]">
+                    {{ item }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <button
+            class="mt-6 sm:mt-8 px-4 sm:px-5 py-2 border border-[#62A403] rounded-lg text-[#62A403] hover:bg-[#62A403] hover:text-white transition text-sm sm:text-base">
+
+            Show More
+            <i class="fa-solid fa-angle-right ml-2"></i>
+
+        </button>
+
+    </div>
+
+    <!-- Review -->
+    <div *ngIf="activeTab==='review'" class="p-4 sm:p-6 md:p-8">
+
+        <h2 class="text-xl sm:text-2xl font-semibold">
+            Customer Reviews
+        </h2>
+
+        <p class="mt-4 text-gray-500 text-sm sm:text-base">
+            No reviews yet.
+        </p>
+
+    </div>
+
+</div>

@@ -1,0 +1,308 @@
+# Angular E-Commerce Application
+
+A modern Angular E-Commerce application built using the **NgModule Architecture**.
+
+---
+
+# Project Architecture
+
+The project follows a feature-based modular architecture to keep the application scalable, maintainable, and easy to understand.
+
+```
+src
+│
+├── app
+│   │
+│   ├── core
+│   │   ├── guards
+│   │   ├── interceptors
+│   │   ├── services
+│   │   │   ├── auth.service.ts
+│   │   │   ├── api.service.ts
+│   │   │   ├── product.service.ts
+│   │   │   ├── cart.service.ts
+│   │   │   └── order.service.ts
+│   │   │
+│   │   ├── models
+│   │   │   ├── product.model.ts
+│   │   │   ├── cart.model.ts
+│   │   │   ├── order.model.ts
+│   │   │   └── user.model.ts
+│   │   │
+│   │   └── core.module.ts
+│   │
+│   ├── shared
+│   │   │
+│   │   ├── components
+│   │   │   ├── header
+│   │   │   ├── footer
+│   │   │   ├── navbar
+│   │   │   ├── product-card
+│   │   │   ├── product-slider
+│   │   │   ├── category-card
+│   │   │   ├── search-bar
+│   │   │   ├── pagination
+│   │   │   ├── loader
+│   │   │   ├── empty-state
+│   │   │   └── breadcrumb
+│   │   │
+│   │   ├── directives
+│   │   ├── pipes
+│   │   └── shared.module.ts
+│   │
+│   ├── layouts
+│   │   │
+│   │   ├── main-layout
+│   │   │   ├── main-layout.component.ts
+│   │   │   ├── main-layout.component.html
+│   │   │   └── main-layout.component.scss
+│   │   │
+│   │   └── layout.module.ts
+│   │
+│   ├── features
+│   │
+│   │   ├── home
+│   │   │   ├── components
+│   │   │   ├── home.component.ts
+│   │   │   ├── home.component.html
+│   │   │   ├── home.component.scss
+│   │   │   ├── home-routing.module.ts
+│   │   │   └── home.module.ts
+│   │   │
+│   │   ├── products
+│   │   │   ├── components
+│   │   │   │   ├── product-list
+│   │   │   │   ├── product-filter
+│   │   │   │   └── related-products
+│   │   │   │
+│   │   │   ├── pages
+│   │   │   │   ├── product-list
+│   │   │   │   └── product-details
+│   │   │   │
+│   │   │   ├── product-routing.module.ts
+│   │   │   └── product.module.ts
+│   │   │
+│   │   ├── cart
+│   │   │   ├── components
+│   │   │   ├── pages
+│   │   │   │   └── cart
+│   │   │   ├── cart-routing.module.ts
+│   │   │   └── cart.module.ts
+│   │   │
+│   │   ├── checkout
+│   │   │   ├── pages
+│   │   │   │   ├── billing
+│   │   │   │   ├── shipping
+│   │   │   │   ├── payment
+│   │   │   │   └── review-order
+│   │   │   ├── checkout-routing.module.ts
+│   │   │   └── checkout.module.ts
+│   │   │
+│   │   ├── order
+│   │   │   ├── pages
+│   │   │   │   ├── order-success
+│   │   │   │   ├── order-history
+│   │   │   │   └── order-details
+│   │   │   ├── order-routing.module.ts
+│   │   │   └── order.module.ts
+│   │   │
+│   │   └── not-found
+│   │       ├── not-found.component.ts
+│   │       ├── not-found.component.html
+│   │       ├── not-found.component.scss
+│   │       └── not-found.module.ts
+│   │
+│   ├── app-routing.module.ts
+│   ├── app.component.ts
+│   ├── app.component.html
+│   └── app.module.ts
+│
+├── assets
+│   ├── images
+│   ├── icons
+│   ├── banners
+│   └── products
+│
+├── environments
+│   ├── environment.ts
+│   └── environment.prod.ts
+│
+├── styles
+│   ├── _variables.scss
+│   ├── _mixins.scss
+│   ├── _buttons.scss
+│   └── theme.scss
+│
+└── styles.scss
+```
+
+---
+
+# Feature Modules
+
+The application is divided into independent feature modules.
+
+| Module | Responsibility |
+|---------|---------------|
+| AppModule | Root module |
+| CoreModule | Singleton services, guards, interceptors, models |
+| SharedModule | Reusable components, directives, and pipes |
+| LayoutModule | Application layouts |
+| HomeModule | Home page |
+| ProductModule | Product listing & details |
+| CartModule | Shopping cart |
+| CheckoutModule | Billing, Shipping & Payment |
+| OrderModule | Orders and Order Success |
+| NotFoundModule | 404 Page |
+
+---
+
+# Application Flow
+
+```
+Home
+   │
+   ▼
+Product List
+   │
+   ▼
+Product Details
+   │
+   ▼
+Add To Cart
+   │
+   ▼
+Shopping Cart
+   │
+   ▼
+Billing
+   │
+   ▼
+Shipping
+   │
+   ▼
+Payment
+   │
+   ▼
+Review Order
+   │
+   ▼
+Order Success
+```
+
+---
+
+# Application Routes
+
+| Route | Description |
+|--------|-------------|
+| / | Home |
+| /products | Product Listing |
+| /products/:id | Product Details |
+| /cart | Shopping Cart |
+| /checkout/billing | Billing Information |
+| /checkout/shipping | Shipping Information |
+| /checkout/payment | Payment |
+| /checkout/review | Review Order |
+| /order-success | Order Complete |
+| /orders | Order History |
+| /orders/:id | Order Details |
+| ** | Not Found |
+
+---
+
+# Shared Components
+
+- Header
+- Navbar
+- Footer
+- Product Card
+- Product Slider
+- Category Card
+- Search Bar
+- Pagination
+- Breadcrumb
+- Loader
+- Empty State
+
+---
+
+# Core Services
+
+- ApiService
+- AuthService
+- ProductService
+- CartService
+- OrderService
+
+---
+
+# Models
+
+- Product
+- Category
+- Cart
+- CartItem
+- Order
+- OrderItem
+- User
+- Address
+
+---
+
+# Assets
+
+```
+assets/
+│
+├── images/
+├── banners/
+├── products/
+└── icons/
+```
+
+---
+
+# Future Features
+
+- Authentication
+- Wishlist
+- Product Search
+- Product Filter
+- Product Reviews
+- Coupon System
+- Online Payment
+- User Profile
+- Order Tracking
+- Admin Dashboard
+
+---
+
+# Development Order
+
+1. Create Project Structure
+2. Build Main Layout
+3. Create Shared Components
+4. Build Home Page
+5. Implement Product Module
+6. Develop Product Details
+7. Build Cart Module
+8. Develop Checkout Module
+9. Implement Order Module
+10. Connect Backend APIs
+11. Add Authentication
+12. Test & Deploy
+
+---
+
+# Technology Stack
+
+- Angular (NgModule Architecture)
+- TypeScript
+- SCSS
+- Bootstrap/Tailwind CSS
+- RxJS
+- Angular Router
+- Angular Forms
+- ASP.NET Core Web API
+- SQL Server / PostgreSQL
