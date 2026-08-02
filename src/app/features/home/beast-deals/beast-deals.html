@@ -1,94 +1,108 @@
-<section class="w-full py-20 bg-white">
+<section class="w-full py-10 md:py-14 lg:py-16 xl:py-20 bg-white">
 
-    <div class="mx-auto max-w-[1400px]">
+  <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-8 xl:px-0">
 
-        <!-- Heading -->
+    <!-- Heading -->
+    <div class="flex items-center justify-center gap-2">
+      <div class="flex gap-1">
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+      </div>
 
-        <div class="flex items-center justify-center gap-2">
+      <span class="text-[10px] md:text-[11px] font-semibold uppercase tracking-[2px] text-[#62A403]">
+        FRESH FROM OUR FARM
+      </span>
 
-            <div class="flex gap-1">
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-            </div>
+      <div class="flex gap-1">
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+        <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
+      </div>
+    </div>
 
-            <span class="text-[11px] font-semibold uppercase tracking-[2px] text-[#62A403]">
-                FRESH FROM OUR FARM
-            </span>
+    <!-- Title -->
+    <h1 class="text-center text-[22px] md:text-[32px] lg:text-[36px] xl:text-[40px] font-bold my-4 md:my-5 lg:my-6">
+      Best Deals of the Week!
+    </h1>
 
-            <div class="flex gap-1">
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-                <span class="h-1 w-1 rounded-full bg-[#62A403]"></span>
-            </div>
+    <!-- ===== MOBILE: 2-column product cards (like screenshot) ===== -->
+    <div class="md:hidden grid grid-cols-2 gap-3">
+      <div *ngFor="let item of deals"
+        class="relative flex flex-col rounded-[14px] border border-[#ECECEC] bg-white p-3 min-h-[320px]">
 
+        <!-- Discount badge (optional) -->
+        <span class="absolute right-2 top-2 rounded-full bg-[#F15A29] px-2 py-0.5 text-[9px] font-semibold text-white">
+          -27%
+        </span>
+
+        <!-- Image -->
+        <div class="flex h-[130px] items-center justify-center">
+          <img [src]="item.image" class="max-h-[130px] w-[130px] object-contain">
         </div>
 
         <!-- Title -->
-        <h1 class="text-center text-[40px] font-bold my-6">Best Deals of the Week!</h1>
+        <h3 class="mt-3 min-h-[40px] text-[13px] font-medium leading-5 text-[#232323] line-clamp-2">
+          {{item.title}}
+        </h3>
 
-        <!-- Cards -->
-
-        <div class="grid grid-cols-2 gap-8">
-
-            <div *ngFor="let item of deals"
-                class="flex h-[300px] w-[630px] overflow-hidden rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:shadow-xl">
-
-                <!-- Image -->
-
-                <div class="flex w-[230px] items-center justify-center">
-
-                    <img [src]="item.image" class="w-[190px] object-cover">
-
-                </div>
-
-                <!-- Content -->
-
-                <div class="flex flex-1 flex-col justify-center pr-8">
-
-                    <h3 class="text-[20px] font-bold leading-8 text-[#252525]">
-
-                        {{item.title}}
-
-                    </h3>
-
-                    <div class="mt-4 flex items-center gap-3">
-
-                        <span class="text-[18px] font-bold text-[#74B72E]">
-
-                            ${{item.price}}
-
-                        </span>
-
-                        <span class="text-[18px] text-gray-400 line-through">
-
-                            ${{item.oldPrice}}
-
-                        </span>
-
-                    </div>
-
-                    <p class="mt-4 text-[14px] leading-7 text-[#7A7A7A]">
-
-                        {{item.description}}
-
-                    </p>
-
-                    <button
-                        class="mt-6 flex h-[50px] w-[180px] items-center justify-center gap-3 rounded-md bg-[#74B72E] text-white font-semibold duration-300 hover:bg-[#5E9B27]">
-
-                        <i class="fa-solid fa-cart-plus"></i>
-
-                        Add to Cart
-
-                    </button>
-
-                </div>
-
-            </div>
-
+        <!-- Price -->
+        <div class="mt-2 flex items-center gap-1.5">
+          <span class="text-[15px] font-bold text-[#74B72E]">
+            ৳{{item.price}}
+          </span>
+          <span class="text-[11px] text-gray-400 line-through">
+            ৳{{item.oldPrice}}
+          </span>
         </div>
 
+        <!-- Button -->
+        <button
+          class="mt-auto flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-[#74B72E] text-[12px] font-semibold text-white">
+          <i class="fa-solid fa-cart-plus text-[11px]"></i>
+          Add to Cart
+        </button>
+      </div>
     </div>
+
+    <!-- ===== TABLET + DESKTOP: Original horizontal cards (not touched) ===== -->
+    <div class="hidden md:grid grid-cols-2 gap-6 lg:gap-7 xl:gap-8">
+      <div *ngFor="let item of deals"
+        class="flex h-[280px] lg:h-[290px] xl:h-[300px] overflow-hidden rounded-[22px] xl:rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:shadow-xl">
+
+        <!-- Image -->
+        <div class="flex w-[190px] lg:w-[200px] xl:w-[230px] items-center justify-center shrink-0">
+          <img [src]="item.image" class="w-[160px] lg:w-[170px] xl:w-[190px] object-contain">
+        </div>
+
+        <!-- Content -->
+        <div class="flex flex-1 flex-col justify-center pr-6 lg:pr-7 xl:pr-8">
+          <h3 class="text-[17px] lg:text-[18px] xl:text-[20px] font-bold leading-7 lg:leading-8 text-[#252525]">
+            {{item.title}}
+          </h3>
+
+          <div class="mt-3 lg:mt-4 flex items-center gap-3">
+            <span class="text-[17px] lg:text-[18px] font-bold text-[#74B72E]">
+              ${{item.price}}
+            </span>
+            <span class="text-[16px] lg:text-[18px] text-gray-400 line-through">
+              ${{item.oldPrice}}
+            </span>
+          </div>
+
+          <p class="mt-3 lg:mt-4 text-[13px] lg:text-[14px] leading-6 lg:leading-7 text-[#7A7A7A] line-clamp-3">
+            {{item.description}}
+          </p>
+
+          <button
+            class="mt-4 lg:mt-5 xl:mt-6 flex h-[44px] lg:h-[48px] xl:h-[50px] w-[150px] lg:w-[160px] xl:w-[180px] items-center justify-center gap-3 rounded-md bg-[#74B72E] text-white font-semibold duration-300 hover:bg-[#5E9B27]">
+            <i class="fa-solid fa-cart-plus"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </section>
