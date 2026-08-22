@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 interface Deal {
   image: string;
@@ -12,7 +13,7 @@ interface Deal {
 @Component({
   selector: 'app-beast-deals',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './beast-deals.html',
   styleUrl: './beast-deals.scss',
 })

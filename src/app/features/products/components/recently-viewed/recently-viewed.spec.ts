@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 
-import { BeastDeals } from './beast-deals';
+import { RecentlyViewed } from './recently-viewed';
 
-describe('BeastDeals', () => {
-  let component: BeastDeals;
-  let fixture: ComponentFixture<BeastDeals>;
+describe('RecentlyViewed', () => {
+  let component: RecentlyViewed;
+  let fixture: ComponentFixture<RecentlyViewed>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BeastDeals],
-      providers: [provideRouter([])],
+      declarations: [RecentlyViewed],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BeastDeals);
+    fixture = TestBed.createComponent(RecentlyViewed);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

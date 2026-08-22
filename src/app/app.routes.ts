@@ -15,6 +15,12 @@ export const routes: Routes = [
         title: 'Falaq v2.0',
       },
       {
+        // Legacy NgModule-based feature, kept as-is per project decision.
+        path: 'products',
+        loadChildren: () =>
+          import('./features/products/product.module').then((m) => m.ProductModule),
+      },
+      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then((m) => m.NotFound),

@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 
-import { BeastDeals } from './beast-deals';
+import { FeatureBar } from './feature-bar';
 
-describe('BeastDeals', () => {
-  let component: BeastDeals;
-  let fixture: ComponentFixture<BeastDeals>;
+describe('FeatureBar', () => {
+  let component: FeatureBar;
+  let fixture: ComponentFixture<FeatureBar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BeastDeals],
-      providers: [provideRouter([])],
+      declarations: [FeatureBar],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BeastDeals);
+    fixture = TestBed.createComponent(FeatureBar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

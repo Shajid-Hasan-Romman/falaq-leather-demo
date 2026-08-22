@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 
-import { BeastDeals } from './beast-deals';
+import { SizeSelector } from './size-selector';
 
-describe('BeastDeals', () => {
-  let component: BeastDeals;
-  let fixture: ComponentFixture<BeastDeals>;
+describe('SizeSelector', () => {
+  let component: SizeSelector;
+  let fixture: ComponentFixture<SizeSelector>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BeastDeals],
-      providers: [provideRouter([])],
+      declarations: [SizeSelector],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BeastDeals);
+    fixture = TestBed.createComponent(SizeSelector);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

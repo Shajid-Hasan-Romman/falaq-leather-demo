@@ -29,7 +29,8 @@
     <!-- ===== MOBILE: 2-column product cards (like screenshot) ===== -->
     <div class="md:hidden grid grid-cols-2 gap-3">
       <div *ngFor="let item of deals"
-        class="relative flex flex-col rounded-[14px] border border-[#ECECEC] bg-white p-3 min-h-[320px]">
+        [routerLink]="['/products/product-details']"
+        class="relative flex flex-col rounded-[14px] border border-[#ECECEC] bg-white p-3 min-h-[320px] cursor-pointer">
 
         <!-- Discount badge (optional) -->
         <span class="absolute right-2 top-2 rounded-full bg-[#F15A29] px-2 py-0.5 text-[9px] font-semibold text-white">
@@ -68,7 +69,8 @@
     <!-- ===== TABLET + DESKTOP: Original horizontal cards (not touched) ===== -->
     <div class="hidden md:grid grid-cols-2 gap-6 lg:gap-7 xl:gap-8">
       <div *ngFor="let item of deals"
-        class="flex h-[280px] lg:h-[290px] xl:h-[300px] overflow-hidden rounded-[22px] xl:rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:shadow-xl">
+        [routerLink]="['/products/product-details']"
+        class="flex h-[280px] lg:h-[290px] xl:h-[300px] overflow-hidden rounded-[22px] xl:rounded-[24px] border border-[#8BC53F] bg-white transition duration-300 hover:shadow-xl cursor-pointer">
 
         <!-- Image -->
         <div class="flex w-[190px] lg:w-[200px] xl:w-[230px] items-center justify-center shrink-0">
