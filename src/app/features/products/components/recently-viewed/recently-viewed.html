@@ -35,7 +35,7 @@
 
                 <img
                     [src]="product.image"
-                    [alt]="product.title"
+                    [alt]="product.name"
                     class="w-full h-full object-contain">
 
                 <!-- Discount -->
@@ -51,7 +51,7 @@
 
                 <h3
                     class="text-sm sm:text-base lg:text-lg font-semibold text-[#273142] line-clamp-2 min-h-[48px]">
-                    {{product.title}}
+                                        {{product.name}}
                 </h3>
 
                 <!-- Price -->
@@ -68,7 +68,8 @@
                 </div>
 
                 <!-- Button -->
-                <button
+                                <button
+                    (click)="addToCart(product)"
                     class="mt-5 w-full py-3 rounded-full bg-[#62A403] text-white text-sm lg:text-base font-semibold flex items-center justify-center gap-2 hover:bg-[#548d03] transition">
 
                     <i class="fa-solid fa-cart-shopping"></i>

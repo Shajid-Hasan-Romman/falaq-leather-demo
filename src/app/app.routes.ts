@@ -21,6 +21,13 @@ export const routes: Routes = [
           import('./features/products/product.module').then((m) => m.ProductModule),
       },
       {
+        path: 'cart',
+        loadChildren: () =>
+          import('./features/cart/cart.module').then(
+            (m) => m.CartModule
+          ),
+      },
+      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then((m) => m.NotFound),
