@@ -1,0 +1,121 @@
+<div class="flex flex-col lg:flex-row justify-between gap-8 lg:gap-10">
+
+  <!-- Left -->
+  <div class="flex-1">
+
+    <h3 class="text-lg font-semibold mb-4">
+      Select Size
+    </h3>
+
+    <!-- Size Buttons -->
+    <div class="flex flex-wrap gap-4">
+
+      <button
+        *ngFor="let size of sizes"
+        (click)="selectSize(size)"
+        class="relative w-20 h-20 rounded-xl border transition-all duration-200 flex flex-col justify-center items-center"
+        [ngClass]="{
+          'border-[#44AC79] bg-green-50': selectedSize === size,
+          'border-gray-200 bg-white hover:border-[#44AC79]': selectedSize !== size
+        }">
+
+        <!-- Selected Check -->
+        <div
+          *ngIf="selectedSize === size"
+          class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-green-600 flex items-center justify-center">
+
+          <i class="fa-solid fa-check text-white text-[10px]"></i>
+
+        </div>
+
+        <!-- Size Name -->
+        <span
+          class="font-bold"
+          [ngClass]="{
+            'text-green-600': selectedSize === size,
+            'text-gray-900': selectedSize !== size
+          }">
+          {{ size.name }}
+        </span>
+
+        <!-- Size Price -->
+        <span
+          class="text-sm mt-1"
+          [ngClass]="{
+            'text-green-600': selectedSize === size,
+            'text-gray-500': selectedSize !== size
+          }">
+          <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+          {{ size.price | number }}
+        </span>
+
+      </button>
+
+    </div>
+
+    <!-- Price + Quantity -->
+    <div class="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+
+      <!-- Subtotal -->
+      <div>
+
+        <h4 class="font-semibold mb-3">
+          Subtotal Price
+        </h4>
+
+        <div class="flex items-center gap-3 flex-wrap">
+
+          <span class="text-3xl sm:text-4xl font-bold text-[#62A403]">
+            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+            {{ selectedSize.price | number }}
+          </span>
+
+          <span
+            class="border border-blue-500 text-blue-600 rounded-md px-2 py-1 text-xs font-medium">
+            Save
+            <i class="fa-solid fa-bangladeshi-taka-sign"></i>
+            200
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Quantity -->
+      <div>
+
+        <h3 class="text-lg font-semibold mb-3">
+          Quantity
+        </h3>
+
+        <div class="flex items-center border rounded-xl px-3 py-2 gap-5 w-fit">
+
+          <button
+            (click)="decrease()"
+            class="w-10 h-10 border rounded-lg hover:bg-gray-100">
+
+            <i class="fa-solid fa-minus"></i>
+
+          </button>
+
+          <span class="text-xl font-semibold text-[#62A403] min-w-[24px] text-center">
+            {{ quantity }}
+          </span>
+
+          <button
+            (click)="increase()"
+            class="w-10 h-10 border rounded-lg hover:bg-gray-100">
+
+            <i class="fa-solid fa-plus"></i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

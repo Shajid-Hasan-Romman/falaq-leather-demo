@@ -1,54 +1,7 @@
-<section class="mx-auto w-full max-w-6xl px-4 py-16 sm:py-24">
-  <div class="mx-auto max-w-2xl text-center">
-    <span
-      class="inline-flex items-center gap-2 rounded-full bg-brand-light px-3 py-1 text-sm font-semibold text-brand-dark"
-    >
-      <span class="h-2 w-2 rounded-full bg-brand"></span>
-      Scaffold ready
-    </span>
-    <h1 class="mt-6 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-      Falaq <span class="text-brand">v2.0</span>
-    </h1>
-    <p class="mt-4 text-lg text-muted">
-      A fresh Angular 22 storefront foundation. Frontend-only today — the backend
-      API and database slot in behind the typed HTTP layer when they land.
-    </p>
-    <div class="mt-8 flex items-center justify-center gap-3">
-      <a
-        href="https://angular.dev"
-        target="_blank"
-        rel="noreferrer"
-        class="rounded-lg bg-brand px-5 py-2.5 font-semibold text-white shadow-card transition-colors hover:bg-brand-dark"
-        >Angular docs</a
-      >
-      <a
-        href="https://tailwindcss.com/docs"
-        target="_blank"
-        rel="noreferrer"
-        class="rounded-lg border border-border px-5 py-2.5 font-semibold text-ink transition-colors hover:bg-background"
-        >Tailwind docs</a
-      >
-    </div>
-  </div>
-
-  <ul class="mx-auto mt-16 grid max-w-3xl gap-4 sm:grid-cols-2">
-    @for (item of stack; track item.label) {
-      <li
-        class="rounded-card border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-card-hover"
-      >
-        <div class="flex items-start gap-3">
-          <span
-            class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-light text-brand-dark"
-            aria-hidden="true"
-          >
-            &#10003;
-          </span>
-          <div>
-            <p class="font-semibold text-ink">{{ item.label }}</p>
-            <p class="mt-1 text-sm text-muted">{{ item.detail }}</p>
-          </div>
-        </div>
-      </li>
-    }
-  </ul>
-</section>
+<app-hero></app-hero>
+<app-featured-categories></app-featured-categories>
+<app-featured-products></app-featured-products>
+<app-popular-organic></app-popular-organic>
+<app-sale></app-sale>
+<app-beast-deals></app-beast-deals>
+<app-secure-delivery></app-secure-delivery>

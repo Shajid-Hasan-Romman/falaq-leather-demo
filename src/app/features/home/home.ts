@@ -1,23 +1,25 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-interface StackItem {
-  readonly label: string;
-  readonly detail: string;
-}
+import { Hero } from './hero/hero';
+import { FeaturedCategories } from './featured-categories/featured-categories';
+import { FeaturedProducts } from './featured-products/featured-products';
+import { PopularOrganic } from './popular-organic/popular-organic';
+import { Sale } from './sale/sale';
+import { BeastDeals } from './beast-deals/beast-deals';
+import { SecureDelivery } from './secure-delivery/secure-delivery';
 
 @Component({
   selector: 'app-home',
+  imports: [
+    Hero,
+    FeaturedCategories,
+    FeaturedProducts,
+    PopularOrganic,
+    Sale,
+    BeastDeals,
+    SecureDelivery,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
-  /** What the scaffold ships with — rendered as the "wired up" checklist. */
-  protected readonly stack: readonly StackItem[] = [
-    { label: 'Angular 22', detail: 'Standalone components, OnPush, signals' },
-    { label: 'SSR + hydration', detail: 'Server-rendered HTML with event replay' },
-    { label: 'Tailwind v4', detail: 'Design tokens compiled from theme.css' },
-    { label: 'Typed HTTP layer', detail: 'HttpClient + environments, ready for the API' },
-    { label: 'Feature architecture', detail: 'core / shared / features / layouts' },
-  ];
-}
+export class Home {}
