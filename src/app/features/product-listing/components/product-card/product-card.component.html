@@ -1,0 +1,22 @@
+<div class="product-card">
+  <div class="product-card__image-wrap">
+    <span class="product-card__badge" *ngIf="product.discountPercent">
+      -{{ product.discountPercent }}%
+    </span>
+    <img [src]="product.image" [alt]="product.name" class="product-card__image" />
+  </div>
+
+  <div class="product-card__body">
+    <h3 class="product-card__title">{{ product.name }}</h3>
+
+    <div class="product-card__price">
+      <span class="product-card__price-current">৳{{ product.price | number }}</span>
+      <span class="product-card__price-old" *ngIf="product.oldPrice">৳{{ product.oldPrice | number }}</span>
+    </div>
+
+    <button type="button" class="product-card__add-btn" (click)="onAddToCart()">
+      <span class="icon">🛒</span>
+      Add to Cart
+    </button>
+  </div>
+</div>

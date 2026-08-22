@@ -1,0 +1,21 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-grid__empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #888;
+  font-size: 14px;
+}
