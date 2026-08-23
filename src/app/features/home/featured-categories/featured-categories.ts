@@ -1,11 +1,19 @@
 import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-featured-categories',
+  imports: [RouterLink],
   templateUrl: './featured-categories.html',
   styleUrl: './featured-categories.scss',
 })
 export class FeaturedCategories {
+  constructor(private readonly router: Router) {}
+
+  goToProductListing(): void {
+    void this.router.navigate(['/product-listing']);
+  }
+
       categories = [
     {
       name: 'Fresh Fruits',

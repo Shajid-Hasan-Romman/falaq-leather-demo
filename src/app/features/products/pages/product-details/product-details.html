@@ -13,7 +13,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
 
                 <!-- Left -->
-                <app-product-gallery></app-product-gallery>
+                <app-product-gallery [productImage]="product.image"></app-product-gallery>
 
                 <!-- Right -->
                 <div class="flex flex-col gap-6">
@@ -21,19 +21,13 @@
                     <!-- Product Title -->
                     <h1
                         class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B1A33] leading-tight">
-                        বোম্বাই মরিচের আচার
-                        <span class="text-[#090A0A]">
-                            (Bombay Chili Pickle)
-                        </span>
+                        {{ product.name }}
                     </h1>
 
                     <!-- Description -->
                     <p
                         class="text-[#62A403] text-sm sm:text-base leading-7 bg-white rounded-2xl">
-                        ঝাল, মশলাদার ও মুখরোচক বোম্বাই মরিচের আচার যা তৈরি করা হয়েছে
-                        নির্বাচিত মরিচ, সরিষার তেল ও দেশি মসলার মিশ্রণে। ভাত,
-                        খিচুড়ি, পরোটা কিংবা যেকোনো খাবারের সাথে বাড়িয়ে দেয়
-                        অসাধারণ স্বাদ।
+                        {{ product.description }}
                     </p>
 
                     <!-- Features -->
@@ -45,7 +39,7 @@
                                 class="fa-regular fa-circle-check text-[#65A30D] mt-1"></i>
 
                             <span class="text-sm sm:text-base text-[#4B5563]">
-                                খাঁটি সরিষার তেল ও দেশি মসলা ব্যবহার।
+                                {{ product.features?.[0] }}
                             </span>
 
                         </div>
@@ -56,7 +50,7 @@
                                 class="fa-regular fa-circle-check text-[#65A30D] mt-1"></i>
 
                             <span class="text-sm sm:text-base text-[#4B5563]">
-                                ভাত, খিচুড়ি, রুটি ও নাস্তার সাথে উপযোগী।
+                                {{ product.features?.[1] }}
                             </span>
 
                         </div>
@@ -78,7 +72,7 @@
 
                         <span
                             class="bg-gray-100 rounded-full px-4 py-1 text-sm text-gray-600">
-                            (11,786 Reviews)
+                            ({{ product.reviewCount | number }} Reviews)
                         </span>
 
                     </div>
@@ -88,17 +82,17 @@
 
                         <span
                             class="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-600">
-                            1,400 ৳
+                            ৳{{ product.price | number }}
                         </span>
 
                         <span
                             class="text-lg sm:text-xl text-gray-400 line-through">
-                            ৳2,500
+                            ৳{{ product.oldPrice | number }}
                         </span>
 
                         <span
                             class="bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            -38%
+                            -{{ product.discountPercent || 0 }}%
                         </span>
 
                     </div>
@@ -111,6 +105,8 @@
                         class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                         <button
+                            type="button"
+                            (click)="addToCart()"
                             class="h-12 sm:h-14 rounded-xl bg-[#FFC107] font-semibold text-[#212B36] flex items-center justify-center gap-2 hover:bg-yellow-500 transition">
 
                             <i class="fas fa-cart-plus"></i>

@@ -21,6 +21,14 @@ export const routes: Routes = [
           import('./features/products/product.module').then((m) => m.ProductModule),
       },
       {
+        path: 'product-listing',
+        loadChildren: () =>
+          import('./features/product-listing/product-listing.module').then(
+            (m) => m.ProductListingModule,
+          ),
+        title: 'Product listing · Falaq v2.0',
+      },
+      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then((m) => m.NotFound),

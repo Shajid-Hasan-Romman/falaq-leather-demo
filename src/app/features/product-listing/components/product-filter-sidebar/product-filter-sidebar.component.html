@@ -1,0 +1,29 @@
+<aside class="sidebar">
+  <div class="sidebar__search">
+    <input
+      type="text"
+      placeholder="Search"
+      [value]="searchTerm"
+      (input)="onSearchInput($event)"
+    />
+  </div>
+
+  <div class="sidebar__block">
+    <app-category-filter
+      [categories]="categories"
+      (categoryChange)="categoryChange.emit($event)"
+    ></app-category-filter>
+  </div>
+
+  <div class="sidebar__block">
+    <app-price-filter
+      [value]="priceRange"
+      [max]="maxPrice"
+      (valueChange)="priceChange.emit($event)"
+    ></app-price-filter>
+  </div>
+
+  <div class="sidebar__block">
+    <app-trending-products [items]="trendingItems"></app-trending-products>
+  </div>
+</aside>

@@ -1,0 +1,34 @@
+<div class="product-listing">
+  <app-product-filter-sidebar
+    [categories]="categories"
+    [trendingItems]="trendingItems"
+    [priceRange]="filter.priceRange"
+    [searchTerm]="filter.search"
+    (searchChange)="onSearchChange($event)"
+    (categoryChange)="onCategoryChange($event)"
+    (priceChange)="onPriceChange($event)"
+  ></app-product-filter-sidebar>
+
+  <main class="product-listing__main">
+    <div class="product-listing__header">
+      <span class="product-listing__count">
+        Showing {{ rangeStart }} - {{ rangeEnd }} of {{ totalItems }}
+      </span>
+
+      <select class="product-listing__sort" (change)="onSortChange($event)">
+        <option *ngFor="let option of sortOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <app-product-grid [products]="products" (addToCart)="onAddToCart($event)"></app-product-grid>
+
+    <app-pagination
+      [totalItems]="totalItems"
+      [pageSize]="pageSize"
+      [currentPage]="filter.page"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
+  </main>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-gallery',
@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
   templateUrl: './product-gallery.html',
   styleUrls: ['./product-gallery.scss']
 })
-export class ProductGallery {
+export class ProductGallery implements OnInit {
+
+  @Input() productImage = '';
 
   selectedImage = 0;
   isZoomed = false;
@@ -18,6 +20,12 @@ export class ProductGallery {
     'image/Products/Mango-3.png',
     'image/Products/Mango-4.png',
   ];
+
+  ngOnInit(): void {
+    if (this.productImage) {
+      this.images = [this.productImage, ...this.images.filter(image => image !== this.productImage)];
+    }
+  }
 
   selectImage(index: number): void {
     this.selectedImage = index;
