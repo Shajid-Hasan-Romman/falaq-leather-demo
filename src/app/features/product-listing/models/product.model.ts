@@ -7,6 +7,9 @@ export interface Product {
   discountPercent?: number;
   category: string;
   rating?: number;
+  description?: string;
+  features?: string[];
+  reviewCount?: number;
 }
 
 export interface TrendingItem {

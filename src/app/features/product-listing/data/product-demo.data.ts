@@ -286,7 +286,15 @@ export const PRODUCT_CARD_DEMO_DATA: Product[] = [
   },
 ];
 
-export const PRODUCT_DEMO_DATA = PRODUCT_CARD_DEMO_DATA;
+export const PRODUCT_DEMO_DATA: Product[] = PRODUCT_CARD_DEMO_DATA.map(product => ({
+  ...product,
+  description: `Fresh and carefully selected ${product.name}, prepared to bring quality and great taste to your everyday meals.`,
+  features: [
+    'Premium quality ingredients selected with care.',
+    'Freshly packed for reliable everyday use.',
+  ],
+  reviewCount: 1000 + product.id * 137,
+}));
 
 export const CATEGORY_OPTIONS: CategoryOption[] = [
   { id: 'fruits-vegetables', label: 'Fruits & Vegetables', checked: false },

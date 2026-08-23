@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Product, TrendingItem } from './models/product.model';
 import { CategoryOption, PriceRange, ProductFilter } from './models/product-filter.model';
 import { ProductDataService } from './services/product-data.service';
@@ -37,7 +38,8 @@ export class ProductListingComponent implements OnInit {
   constructor(
     private readonly productDataService: ProductDataService,
     private readonly cartStateService: CartStateService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +113,9 @@ export class ProductListingComponent implements OnInit {
 
   onAddToCart(product: Product): void {
     this.cartStateService.addToCart(product);
+    void this.router.navigate(['/products/product-details'], {
+      queryParams: { id: product.id },
+    });
   }
 
   get rangeStart(): number {

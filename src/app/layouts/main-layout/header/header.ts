@@ -15,6 +15,7 @@ export class Header {
   ];
 
   readonly categoryMenuOpen = signal(false);
+  readonly suggestionsVisible = signal(false);
   readonly productSuggestions = [
     'Organic Food Combo 1 Basket',
     'Fresh Seasonal Vegetable Box',
@@ -32,7 +33,7 @@ export class Header {
   get searchSuggestions(): string[] {
     const query = this.searchTerm.trim().toLowerCase();
 
-    if (!query) {
+    if (!query || !this.suggestionsVisible()) {
       return [];
     }
 
@@ -47,6 +48,14 @@ export class Header {
     this.categoryMenuOpen.update(isOpen => !isOpen);
   }
 
+  closeCategoryMenu(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+
+    if (!target.closest('.category-nav')) {
+      this.categoryMenuOpen.set(false);
+    }
+  }
+
   goToCategory(categoryId: string): void {
     this.categoryMenuOpen.set(false);
     void this.router.navigate(['/product-listing'], {
@@ -56,6 +65,7 @@ export class Header {
 
   searchProducts(): void {
     const search = this.searchTerm.trim();
+    this.suggestionsVisible.set(false);
 
     void this.router.navigate(['/product-listing'], {
       queryParams: { search: search || null, category: null },
@@ -64,6 +74,7 @@ export class Header {
 
   onSearchInput(event: Event): void {
     this.searchTerm = (event.target as HTMLInputElement).value;
+    this.suggestionsVisible.set(true);
   }
 
   selectSuggestion(suggestion: string): void {

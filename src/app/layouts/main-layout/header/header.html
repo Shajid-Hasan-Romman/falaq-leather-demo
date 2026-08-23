@@ -47,7 +47,10 @@
   </div>
 </section>
 
-<header class="w-full bg-white px-4 md:px-6 lg:px-10 xl:px-16 2xl:px-20 pb-3 md:pb-4">
+<header
+  class="w-full bg-white px-4 md:px-6 lg:px-10 xl:px-16 2xl:px-20 pb-3 md:pb-4"
+  (document:click)="closeCategoryMenu($event)"
+>
   <!-- Top row: Logo + Mobile menu + Cart (mobile) / Full nav (desktop) -->
   <div class="flex items-center justify-between h-16 md:h-18 lg:h-20 gap-3 md:gap-4 lg:gap-6 xl:gap-10 2xl:gap-15">
 
@@ -66,50 +69,52 @@
           class="h-12 md:h-14 lg:h-16 xl:h-[72px] 2xl:h-[80px] w-auto object-contain"
         />
       </a>
+
     </div>
 
     <!-- Center Nav (hidden on mobile, visible from lg) -->
-    <nav class="hidden lg:flex items-center">
-      <ul class="flex items-center gap-8 xl:gap-12 2xl:gap-20">
-        <li>
-          <a href="#" class="text-base xl:text-[18px] 2xl:text-[20px] font-medium text-[#62A403] hover:text-[#4f8702] transition-colors">
-            Home
-          </a>
-        </li>
-        <li class="relative">
-          <button
-            type="button"
-            class="flex items-center gap-1.5 xl:gap-2 text-base xl:text-[18px] 2xl:text-[20px] font-medium text-gray-700 hover:text-[#62A403] transition-colors"
-            (click)="toggleCategoryMenu()"
-            aria-haspopup="menu"
-            [attr.aria-expanded]="categoryMenuOpen()"
-          >
-            Categories
-            <i class="fa-solid fa-chevron-down text-[10px] xl:text-xs"></i>
-          </button>
-
-          <div
-            *ngIf="categoryMenuOpen()"
-            class="category-dropdown"
-            role="menu"
-          >
+    <nav class="header__nav hidden lg:flex items-center">
+        <ul class="flex items-center gap-8 xl:gap-12 2xl:gap-20">
+          <li>
+            <a href="#" class="text-base xl:text-[18px] 2xl:text-[20px] font-medium text-[#62A403] hover:text-[#4f8702] transition-colors">
+              Home
+            </a>
+          </li>
+          <li class="category-nav relative">
             <button
               type="button"
-              *ngFor="let category of categories"
-              class="category-dropdown__item"
-              role="menuitem"
-              (click)="goToCategory(category.id)"
+              class="flex items-center gap-1.5 xl:gap-2 text-base xl:text-[18px] 2xl:text-[20px] font-medium text-gray-700 hover:text-[#62A403] transition-colors"
+              (click)="toggleCategoryMenu()"
+              aria-haspopup="menu"
+              [attr.aria-expanded]="categoryMenuOpen()"
             >
-              {{ category.label }}
+              Categories
+              <i class="fa-solid fa-chevron-down text-[10px] xl:text-xs"></i>
             </button>
-          </div>
-        </li>
-      </ul>
+
+            <div
+              *ngIf="categoryMenuOpen()"
+              class="category-dropdown"
+              role="menu"
+            >
+              <button
+                type="button"
+                *ngFor="let category of categories"
+                class="category-dropdown__item"
+                role="menuitem"
+                (click)="goToCategory(category.id)"
+              >
+                {{ category.label }}
+              </button>
+            </div>
+          </li>
+        </ul>
     </nav>
 
     <!-- Offers Button (hidden on mobile & tablet, visible from lg) -->
     <button
-      class="hidden lg:flex h-9 xl:h-10 2xl:h-[42px] w-[100px] xl:w-[110px] 2xl:w-[120px] items-center justify-center gap-1.5 xl:gap-2 rounded-lg bg-[#62A403] px-3 xl:px-4 text-sm xl:text-base font-semibold text-white shadow-[0_8px_16px_0_rgba(145,158,171,0.16)] transition-all duration-300 hover:bg-[#4F8702]">
+      class="hidden lg:flex h-9 xl:h-10 2xl:h-[42px] w-[100px] xl:w-[110px] 2xl:w-[120px] items-center justify-center gap-1.5 xl:gap-2 rounded-lg bg-[#62A403] px-3 xl:px-4 text-sm xl:text-base font-semibold text-white shadow-[0_8px_16px_0_rgba(145,158,171,0.16)] transition-all duration-300 hover:bg-[#4F8702]"
+    >
       <span class="flex h-5 w-5 xl:h-6 xl:w-6 items-center justify-center rounded-full border border-white">
         <i class="fa-solid fa-tags text-[10px] xl:text-xs"></i>
       </span>

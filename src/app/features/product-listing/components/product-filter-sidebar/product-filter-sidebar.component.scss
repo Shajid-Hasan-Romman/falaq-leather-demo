@@ -1,4 +1,7 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   width: 260px;
   flex-shrink: 0;
 
@@ -7,8 +10,6 @@
   }
 
   &__search {
-    margin-bottom: 20px;
-
     input {
       width: 100%;
       padding: 9px 12px;
@@ -26,6 +27,6 @@
   }
 
   &__block {
-    padding: 18px 0;
+    padding: 0;
   }
 }
