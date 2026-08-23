@@ -1,0 +1,27 @@
+.featured-category-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.featured-category-item__image {
+	display: flex;
+	width: 100%;
+	height: 120px;
+	align-items: center;
+	justify-content: center;
+}
+
+.featured-category-item__title {
+	min-height: 29px;
+}
+
+.featured-category-item__count {
+	min-height: 20px;
+}
+
+@media (max-width: 1199px) {
+	.featured-category-item__image {
+		height: 100px;
+	}
+}

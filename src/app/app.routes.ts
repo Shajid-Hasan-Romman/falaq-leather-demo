@@ -25,6 +25,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/checkout/checkout').then((m) => m.Checkout),
         title: 'Checkout · Falaq v2.0',
+        path: 'product-listing',
+        loadChildren: () =>
+          import('./features/product-listing/product-listing.module').then(
+            (m) => m.ProductListingModule,
+          ),
+        title: 'Product listing · Falaq v2.0',
       },
       {
         path: '**',
