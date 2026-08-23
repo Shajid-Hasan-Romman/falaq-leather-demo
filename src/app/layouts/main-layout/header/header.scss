@@ -3,6 +3,68 @@
 	top: 3px;
 }
 
+@media (min-width: 1024px) and (max-width: 1349px) {
+	.header__topbar {
+		height: 40px;
+		gap: 10px;
+		font-size: 14px;
+	}
+
+	.header__topbar > div {
+		gap: 6px;
+	}
+
+	.header__topbar > div > span {
+		margin-right: 12px;
+		margin-left: 12px;
+	}
+}
+
+@media (min-width: 1024px) and (max-width: 1349px) {
+	.header__row {
+		gap: 12px;
+	}
+
+	.header__brand {
+		gap: 18px;
+	}
+
+	.header__brand img {
+		height: 56px;
+	}
+
+	.header__nav ul {
+		gap: 24px;
+	}
+
+	.header__nav a,
+	.header__nav button {
+		font-size: 16px;
+	}
+
+	.header__offers {
+		width: 92px;
+		height: 38px;
+		padding: 0 8px;
+		font-size: 13px;
+	}
+
+	.header__search {
+		min-width: 220px;
+		max-width: 380px;
+		height: 40px;
+	}
+
+	.header__actions {
+		gap: 10px;
+	}
+
+	.header__actions button {
+		width: 38px;
+		height: 38px;
+	}
+}
+
 .search-form {
 	position: relative;
 	z-index: 30;
