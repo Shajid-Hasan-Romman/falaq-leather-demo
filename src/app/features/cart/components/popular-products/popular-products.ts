@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 
 import { CartService } from '../../../../core/services/cart.service';
-
-interface PopularProduct {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  oldPrice: number;
-  sizes: string[];
-}
+import { PopularProduct } from '../../models/popular-product.model';
+import popularProductsData from '../../data/popular-products.json';
 
 @Component({
   selector: 'app-popular-products',
@@ -20,30 +13,13 @@ interface PopularProduct {
 export class PopularProducts {
   constructor(private cartService: CartService) {}
 
-  products: PopularProduct[] = [
-    {
-      id: 'pp-1',
-      name: 'Organic Food Combo 1 Basket',
-      image: 'image/Products/Product-1.png',
-      price: 1100,
-      oldPrice: 1300,
-      sizes: ['1 kg', '2 kg'],
-    },
-    {
-      id: 'pp-2',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey)',
-      image: 'image/Products/Product-2.png',
-      price: 1250,
-      oldPrice: 1450,
-      sizes: ['1 kg', '2 kg'],
-    },
-  ];
+  /** Static popular-product list loaded from `data/popular-products.json`. */
+  products: PopularProduct[] = [...popularProductsData];
 
-  /** Selected size per product, keyed by product id. Defaults to the first size. */
-  readonly selectedSizes: Record<string, string> = {
-    'pp-1': '1 kg',
-    'pp-2': '1 kg',
-  };
+  /** Selected size per product, keyed by product id. Defaults to each product's first size. */
+  readonly selectedSizes: Record<string, string> = Object.fromEntries(
+    popularProductsData.map((product) => [product.id, product.sizes[0]!]),
+  );
 
   selectSize(productId: string, size: string): void {
     this.selectedSizes[productId] = size;

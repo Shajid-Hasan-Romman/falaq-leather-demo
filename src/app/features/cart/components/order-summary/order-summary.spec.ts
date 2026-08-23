@@ -2,10 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { CartModule } from '../../cart.module';
 import { OrderSummary } from './order-summary';
-import {
-  CartService,
-  SHIPPING_OPTIONS,
-} from '../../../../core/services/cart.service';
+import { CartService } from '../../../../core/services/cart.service';
+import { SHIPPING_OPTIONS } from '../../../../core/constants/delivery-options';
 import { vi } from 'vitest';
 
 describe('OrderSummary', () => {

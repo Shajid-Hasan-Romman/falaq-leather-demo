@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItem } from '../../../../core/models/cart-item.model';
-import {
-  CartService,
-  ShippingOption,
-} from '../../../../core/services/cart.service';
+import { CartService } from '../../../../core/services/cart.service';
+import { ShippingOption } from '../../../../core/constants/delivery-options';
 
 @Component({
   selector: 'app-order-summary',

@@ -1,6 +1,7 @@
 import { firstValueFrom } from 'rxjs';
 
-import { CartService, SHIPPING_OPTIONS } from './cart.service';
+import { CartService } from './cart.service';
+import { SHIPPING_OPTIONS } from '../constants/delivery-options';
 
 /** Browser platform ID (matches `@angular/common`'s `isPlatformBrowser`). */
 const BROWSER_PLATFORM_ID = 'browser' as unknown as object;
