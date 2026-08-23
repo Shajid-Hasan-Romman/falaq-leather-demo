@@ -9,12 +9,16 @@ import { CategoryOption } from '../../models/product-filter.model';
 })
 export class CategoryFilterComponent {
   @Input() categories: CategoryOption[] = [];
+
   @Output() categoryChange = new EventEmitter<CategoryOption[]>();
 
   onToggle(category: CategoryOption): void {
     const updated = this.categories.map(c =>
-      c.id === category.id ? { ...c, checked: !c.checked } : c
+      c.id === category.id
+        ? { ...c, checked: !c.checked }
+        : c
     );
+
     this.categoryChange.emit(updated);
   }
 }

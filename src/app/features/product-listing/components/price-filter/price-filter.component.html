@@ -1,17 +1,31 @@
 <div class="price-filter">
   <h4 class="price-filter__title">Filter By Price</h4>
 
-  <input
-    type="range"
-    class="price-filter__range"
-    [min]="min"
-    [max]="max"
-    [value]="value.max"
-    (input)="onMaxChange($event)"
-  />
+  <div class="price-filter__slider">
+    <span class="price-filter__handle price-filter__handle--left"></span>
+
+    <input
+      type="range"
+      class="price-filter__range"
+      [min]="min"
+      [max]="max"
+      [value]="value.max"
+      (input)="onMaxChange($event)"
+    />
+
+    <span class="price-filter__handle price-filter__handle--right"></span>
+  </div>
 
   <div class="price-filter__row">
-    <button type="button" class="price-filter__btn" (click)="onFilterClick()">FILTER</button>
-    <span class="price-filter__label">Price ${{ min }} - ${{ value.max }}</span>
+    <button
+      type="button"
+      class="price-filter__btn"
+      (click)="onFilterClick()"
+    >
+      FILTER
+    </button>
+    <span class="price-filter__label">
+      Price ${{ min }}-${{ value.max }}
+    </span>
   </div>
 </div>

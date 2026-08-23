@@ -11,11 +11,17 @@ export class PriceFilterComponent {
   @Input() min = 10;
   @Input() max = 990;
   @Input() value: PriceRange = { min: 10, max: 990 };
+
   @Output() valueChange = new EventEmitter<PriceRange>();
 
   onMaxChange(event: Event): void {
     const max = Number((event.target as HTMLInputElement).value);
-    this.value = { ...this.value, max };
+
+    this.value = {
+      ...this.value,
+      max,
+    };
+
     this.valueChange.emit(this.value);
   }
 

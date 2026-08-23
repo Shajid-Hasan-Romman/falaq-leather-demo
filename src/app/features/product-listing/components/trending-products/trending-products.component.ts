@@ -11,6 +11,9 @@ export class TrendingProductsComponent {
   @Input() items: TrendingItem[] = [];
 
   stars(rating = 0): number[] {
-    return Array.from({ length: 5 }, (_, i) => (i < rating ? 1 : 0));
+    return Array.from(
+      { length: 5 },
+      (_, i) => (i < rating ? 1 : 0)
+    );
   }
 }

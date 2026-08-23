@@ -1,71 +1,176 @@
 .trending {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 22px 30px 24px;
+  background: #ffffff;
+  border: 1px solid #dce7eb;
+  border-radius: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+
   &__title {
-    font-size: 14px;
+    margin: 0 0 28px;
+    color: #252932;
+    font-size: 24px;
     font-weight: 700;
-    color: #2b2b2b;
-    margin: 0 0 14px;
+    line-height: 1;
+    font-family: 'Roboto', Arial, sans-serif;
   }
 
   &__item {
     display: flex;
-    gap: 10px;
-    margin-bottom: 14px;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 0 0 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__thumb {
-    width: 46px;
-    height: 46px;
-    border-radius: 6px;
+    flex: 0 0 92px;
+    width: 92px;
+    height: 72px;
+
+    /*
+     * No background
+     * No border
+     * No radius
+     */
+    background: transparent;
+    border: none;
+    border-radius: 0;
     overflow: hidden;
-    background: #f2f3ef;
-    flex-shrink: 0;
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
+      background: transparent;
     }
   }
 
   &__info {
     flex: 1;
     min-width: 0;
+    padding-top: 0;
   }
 
   &__name {
-    font-size: 12.5px;
-    color: #333;
-    margin: 0 0 4px;
+    margin: 0 0 5px;
+    color: #252932;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: 'Roboto', Arial, sans-serif;
   }
 
   &__price {
     display: flex;
-    gap: 6px;
     align-items: baseline;
-    margin-bottom: 3px;
+    gap: 8px;
+    margin-bottom: 5px;
   }
 
   &__price-old {
-    color: #b5b5b5;
+    color: #b7b7b7;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1;
     text-decoration: line-through;
-    font-size: 11px;
   }
 
   &__price-current {
-    color: #4caf50;
-    font-size: 12.5px;
-    font-weight: 700;
+    color: #9fcb22;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
   }
 
   &__stars {
-    font-size: 11px;
-    color: #ddd;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 14px;
+    font-size: 13px;
+    line-height: 1;
 
-    span.filled {
-      color: #ffb400;
+    span {
+      color: #c7c7c7;
+      line-height: 1;
+
+      &.filled {
+        color: #ffbd28;
+      }
+    }
+  }
+
+  // Tablet
+  @media (max-width: 900px) {
+    padding: 20px 24px;
+
+    &__title {
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+
+    &__thumb {
+      flex-basis: 80px;
+      width: 80px;
+      height: 68px;
+    }
+
+    &__name {
+      font-size: 15px;
+    }
+
+    &__price-old,
+    &__price-current {
+      font-size: 15px;
+    }
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    padding: 18px 20px;
+    border-radius: 16px;
+
+    &__title {
+      font-size: 21px;
+      margin-bottom: 22px;
+    }
+
+    &__item {
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    &__thumb {
+      flex-basis: 72px;
+      width: 72px;
+      height: 64px;
+    }
+
+    &__name {
+      font-size: 14px;
+    }
+
+    &__price {
+      gap: 6px;
+    }
+
+    &__price-old,
+    &__price-current {
+      font-size: 14px;
+    }
+
+    &__stars {
+      font-size: 12px;
     }
   }
 }
