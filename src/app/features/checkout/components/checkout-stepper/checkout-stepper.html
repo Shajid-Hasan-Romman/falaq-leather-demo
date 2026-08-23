@@ -1,0 +1,44 @@
+<nav
+  class="checkout-stepper mx-auto flex w-full max-w-[280px] sm:max-w-[360px] items-start justify-between px-4 pb-8"
+  aria-label="Checkout progress"
+>
+  @for (frame of frames(); track frame.step.id) {
+    <!-- Step item -->
+    <div
+      class="checkout-stepper__step relative flex flex-col items-center shrink-0"
+      [attr.aria-current]="frame.step.status === 'active' ? 'step' : null"
+    >
+      <!-- Indicator Icon/Dot -->
+      <div
+        class="checkout-stepper__indicator relative z-10 flex h-6 w-6 items-center justify-center bg-white"
+        aria-hidden="true"
+      >
+        @if (frame.step.status === 'completed') {
+          <i class="fa-solid fa-check text-base text-brand"></i>
+        } @else if (frame.step.status === 'active') {
+          <span class="h-2.5 w-2.5 rounded-full bg-brand"></span>
+        } @else {
+          <span class="h-2.5 w-2.5 rounded-full bg-border"></span>
+        }
+      </div>
+
+      <!-- Label: Perfectly centered under dots without screen overflow -->
+      <span
+        [class]="labelClass[frame.step.status]"
+        class="checkout-stepper__label absolute top-[36px] left-1/2 -translate-x-1/2 text-center text-[12px] font-medium leading-tight text-ink sm:text-xs md:text-sm whitespace-nowrap"
+      >
+        {{ frame.step.label }}
+      </span>
+    </div>
+
+    <!-- Connector Line -->
+    @if (!frame.isLast) {
+      <div
+        class="checkout-stepper__connector flex h-6 flex-1 items-center px-2 relative z-0"
+        aria-hidden="true"
+      >
+        <div [class]="connectorClass[frame.connectorStatus]" class="w-full"></div>
+      </div>
+    }
+  }
+</nav>

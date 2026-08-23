@@ -21,6 +21,12 @@ export const routes: Routes = [
           import('./features/products/product.module').then((m) => m.ProductModule),
       },
       {
+        path: 'checkout',
+        loadComponent: () =>
+          import('./features/checkout/checkout').then((m) => m.Checkout),
+        title: 'Checkout · Falaq v2.0',
+      },
+      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then((m) => m.NotFound),
