@@ -84,7 +84,7 @@
         <div id="categorySlider" class="overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth">
           <div class="flex gap-4 px-1" style="width: max-content;">
             @for(category of categories; track category.name){
-              <div class="w-[160px] flex-shrink-0 snap-center text-center">
+              <a href="/product-listing" [routerLink]="['/product-listing']" (click)="goToProductListing(); $event.preventDefault()" class="w-[160px] flex-shrink-0 snap-center text-center">
                 <img 
                   [src]="category.image" 
                   [alt]="category.name" 
@@ -96,7 +96,7 @@
                 <p class="mt-1 text-xs text-[#8A94A6]">
                   {{category.items}} Items
                 </p>
-              </div>
+              </a>
             }
           </div>
         </div>
@@ -114,19 +114,21 @@
                   gap-4 md:gap-6 lg:gap-3 xl:gap-14
                   px-4 lg:px-6 xl:px-0">
         @for(category of categories; track category.name){
-          <div class="w-[120px] md:w-[140px] lg:w-[115px] xl:w-[170px] text-center">
-            <img 
+          <a href="/product-listing" [routerLink]="['/product-listing']" (click)="goToProductListing(); $event.preventDefault()" class="featured-category-item w-[120px] md:w-[140px] lg:w-[115px] xl:w-[170px] text-center">
+            <div class="featured-category-item__image">
+              <img 
               [src]="category.image" 
               [alt]="category.name" 
-              class="mx-auto h-[75px] md:h-[100px] lg:h-[78px] xl:h-auto object-contain"
-            >
-            <h3 class="mt-2 md:mt-3 lg:mt-2 xl:mt-5 text-[13px] md:text-base lg:text-[13px] xl:text-lg font-semibold text-[#2B3445]">
+              class="mx-auto h-full w-full object-contain"
+              >
+            </div>
+            <h3 class="featured-category-item__title mt-2 md:mt-3 lg:mt-2 xl:mt-5 text-[13px] md:text-base lg:text-[13px] xl:text-lg font-semibold text-[#2B3445]">
               {{category.name}}
             </h3>
-            <p class="mt-0.5 text-[11px] md:text-sm text-[#8A94A6]">
+            <p class="featured-category-item__count mt-0.5 text-[11px] md:text-sm text-[#8A94A6]">
               {{category.items}} Items
             </p>
-          </div>
+          </a>
         }
       </div>
 

@@ -1,21 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { vi } from 'vitest';
 
-import { CartService } from '../../../../core/services/cart.service';
+import { CartStateService } from '../../../product-listing/services/cart-state.service';
 import { ProductModule } from '../../product.module';
 import { ProductDetails } from './product-details';
 
 describe('ProductDetails', () => {
   let component: ProductDetails;
   let fixture: ComponentFixture<ProductDetails>;
-  let mockCartService: CartService;
+  let mockCartStateService: CartStateService;
 
   beforeEach(() => {
-    mockCartService = { addItem: vi.fn() } as unknown as CartService;
+    mockCartStateService = { addToCart: vi.fn() } as unknown as CartStateService;
 
     TestBed.configureTestingModule({
       imports: [ProductModule],
-      providers: [{ provide: CartService, useValue: mockCartService }],
+      providers: [
+        { provide: CartStateService, useValue: mockCartStateService },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParamMap: { get: () => null } } },
+        },
+      ],
     });
 
     fixture = TestBed.createComponent(ProductDetails);
@@ -29,6 +36,6 @@ describe('ProductDetails', () => {
 
   it('should add the displayed product to the cart', () => {
     component.addToCart();
-    expect(mockCartService.addItem).toHaveBeenCalledWith(component.product);
+    expect(mockCartStateService.addToCart).toHaveBeenCalledWith(component.product);
   });
 });

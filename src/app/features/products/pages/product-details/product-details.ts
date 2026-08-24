@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-
-import { CartService } from '../../../../core/services/cart.service';
-import { Product } from '../../../../core/models/product.model';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Product } from '../../../product-listing/models/product.model';
+import { PRODUCT_DEMO_DATA } from '../../../product-listing/data/product-demo.data';
+import { CartStateService } from '../../../product-listing/services/cart-state.service';
 
 @Component({
   selector: 'app-product-details',
@@ -9,21 +10,24 @@ import { Product } from '../../../../core/models/product.model';
   templateUrl: './product-details.html',
   styleUrls: ['./product-details.scss'],
 })
-export class ProductDetails {
-  constructor(private cartService: CartService) {}
+export class ProductDetails implements OnInit {
+  product: Product = PRODUCT_DEMO_DATA[0];
 
-  /** The product displayed on the details page (matches the visible UI). */
-  readonly product: Product = {
-    id: 'bombay-chili-pickle',
-    name: 'বোম্বাই মরিচের আচার (Bombay Chili Pickle)',
-    image: 'image/Products/Mango.png',
-    price: 1400,
-    oldPrice: 2500,
-    discount: 38,
-    weight: '1KG',
-  };
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly cartStateService: CartStateService
+  ) {}
+
+  ngOnInit(): void {
+    const productId = Number(this.route.snapshot.queryParamMap.get('id'));
+    const selectedProduct = PRODUCT_DEMO_DATA.find(item => item.id === productId);
+
+    if (selectedProduct) {
+      this.product = selectedProduct;
+    }
+  }
 
   addToCart(): void {
-    this.cartService.addItem(this.product);
+    this.cartStateService.addToCart(this.product);
   }
 }

@@ -25,27 +25,56 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
 
-  /* Fonts */
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  /*
+   * Fonts — Noto Sans is the storefront typeface (checkout design). The
+   * Bengali sibling is loaded too and sits in the fallback chain so Bangla
+   * copy (placeholders, names) renders with matching letterforms.
+   */
+  --font-sans: "Noto Sans", "Noto Sans Bengali", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
-  /* Brand palette — starter tokens, tune to the v2.0 design system. */
-  --color-brand: #179d55;
-  --color-brand-dark: #107340;
-  --color-brand-light: rgba(23, 157, 85, 0.12);
+  /*
+   * Brand palette — lifted from the checkout design (place-order button,
+   * stepper connectors, selected delivery tiles): #62A403 primary green with
+   * its hover step and the soft tint used for selected states.
+   */
+  --color-brand: #62a403;
+  --color-brand-dark: #4f8702;
+  --color-brand-light: rgba(98, 164, 3, 0.12);
 
-  --color-ink: #1a1a1a;
-  --color-muted: #6b7280;
+  /* Neutral ramp — checkout's Minimal grey scale. */
+  --color-ink: #212b36;
+  --color-ink-secondary: #454f5b;
+  --color-muted: #637381;
+  --color-ink-muted: #919eab;
   --color-surface: #ffffff;
   --color-background: #f9fafb;
-  --color-border: #e5e7eb;
+  --color-border: #dfe3e8;
+  --color-border-hover: #b9c4cc;
+  --color-divider: #c4cdd5;
 
-  /* Spacing — Tailwind auto-derives p-N/m-N/gap-N as calc(var(--spacing) * N). */
+  /*
+   * Checkout state colors — the design's soft green selection fill (delivery
+   * tiles), its lightest hairline (stepper track) and the error red used by
+   * required-field markers.
+   */
+  --color-selected: rgba(0, 171, 85, 0.12);
+  --color-line: #e5e7eb;
+  --color-error: #ff4842;
+
+  /*
+   * Spacing — Tailwind auto-derives p-N/m-N/gap-N as calc(var(--spacing) * N).
+   */
   --spacing: 4px;
 
-  /* Radius + elevation */
-  --radius-card: 12px;
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover: 0 8px 28px rgba(0, 0, 0, 0.12);
+  /*
+   * Radius + elevation — cards in the checkout design are rounded-2xl (16px)
+   * with a grey-tinted two-layer shadow.
+   */
+  --radius-card: 16px;
+  --shadow-card:
+    0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  --shadow-card-hover:
+    0px 16px 32px -6px rgba(145, 158, 171, 0.24), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
 }
 
 @layer base {
