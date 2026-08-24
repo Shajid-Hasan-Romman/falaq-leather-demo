@@ -31,20 +31,37 @@ export class ProductCardComponent {
     private readonly cartService: CartService,
   ) {}
 
+  /**
+   * Product image click
+   * → Product Details page
+   */
+  openProductDetails(): void {
+    if (!this.product) {
+      return;
+    }
+
+    this.router.navigate(
+      ['/products/product-details'],
+      {
+        queryParams: {
+          id: this.product.id,
+        },
+      },
+    );
+  }
+
+  /**
+   * Add product to cart
+   * → Cart page
+   */
   onAddToCart(): void {
     if (!this.product) {
       return;
     }
 
     /*
-     * Product Listing Product
-     * id: number
-     *
-     * Cart Product
-     * id: string
-     *
-     * Convert Product Listing model
-     * into Cart model before adding.
+     * Convert Product Listing Product
+     * to Core Cart Product.
      */
     const cartProduct: CartProduct = {
       id: String(this.product.id),
@@ -55,13 +72,13 @@ export class ProductCardComponent {
       discount: this.product.discountPercent ?? 0,
     };
 
-    // Add product to CartService.
+    // Add product to actual cart.
     this.cartService.addItem(cartProduct);
 
     // Notify parent component.
     this.addToCart.emit(this.product);
 
-    // Redirect to Cart page.
+    // Redirect to cart.
     this.router.navigate(['/cart']);
   }
 }

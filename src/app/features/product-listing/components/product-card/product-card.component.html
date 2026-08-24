@@ -1,7 +1,13 @@
 <div class="product-card">
 
   <!-- Product Image -->
-  <div class="product-card__image-wrap">
+  <div
+    class="product-card__image-wrap cursor-pointer"
+    (click)="openProductDetails()"
+    role="button"
+    tabindex="0"
+    (keydown.enter)="openProductDetails()"
+  >
 
     <span
       class="product-card__badge"
