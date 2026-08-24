@@ -1,0 +1,105 @@
+/* =========================================================
+   BUY NOW BUTTON
+   ========================================================= */
+
+.hero-buy-button {
+  position: relative;
+  overflow: hidden;
+
+  .hero-buy-icon {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    z-index: 2;
+
+    transform: translateY(-50%);
+
+    transition:
+      left 0.5s ease-in-out,
+      transform 0.5s ease-in-out;
+  }
+
+  .hero-buy-text {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+
+    /* Keep text visible beside the lock */
+    padding-left: 24px;
+
+    text-align: center;
+
+    transition:
+      transform 0.5s ease-in-out,
+      padding 0.5s ease-in-out;
+  }
+
+  /* Hover animation */
+  &:hover {
+    .hero-buy-icon {
+      left: calc(100% - 30px);
+
+      transform: translateY(-50%) rotate(360deg);
+    }
+
+    .hero-buy-text {
+      padding-left: 0;
+      transform: translateX(-8px);
+    }
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 768px) {
+  .hero-buy-button {
+    .hero-buy-icon {
+      left: 6px;
+    }
+
+    .hero-buy-text {
+      padding-left: 30px;
+    }
+
+    &:hover {
+      .hero-buy-icon {
+        left: calc(100% - 44px);
+      }
+
+      .hero-buy-text {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1536px) {
+  .hero-buy-button {
+    .hero-buy-icon {
+      left: 6px;
+    }
+
+    .hero-buy-text {
+      padding-left: 38px;
+    }
+
+    &:hover {
+      .hero-buy-icon {
+        left: calc(100% - 52px);
+      }
+
+      .hero-buy-text {
+        padding-left: 0;
+      }
+    }
+  }
+}

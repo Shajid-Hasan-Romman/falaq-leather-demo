@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { CartItem } from '../../../../core/models/cart-item.model';
 import { CartService } from '../../../../core/services/cart.service';
 import { ShippingOption } from '../../../../core/constants/delivery-options';
@@ -20,7 +22,15 @@ export class OrderSummary {
   readonly shippingOptions$: Observable<ShippingOption[]>;
   readonly selectedShipping$: Observable<ShippingOption>;
 
-  constructor(private cartService: CartService) {
+  /**
+   * Whether the custom shipping dropdown is expanded.
+   */
+  isOpen = false;
+
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+  ) {
     this.cartItems$ = cartService.cartItems$;
     this.subtotal$ = cartService.subtotal$;
     this.shipping$ = cartService.shipping$;
@@ -30,29 +40,34 @@ export class OrderSummary {
     this.selectedShipping$ = cartService.selectedShipping$;
   }
 
-  /** Whether the custom shipping dropdown is expanded. */
-  isOpen = false;
-
-  /** Toggle the shipping dropdown open/closed. */
+  /**
+   * Toggle the shipping dropdown open/closed.
+   */
   toggleShipping(): void {
     this.isOpen = !this.isOpen;
   }
 
-  /** Select a shipping zone from the dropdown and close it. */
+  /**
+   * Select a shipping option and close dropdown.
+   */
   selectShipping(zoneId: ShippingOption['id'] | string): void {
     this.cartService.setShipping(zoneId);
     this.isOpen = false;
   }
 
+  /**
+   * Clear the cart after confirmation.
+   */
   clearCartWithConfirm(): void {
     if (confirm('Are you sure you want to clear your cart?')) {
       this.cartService.clearCart();
     }
   }
 
+  /**
+   * Navigate to Checkout page.
+   */
   proceedToCheckout(): void {
-    // TODO: Wire up the CheckoutModule once it exists.
-    console.log('Checkout flow not yet implemented');
+    this.router.navigate(['/checkout']);
   }
 }
-
