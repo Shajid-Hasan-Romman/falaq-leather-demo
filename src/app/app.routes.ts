@@ -19,14 +19,14 @@ export const routes: Routes = [
         title: 'Falaq v2.0',
       },
 
-      // {
-      //   // Legacy NgModule-based feature.
-      //   path: 'products',
-      //   loadChildren: () =>
-      //     import('./features/products/product.module').then(
-      //       (m) => m.ProductModule,
-      //     ),
-      // },
+      {
+        // Legacy NgModule-based feature.
+        path: 'products',
+        loadChildren: () =>
+          import('./features/products/product.module').then(
+            (m) => m.ProductModule,
+          ),
+      },
 
       {
         path: 'checkout',

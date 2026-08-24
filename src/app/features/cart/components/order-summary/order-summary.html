@@ -169,18 +169,4 @@
       Proceed to Checkout
     </span>
   </button>
-
-  <!-- Clear Cart -->
-  <button
-    type="button"
-    (click)="clearCartWithConfirm()"
-    [disabled]="(isEmpty$ | async)"
-    class="mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[#e4e7ee] font-semibold text-[#637381] transition hover:bg-[#f3f4f6] disabled:cursor-not-allowed disabled:opacity-50"
-  >
-    <i class="fa-solid fa-trash"></i>
-
-    <span>
-      Clear Cart
-    </span>
-  </button>
 </div>

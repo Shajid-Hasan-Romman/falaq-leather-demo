@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Product } from '../../../product-listing/models/product.model';
 import { PRODUCT_DEMO_DATA } from '../../../product-listing/data/product-demo.data';
 import { CartStateService } from '../../../product-listing/services/cart-state.service';
@@ -15,19 +16,31 @@ export class ProductDetails implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly cartStateService: CartStateService
   ) {}
 
   ngOnInit(): void {
-    const productId = Number(this.route.snapshot.queryParamMap.get('id'));
-    const selectedProduct = PRODUCT_DEMO_DATA.find(item => item.id === productId);
+    const productId = Number(
+      this.route.snapshot.queryParamMap.get('id')
+    );
+
+    const selectedProduct = PRODUCT_DEMO_DATA.find(
+      item => item.id === productId
+    );
 
     if (selectedProduct) {
       this.product = selectedProduct;
     }
   }
 
+  /**
+   * Adds the current product to the cart
+   * and redirects the user to the cart page.
+   */
   addToCart(): void {
     this.cartStateService.addToCart(this.product);
+
+    this.router.navigate(['/cart']);
   }
 }

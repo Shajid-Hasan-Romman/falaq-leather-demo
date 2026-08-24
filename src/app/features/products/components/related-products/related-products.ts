@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { CartService } from '../../../../core/services/cart.service';
 import { Product } from '../../../../core/models/product.model';
 
@@ -7,14 +8,9 @@ import { Product } from '../../../../core/models/product.model';
   selector: 'app-related-products',
   templateUrl: './related-products.html',
   styleUrls: ['./related-products.scss'],
-  standalone: false
+  standalone: false,
 })
 export class RelatedProducts {
-  constructor(
-    private cartService: CartService,
-    private router: Router,
-  ) {}
-
   products: Product[] = [
     {
       id: 'rp-1',
@@ -25,6 +21,7 @@ export class RelatedProducts {
       discount: 27,
       weight: '1KG',
     },
+
     {
       id: 'rp-2',
       name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
@@ -34,6 +31,7 @@ export class RelatedProducts {
       discount: 27,
       weight: '1KG',
     },
+
     {
       id: 'rp-3',
       name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
@@ -43,6 +41,7 @@ export class RelatedProducts {
       discount: 27,
       weight: '1KG',
     },
+
     {
       id: 'rp-4',
       name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
@@ -54,7 +53,35 @@ export class RelatedProducts {
     },
   ];
 
-  addToCart(product: Product): void {
+  constructor(
+    private readonly cartService: CartService,
+    private readonly router: Router
+  ) {}
+
+  /**
+   * Product image/name click
+   * → Product Details page
+   */
+  openProductDetails(product: Product): void {
+    this.router.navigate(
+      ['/products/product-details'],
+      {
+        queryParams: {
+          id: product.id,
+        },
+      }
+    );
+  }
+
+  /**
+   * Add product to cart
+   * → Cart page
+   */
+  addToCart(product: Product, event?: Event): void {
+    event?.stopPropagation();
+
     this.cartService.addItem(product);
+
+    this.router.navigate(['/cart']);
   }
 }
