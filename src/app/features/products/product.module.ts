@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductDetails } from './pages/product-details/product-details';
@@ -24,9 +25,10 @@ import { RecentlyViewed } from './components/recently-viewed/recently-viewed';
     ProductDescription,
     RecentlyViewed
   ],
-  imports: [
+    imports: [
     CommonModule,
-    ProductRoutingModule
+    RouterModule,
+    ProductRoutingModule,
   ]
 })
 export class ProductModule {}

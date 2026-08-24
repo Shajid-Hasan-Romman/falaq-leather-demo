@@ -47,6 +47,13 @@ export const routes: Routes = [
       },
 
       {
+        path: 'cart',
+        loadChildren: () =>
+          import('./features/cart/cart.module').then(
+            (m) => m.CartModule
+          ),
+      },
+      {
         path: '**',
         loadComponent: () =>
           import('./features/not-found/not-found').then(

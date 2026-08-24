@@ -1,9 +1,12 @@
 import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -42,7 +45,14 @@ export class Header {
       .slice(0, 5);
   }
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    public cartService: CartService,
+    private readonly router: Router,
+  ) {}
+
+  goToCart(): void {
+    this.router.navigate(['/cart']);
+  }
 
   toggleCategoryMenu(): void {
     this.categoryMenuOpen.update(isOpen => !isOpen);
@@ -81,5 +91,4 @@ export class Header {
     this.searchTerm = suggestion;
     this.searchProducts();
   }
-
 }

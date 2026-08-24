@@ -6,10 +6,9 @@ import { CartStateService } from '../../../product-listing/services/cart-state.s
 
 @Component({
   selector: 'app-product-details',
-    standalone: false,
-
+  standalone: false,
   templateUrl: './product-details.html',
-  styleUrls: ['./product-details.scss']
+  styleUrls: ['./product-details.scss'],
 })
 export class ProductDetails implements OnInit {
   product: Product = PRODUCT_DEMO_DATA[0];

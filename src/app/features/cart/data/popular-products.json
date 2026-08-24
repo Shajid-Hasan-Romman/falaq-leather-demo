@@ -1,0 +1,18 @@
+[
+  {
+    "id": "pp-1",
+    "name": "Organic Food Combo 1 Basket",
+    "image": "image/Products/Product-1.png",
+    "price": 1100,
+    "oldPrice": 1300,
+    "sizes": ["1 kg", "2 kg"]
+  },
+  {
+    "id": "pp-2",
+    "name": "কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey)",
+    "image": "image/Products/Product-2.png",
+    "price": 1250,
+    "oldPrice": 1450,
+    "sizes": ["1 kg", "2 kg"]
+  }
+]

@@ -1,0 +1,134 @@
+<div class="bg-white rounded-2xl border border-[#e4e7ee] p-6">
+  <h2 class="text-xl font-bold text-[#212B36] mb-5">Order Summary</h2>
+
+  <!-- Subtotal -->
+  <div class="flex justify-between py-3 border-b border-[#e4e7ee]">
+    <span class="text-[#637381]">Subtotal</span>
+    <span class="font-semibold text-[#212B36]">৳{{ subtotal$ | async | number }}</span>
+  </div>
+
+  <!-- Shipping (selectable dropdown) -->
+  <div class="py-4 border-b border-[#e4e7ee]">
+    <span class="mb-3 block text-[#637381] text-sm">
+      Shipping Method
+    </span>
+
+    <div class="relative">
+      <!-- Backdrop: click outside closes the dropdown -->
+      <div
+        *ngIf="isOpen"
+        (click)="isOpen = false"
+        class="fixed inset-0 z-10 cursor-default"></div>
+
+      <!-- Trigger -->
+      <button
+        type="button"
+        (click)="toggleShipping()"
+        class="relative z-20 flex w-full items-center justify-between gap-3 rounded-xl border-2 border-[#e4e7ee] bg-[#F4F6F8] px-3.5 py-3 transition-colors hover:border-[#62A403]/50 hover:bg-gray-50"
+        [attr.aria-expanded]="isOpen"
+        aria-haspopup="listbox">
+
+        <!-- Left: radio indicator + selected label -->
+        <span class="flex items-center gap-2.5 min-w-0">
+          <span
+            class="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 border-[#62A403] bg-white">
+            <span class="h-2 w-2 rounded-full bg-[#62A403]"></span>
+          </span>
+
+          <span class="truncate text-sm font-semibold text-[#212B36]">
+            {{ (selectedShipping$ | async)?.label }}
+          </span>
+        </span>
+
+        <!-- Right: fee + chevron -->
+        <span class="flex shrink-0 items-center gap-2">
+          <span class="text-sm font-bold text-[#62A403]">
+            ৳{{ (shipping$ | async) | number }}
+          </span>
+
+          <i
+            class="fa-solid fa-chevron-down text-xs text-[#637381] transition-transform duration-200"
+            [ngClass]="{ 'rotate-180': isOpen }"></i>
+        </span>
+      </button>
+
+      <!-- Options panel -->
+      <div
+        *ngIf="isOpen"
+        role="listbox"
+        aria-label="Shipping options"
+        class="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-[#e4e7ee] bg-white shadow-lg">
+
+        <button
+          *ngFor="let option of shippingOptions$ | async"
+          type="button"
+          role="option"
+          (click)="selectShipping(option.id)"
+          [attr.aria-selected]="(selectedShipping$ | async)?.id === option.id"
+          class="flex w-full items-center justify-between gap-3 border-b border-[#f0f2f5] px-3.5 py-3 text-left transition-colors last:border-b-0 hover:bg-green-50"
+          [ngClass]="{
+            'bg-green-50': (selectedShipping$ | async)?.id === option.id
+          }">
+
+          <!-- Left: radio + label -->
+          <span class="flex items-center gap-2.5 min-w-0">
+            <span
+              class="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
+              [ngClass]="{
+                'border-[#62A403]': (selectedShipping$ | async)?.id === option.id,
+                'border-[#B6B6B6]': (selectedShipping$ | async)?.id !== option.id
+              }">
+              <span
+                *ngIf="(selectedShipping$ | async)?.id === option.id"
+                class="h-2 w-2 rounded-full bg-[#62A403]"></span>
+            </span>
+
+            <span class="truncate text-sm font-medium text-[#212B36]">
+              {{ option.label }}
+            </span>
+          </span>
+
+          <!-- Right: fee -->
+          <span
+            class="shrink-0 text-sm font-bold"
+            [ngClass]="{
+              'text-[#62A403]': (selectedShipping$ | async)?.id === option.id,
+              'text-[#212B36]': (selectedShipping$ | async)?.id !== option.id
+            }">
+            ৳{{ option.fee | number }}
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Grand Total -->
+  <div class="flex justify-between py-4 border-b-2 border-[#62A403] mb-6">
+    <span class="text-lg font-bold text-[#212B36]">Total</span>
+    <span class="text-xl font-bold text-[#62A403]">৳{{ grandTotal$ | async | number }}</span>
+  </div>
+
+  <!-- Proceed to Checkout -->
+  <button
+    (click)="proceedToCheckout()"
+    [disabled]="(isEmpty$ | async)"
+    class="w-full h-12 rounded-full bg-[#62A403] text-white font-semibold hover:bg-[#4F8702] transition flex items-center justify-center gap-2 disabled:opacity-50"
+  >
+    <i class="fa-solid fa-credit-card"></i>
+    Proceed to Checkout
+  </button>
+
+  <!-- Clear Cart -->
+  <button
+    (click)="clearCartWithConfirm()"
+    [disabled]="(isEmpty$ | async)"
+    class="w-full h-12 rounded-full border border-[#e4e7ee] text-[#637381] font-semibold hover:bg-[#f3f4f6] transition mt-3 flex items-center justify-center gap-2 disabled:opacity-50"
+  >
+    <i class="fa-solid fa-trash"></i>
+    Clear Cart
+  </button>
+</div>
+

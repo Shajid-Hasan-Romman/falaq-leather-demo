@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-
-interface Deal {
-  image: string;
-  title: string;
-  price: number;
-  oldPrice: number;
-  description: string;
-}
+import { Router, RouterLink } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
+import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-beast-deals',
@@ -18,36 +12,64 @@ interface Deal {
   styleUrl: './beast-deals.scss',
 })
 export class BeastDeals {
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+  ) {}
 
-  deals: Deal[] = [
+  deals: Product[] = [
     {
+      id: 'bd-1',
+      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       image: 'mango.png',
-      title: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       price: 80,
       oldPrice: 90,
-      description: 'Apparently we had reached a great height in the atmosphere.'
+      discount: 11,
+      weight: '1KG',
     },
     {
+      id: 'bd-2',
+      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       image: 'basket vagitable.png',
-      title: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       price: 80,
       oldPrice: 90,
-      description: 'Apparently we had reached a great height in the atmosphere.'
+      discount: 11,
+      weight: '1KG',
     },
     {
+      id: 'bd-3',
+      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       image: 'vagitable.png',
-      title: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       price: 80,
       oldPrice: 90,
-      description: 'Apparently we had reached a great height in the atmosphere.'
+      discount: 11,
+      weight: '1KG',
     },
     {
+      id: 'bd-4',
+      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       image: 'basket 3.png',
-      title: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) – 1KG',
       price: 80,
       oldPrice: 90,
-      description: 'Apparently we had reached a great height in the atmosphere.'
-    }
+      discount: 11,
+      weight: '1KG',
+    },
   ];
 
+  navigateToProduct(product: Product): void {
+    this.router.navigate(['/products/product-details'], {
+      queryParams: {
+        id: product.id,
+        title: product.name,
+        price: product.price,
+        description: '',
+        image: product.image,
+      },
+    });
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addItem(product);
+    this.router.navigate(['/cart']);
+  }
 }

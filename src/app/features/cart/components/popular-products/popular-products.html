@@ -1,0 +1,98 @@
+<section class="mt-10 md:mt-14">
+  <!-- Header -->
+  <div class="mb-6 flex items-center justify-between gap-4">
+    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#273142]">
+      Popular Product's
+    </h2>
+
+    <!-- Previous / Next arrows -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button
+        type="button"
+        aria-label="Previous products"
+        (click)="previous()"
+        class="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full border border-[#E5E7EB] flex items-center justify-center hover:bg-green-50 transition">
+        <i class="fa-solid fa-chevron-left text-[#62A403]"></i>
+      </button>
+
+      <button
+        type="button"
+        aria-label="Next products"
+        (click)="next()"
+        class="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full border border-[#E5E7EB] flex items-center justify-center hover:bg-green-50 transition">
+        <i class="fa-solid fa-chevron-right text-[#62A403]"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Product Grid (2 per row) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+
+    <div
+      *ngFor="let product of products"
+      class="w-full bg-white border border-[#E5E7EB] rounded-2xl p-3 sm:p-4 flex items-center gap-3 sm:gap-4 hover:shadow-md transition duration-300">
+
+      <!-- Image (left) -->
+      <img
+        [src]="product.image"
+        [alt]="product.name"
+        class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl border border-[#E5E7EB] object-cover" />
+
+      <!-- Middle: name (top) + size options (below) -->
+      <div class="flex-1 min-w-0">
+
+        <h3 class="text-sm font-semibold text-[#273142] leading-5 line-clamp-2">
+          {{ product.name }}
+        </h3>
+
+        <!-- Size options -->
+        <div class="mt-2 flex flex-wrap items-center gap-1.5">
+          <button
+            *ngFor="let size of product.sizes"
+            type="button"
+            (click)="selectSize(product.id, size)"
+            [ngClass]="
+              selectedSizes[product.id] === size
+                ? 'border-[#62A403] bg-[#62A403] text-white'
+                : 'border-[#E5E7EB] text-[#637381] hover:border-[#62A403] hover:text-[#62A403]'
+            "
+            class="px-2.5 py-1 rounded-full border text-xs font-medium transition">
+            {{ size }}
+          </button>
+        </div>
+
+      </div>
+
+            <!-- Price + Save amount (left of the divider, stacked) -->
+      <div class="flex shrink-0 flex-col items-center justify-center gap-1">
+        <span class="text-lg sm:text-xl font-bold text-[#62A403] whitespace-nowrap">
+          ৳{{ product.price | number }}
+        </span>
+
+        <span
+          class="inline-flex items-center rounded-full border border-blue-500 bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-600 whitespace-nowrap">
+          Save ৳{{ saveAmount(product) | number }}
+        </span>
+      </div>
+
+      <!-- Vertical divider (between price/save and the Add button) -->
+      <div class="h-16 sm:h-20 w-px shrink-0 bg-[#E5E7EB]" aria-hidden="true"></div>
+
+      <!-- Add button (right) -->
+      <div class="flex shrink-0 flex-col items-center justify-center">
+        <button
+          type="button"
+          (click)="addToCart(product)"
+          class="flex items-center gap-1 rounded-full bg-[#62A403] px-4 py-1.5 text-white text-sm font-semibold hover:bg-[#4F8A08] transition">
+
+          <i class="fa-solid fa-plus text-xs"></i>
+
+          Add
+
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
