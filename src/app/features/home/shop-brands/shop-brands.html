@@ -1,0 +1,35 @@
+<section
+  class="shop-brands page-shell py-8 md:py-12"
+  aria-labelledby="shop-brands-heading"
+>
+  <h2
+    id="shop-brands-heading"
+    class="font-display text-center text-[1.75rem] leading-tight text-[#1a2b48] md:text-[2.15rem] lg:text-[2.35rem]"
+  >
+    Shop Our Brands
+  </h2>
+
+  <div class="brand-grid mt-8 lg:mt-10">
+    @for (brand of brands; track brand.id) {
+      <a
+        routerLink="/products"
+        [queryParams]="{ shop_our_brand: brand.id }"
+        class="brand-card"
+      >
+        <div class="brand-card__logo">
+          <img
+            [src]="brand.logo"
+            [alt]="brand.alt"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="brand-card__text">
+          <h3 class="brand-card__name">{{ brand.name }}</h3>
+          <p class="brand-card__desc">{{ brand.description }}</p>
+        </div>
+      </a>
+    }
+  </div>
+</section>

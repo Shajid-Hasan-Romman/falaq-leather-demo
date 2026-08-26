@@ -9,49 +9,30 @@ export const routes: Routes = [
       import('./layouts/main-layout/main-layout').then(
         (m) => m.MainLayout,
       ),
-
     children: [
       {
         path: '',
         pathMatch: 'full',
         loadComponent: () =>
           import('./features/home/home').then((m) => m.Home),
-        title: 'Falaq v2.0',
+        title: 'Falaq Leather',
       },
-
       {
-        // Legacy NgModule-based feature.
-        path: 'products',
-        loadChildren: () =>
-          import('./features/products/product.module').then(
-            (m) => m.ProductModule,
-          ),
-      },
-
-      {
-        path: 'checkout',
+        path: 'product-details/:slug',
         loadComponent: () =>
-          import('./features/checkout/checkout').then(
-            (m) => m.Checkout,
+          import('./features/product-details/product-details').then(
+            (m) => m.ProductDetails,
           ),
-        title: 'Checkout · Falaq v2.0',
+        title: 'Product · Falaq Leather',
       },
-
       {
-        path: 'product-listing',
-        loadChildren: () =>
-          import(
-            './features/product-listing/product-listing.module'
-          ).then((m) => m.ProductListingModule),
-        title: 'Product listing · Falaq v2.0',
-      },
-
-      {
-        path: 'cart',
-        loadChildren: () =>
-          import('./features/cart/cart.module').then(
-            (m) => m.CartModule
+        // AmarBay: /products?shop_our_brand=elegante
+        path: 'products',
+        loadComponent: () =>
+          import('./features/brand-products/brand-products').then(
+            (m) => m.BrandProducts,
           ),
+        title: 'Shop Our Brands · Falaq Leather',
       },
       {
         path: '**',
@@ -59,7 +40,7 @@ export const routes: Routes = [
           import('./features/not-found/not-found').then(
             (m) => m.NotFound,
           ),
-        title: 'Page not found · Falaq v2.0',
+        title: 'Page not found · Falaq Leather',
       },
     ],
   },

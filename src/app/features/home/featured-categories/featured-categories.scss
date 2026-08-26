@@ -1,27 +1,22 @@
-.featured-category-item {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+:host {
+  display: block;
+  background: #fff;
 }
 
-.featured-category-item__image {
-	display: flex;
-	width: 100%;
-	height: 120px;
-	align-items: center;
-	justify-content: center;
+.collection-tab.is-active {
+  color: #1a1a1a;
 }
 
-.featured-category-item__title {
-	min-height: 29px;
+.collection-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: #1a1a1a;
 }
 
-.featured-category-item__count {
-	min-height: 20px;
-}
-
-@media (max-width: 1199px) {
-	.featured-category-item__image {
-		height: 100px;
-	}
+.collection-tab:hover {
+  color: #1a1a1a;
 }

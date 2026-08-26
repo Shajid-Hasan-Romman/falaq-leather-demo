@@ -1,252 +1,96 @@
-<section class="bg-white py-8 md:py-10 lg:py-12">
-  <div class="mx-auto w-full px-4 md:px-8 lg:px-12 xl:px-20">
+<section
+  class="featured-products page-shell py-12 lg:py-16"
+  aria-labelledby="featured-products-heading"
+>
+  <h2
+    id="featured-products-heading"
+    class="font-display text-center text-[1.75rem] leading-tight text-[#1a2b48] md:text-[2.15rem] lg:text-[2.35rem]"
+  >
+    Our Featured Products
+  </h2>
 
-    <!-- ========================================================= -->
-    <!-- MOBILE HEADER -->
-    <!-- ========================================================= -->
+  <div class="relative mt-8 md:mt-10">
+    <button
+      type="button"
+      class="featured-nav absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 text-2xl leading-none text-[#c0c0c0] transition-colors hover:text-[#666] disabled:cursor-default disabled:opacity-30 lg:-left-2 lg:block xl:-left-4"
+      aria-label="Previous products"
+      [disabled]="!canPrev()"
+      (click)="prev()"
+    >
+      «
+    </button>
 
-    <div class="mb-5 flex items-start justify-between md:hidden">
-      <div>
-        <p
-          class="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-[#69AE14]"
-        >
-          <span class="flex gap-0.5">
-            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
-            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
-            <span class="h-[5px] w-[5px] rounded-full bg-[#69AE14]"></span>
-          </span>
-
-          Fresh From Our Farm
-        </p>
-
-        <h2 class="text-[18px] font-extrabold text-[#1F2937]">
-          Featured Products
-        </h2>
-      </div>
-
-      <!-- Explore More -->
-      <button
-        type="button"
-        (click)="goToProductListing()"
-        class="flex h-8 items-center gap-1.5 rounded-lg border border-[#69AE14] px-3 text-[12px] font-semibold text-[#69AE14] transition hover:bg-[#69AE14] hover:text-white"
-      >
-        Explore More
-
-        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-      </button>
-    </div>
-
-
-    <!-- ========================================================= -->
-    <!-- TABLET + DESKTOP HEADER -->
-    <!-- ========================================================= -->
-
-    <div class="mb-6 hidden items-end justify-between md:mb-8 md:flex">
-      <div>
-        <p
-          class="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[1.5px] text-[#69AE14]"
-        >
-          <span class="flex gap-1">
-            <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
-            <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
-            <span class="h-[6px] w-[6px] rounded-full bg-[#69AE14]"></span>
-          </span>
-
-          Fresh From Our Farm
-        </p>
-
-        <h2
-          class="text-[36px] font-extrabold leading-none text-[#1F2937] lg:text-[40px] xl:text-[44px]"
-        >
-          Featured Products
-        </h2>
-      </div>
-
-      <!-- Explore More -->
-      <button
-        type="button"
-        (click)="goToProductListing()"
-        class="flex h-11 items-center gap-2 rounded-lg border border-[#69AE14] px-6 text-[14px] font-semibold text-[#69AE14] transition hover:bg-[#69AE14] hover:text-white lg:h-[48px] lg:px-7 lg:text-[15px]"
-      >
-        Explore More
-
-        <i class="fa-solid fa-arrow-right text-sm"></i>
-      </button>
-    </div>
-
-
-    <!-- ========================================================= -->
-    <!-- MOBILE PRODUCT GRID -->
-    <!-- ========================================================= -->
+    <button
+      type="button"
+      class="featured-nav absolute top-1/2 right-0 z-10 hidden -translate-y-1/2 text-2xl leading-none text-[#c0c0c0] transition-colors hover:text-[#666] disabled:cursor-default disabled:opacity-30 lg:-right-2 lg:block xl:-right-4"
+      aria-label="Next products"
+      [disabled]="!canNext()"
+      (click)="next()"
+    >
+      »
+    </button>
 
     <div
-      id="mobileProductGrid"
-      class="grid grid-cols-2 gap-3 md:hidden"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:gap-6"
+      aria-live="polite"
     >
+      @for (product of visibleProducts(); track product.id) {
+        <article class="product-card flex flex-col border border-[#e8e8e8] bg-white">
+          <a [routerLink]="product.path" class="block overflow-hidden bg-white p-3 sm:p-4">
+            <div class="aspect-square w-full">
+              <img
+                [src]="product.image"
+                [alt]="product.alt"
+                class="h-full w-full object-contain object-center transition-transform duration-500 ease-out hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
 
-      @for (product of products; track product.id) {
+          <div class="flex flex-1 flex-col px-3 pb-4 sm:px-4 sm:pb-5">
+            <h3 class="text-center text-[0.95rem] leading-snug text-[#1a1a1a] md:text-base">
+              <a [routerLink]="product.path" class="hover:text-brand">
+                {{ product.name }}
+              </a>
+            </h3>
 
-        <div
-          [routerLink]="['/products/product-details']"
-          [class.hidden]="$index >= 4 && !showingAll"
-          class="product-card relative flex min-h-[340px] cursor-pointer flex-col rounded-[14px] border border-[#ECECEC] bg-white p-3"
-        >
-
-          <!-- Discount -->
-          <span
-            class="absolute right-2 top-2 rounded-full bg-[#F15A29] px-2 py-0.5 text-[9px] font-semibold text-white"
-          >
-            {{ product.discount }}%
-          </span>
-
-
-          <!-- Product Image -->
-          <div class="flex h-[140px] items-center justify-center">
-            <img
-              [src]="product.image"
-              [alt]="product.name"
-              class="max-h-[140px] w-[140px] object-contain"
-            />
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <p class="text-sm font-semibold text-[#1a1a1a] md:text-[0.95rem]">
+                {{ product.currency }} {{ product.price | number: '1.2-2' }}
+              </p>
+              <a
+                [routerLink]="product.path"
+                class="shrink-0 text-sm font-medium text-[#d64545] transition-colors hover:text-[#b83232] md:text-[0.95rem]"
+              >
+                Buy Now
+              </a>
+            </div>
           </div>
-
-
-          <!-- Product Title -->
-          <h3
-            class="mt-3 min-h-[40px] text-[13px] font-medium leading-5 text-[#232323] line-clamp-2"
-          >
-            {{ product.name }}
-          </h3>
-
-
-          <!-- Price -->
-          <div class="mt-2 flex items-center gap-1.5">
-
-            <span
-              class="flex items-center text-[16px] font-bold text-[#69AE14]"
-            >
-              <i
-                class="fa-solid fa-bangladeshi-taka-sign mr-0.5 text-[12px]"
-              ></i>
-
-              {{ product.price }}
-            </span>
-
-            <span
-              class="flex items-center text-[10px] text-[#B6B6B6] line-through"
-            >
-              <i
-                class="fa-solid fa-bangladeshi-taka-sign mr-0.5 text-[8px]"
-              ></i>
-
-              {{ product.oldPrice }}
-            </span>
-
-          </div>
-
-
-          <!-- Add To Cart -->
-          <button
-            type="button"
-            (click)="addToCart(product); $event.stopPropagation()"
-            class="mt-auto flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-[#69AE14] text-[12px] font-semibold text-white"
-          >
-            <i class="fa-solid fa-cart-shopping text-[11px]"></i>
-
-            Add to Cart
-          </button>
-
-        </div>
+        </article>
       }
-
     </div>
 
-
-    <!-- ========================================================= -->
-    <!-- TABLET + DESKTOP PRODUCT GRID -->
-    <!-- ========================================================= -->
-
-    <div
-      class="featured-products-grid hidden grid-cols-2 items-stretch md:grid lg:grid-cols-3 xl:grid-cols-4"
-    >
-
-      @for (product of products; track product.id) {
-
-        <div
-          [routerLink]="['/products/product-details']"
-          class="featured-product-card relative flex h-[450px] w-full cursor-pointer flex-col rounded-[14px] border border-[#ECECEC] bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,.08)]"
-        >
-
-          <!-- Discount -->
-          <span
-            class="absolute right-3 top-3 rounded-full bg-[#F15A29] px-2.5 py-1 text-[10px] font-semibold text-white"
-          >
-            {{ product.discount }}%
-          </span>
-
-
-          <!-- Product Image -->
-          <div
-            class="featured-product-card__image flex h-[260px] flex-none items-center justify-center"
-          >
-            <img
-              [src]="product.image"
-              [alt]="product.name"
-              class="featured-product-card__image-file h-[260px] w-[260px] max-w-full object-contain transition duration-300 hover:scale-105"
-            />
-          </div>
-
-
-          <!-- Product Title -->
-          <h3
-            class="featured-product-card__title mt-3 h-[48px] min-h-[48px] text-[15px] font-semibold leading-6 text-[#232323] line-clamp-2"
-          >
-            {{ product.name }}
-          </h3>
-
-
-          <!-- Price -->
-          <div
-            class="featured-product-card__price mt-3 flex items-center gap-2"
-          >
-
-            <span
-              class="flex items-center text-[20px] font-bold text-[#69AE14] xl:text-[22px]"
-            >
-              <i
-                class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[16px]"
-              ></i>
-
-              {{ product.price }}
-            </span>
-
-            <span
-              class="flex items-center text-[12px] text-[#B6B6B6] line-through"
-            >
-              <i
-                class="fa-solid fa-bangladeshi-taka-sign mr-1 text-[10px]"
-              ></i>
-
-              {{ product.oldPrice }}
-            </span>
-
-          </div>
-
-
-          <!-- Add To Cart -->
-          <button
-            type="button"
-            (click)="addToCart(product); $event.stopPropagation()"
-            class="featured-product-card__button mt-auto flex h-[44px] w-full items-center justify-center gap-2 rounded-md bg-[#69AE14] text-[14px] font-semibold text-white transition duration-300 hover:bg-[#5A9613]"
-          >
-            <i class="fa-solid fa-cart-shopping text-[13px]"></i>
-
-            Add to Cart
-          </button>
-
-        </div>
-      }
-
+    <!-- Mobile / tablet nav under grid -->
+    <div class="mt-6 flex items-center justify-center gap-6 lg:hidden">
+      <button
+        type="button"
+        class="text-2xl leading-none text-[#c0c0c0] transition-colors hover:text-[#666] disabled:opacity-30"
+        aria-label="Previous products"
+        [disabled]="!canPrev()"
+        (click)="prev()"
+      >
+        «
+      </button>
+      <button
+        type="button"
+        class="text-2xl leading-none text-[#c0c0c0] transition-colors hover:text-[#666] disabled:opacity-30"
+        aria-label="Next products"
+        [disabled]="!canNext()"
+        (click)="next()"
+      >
+        »
+      </button>
     </div>
-
   </div>
 </section>

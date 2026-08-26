@@ -1,13 +1,12 @@
 /*
- * Falaq v2.0 — Tailwind v4 design-token source of truth.
+ * Falaq Leather — Tailwind v4 design-token source of truth.
  *
  * Compiled to `tailwind.generated.css` by the standalone Tailwind CLI
  * (`npm run tailwind:build` / `tailwind:watch`), which is then imported by
  * styles.scss. We use the CLI rather than the PostCSS plugin because the
  * Angular esbuild pipeline does not reliably pass the source-file context the
- * plugin needs to anchor its class scan (proven in the v1 storefront). The CLI
- * scans the paths listed in the @source directives below and emits only the
- * utilities actually used in templates.
+ * plugin needs to anchor its class scan. The CLI scans the paths listed in the
+ * @source directives below and emits only the utilities actually used in templates.
  *
  * Regenerate manually:  npm run tailwind:build
  */
@@ -19,29 +18,31 @@
 @source "../index.html";
 
 @theme {
-  /* Breakpoints — mobile-first, matches the v1 storefront scale. */
+  /* Breakpoints — mobile-first. 2xl matches common 1920 desktop. */
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1920px;
 
-  /*
-   * Fonts — Noto Sans is the storefront typeface (checkout design). The
-   * Bengali sibling is loaded too and sits in the fallback chain so Bangla
-   * copy (placeholders, names) renders with matching letterforms.
+  /* Page shell:
+   * - up to xl: max 1440px (1280 content + 80px gutters)
+   * - 2xl / 1920: full viewport width with 80px gutters (content ~1760px)
    */
-  --font-sans: "Noto Sans", "Noto Sans Bengali", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --max-width-site: 1440px;
+  --max-width-site-2xl: 1920px;
+  --spacing-gutter: 80px;
 
-  /*
-   * Brand palette — lifted from the checkout design (place-order button,
-   * stepper connectors, selected delivery tiles): #62A403 primary green with
-   * its hover step and the soft tint used for selected states.
-   */
-  --color-brand: #62a403;
-  --color-brand-dark: #4f8702;
-  --color-brand-light: rgba(98, 164, 3, 0.12);
+  /* Fonts — body UI (Times New Roman) + display for logo/titles only. */
+  --font-sans: "Times New Roman", Times, Georgia, serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
 
-  /* Neutral ramp — checkout's Minimal grey scale. */
+  /* Brand palette — placeholder tokens; swap for leather brand colors. */
+  --color-brand: #3d2b1f;
+  --color-brand-dark: #2a1d15;
+  --color-brand-light: rgba(61, 43, 31, 0.12);
+
+  /* Neutral ramp. */
   --color-ink: #212b36;
   --color-ink-secondary: #454f5b;
   --color-muted: #637381;
@@ -52,29 +53,43 @@
   --color-border-hover: #b9c4cc;
   --color-divider: #c4cdd5;
 
-  /*
-   * Checkout state colors — the design's soft green selection fill (delivery
-   * tiles), its lightest hairline (stepper track) and the error red used by
-   * required-field markers.
-   */
-  --color-selected: rgba(0, 171, 85, 0.12);
+  /* UI state colors. */
+  --color-selected: rgba(61, 43, 31, 0.12);
   --color-line: #e5e7eb;
   --color-error: #ff4842;
 
-  /*
-   * Spacing — Tailwind auto-derives p-N/m-N/gap-N as calc(var(--spacing) * N).
-   */
+  /* Spacing — Tailwind auto-derives p-N/m-N/gap-N as calc(var(--spacing) * N). */
   --spacing: 4px;
 
-  /*
-   * Radius + elevation — cards in the checkout design are rounded-2xl (16px)
-   * with a grey-tinted two-layer shadow.
-   */
+  /* Radius + elevation. */
   --radius-card: 16px;
   --shadow-card:
     0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
   --shadow-card-hover:
     0px 16px 32px -6px rgba(145, 158, 171, 0.24), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+}
+
+@layer utilities {
+  /* Shared header/footer content shell — matches 1920 desktop screenshot */
+  .page-shell {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--max-width-site);
+    margin-inline: auto;
+    padding-inline: 1.25rem; /* 20px mobile */
+  }
+
+  @media (min-width: 992px) {
+    .page-shell {
+      padding-inline: 5rem; /* 80px */
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .page-shell {
+      max-width: var(--max-width-site-2xl);
+    }
+  }
 }
 
 @layer base {

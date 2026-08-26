@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-Guidance for working in the **Falaq v2.0** Angular storefront.
+Guidance for working in the **Falaq Leather** Angular storefront.
 
 ## What this is
 
-The next-gen FalaqCommerce storefront, built from scratch on the latest Angular.
+The Falaq Leather storefront, built from scratch on the latest Angular.
 **Frontend-only today** — there is no backend or database in this repo yet. The
 HTTP layer is scaffolded so an API + DB can be added later without re-architecting
 the frontend.

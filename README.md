@@ -1,8 +1,8 @@
-# Falaq v2.0
+# Falaq Leather
 
-A fresh Angular 22 storefront foundation — the next-generation FalaqCommerce
-frontend. **Frontend-only today**; the backend API and database are added later
-behind the typed HTTP layer.
+A fresh Angular 22 storefront foundation for Falaq Leather.
+**Frontend-only today**; the backend API and database are added later behind the
+typed HTTP layer.
 
 ## Stack
 
@@ -53,7 +53,7 @@ src/
     shared/
       components/ pipes/ directives/
     features/
-      home/                     # sample landing feature (lazy-loaded)
+      home/                     # landing feature (lazy-loaded)
       not-found/
     layouts/main-layout/        # header + footer shell
     app.routes.ts               # lazy feature routes

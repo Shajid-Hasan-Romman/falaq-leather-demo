@@ -1,0 +1,26 @@
+<section
+  class="promo-banner page-shell relative overflow-hidden py-8 md:py-12"
+  aria-labelledby="promo-banner-heading"
+>
+  <div class="promo-banner__frame relative w-full">
+    <img
+      [src]="imageSrc"
+      alt="Outdoor Collection — Someone Special Today"
+      class="promo-banner__image block h-auto w-full"
+      loading="lazy"
+      decoding="async"
+    />
+
+    <!--
+      Bay watermark + vertical OUTDOOR COLLECTION ship in the JPG.
+      Left copy matches AmarBay HTML overlays on top of the art.
+    -->
+    <div class="promo-banner__copy">
+      <h2 id="promo-banner-heading" class="promo-banner__title font-display">
+        Someone<br />Special Today
+      </h2>
+
+      <a [routerLink]="explorePath" class="promo-banner__cta"> Explore .. </a>
+    </div>
+  </div>
+</section>

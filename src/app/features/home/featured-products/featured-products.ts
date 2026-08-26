@@ -1,121 +1,106 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
-import { CartService } from '../../../core/services/cart.service';
-import { Product } from '../../../core/models/product.model';
+export interface FeaturedProduct {
+  readonly id: string;
+  readonly name: string;
+  readonly price: number;
+  readonly currency: string;
+  readonly image: string;
+  readonly alt: string;
+  readonly path: string;
+}
 
 @Component({
   selector: 'app-featured-products',
-  standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './featured-products.html',
   styleUrl: './featured-products.scss',
 })
 export class FeaturedProducts {
-  showingAll = false;
+  private readonly visibleCount = 4;
 
-  constructor(
-    private cartService: CartService,
-    private router: Router,
-  ) {}
+  readonly startIndex = signal(0);
 
-  products: Product[] = [
+  /** Card images match the primary shot in each product folder. */
+  readonly products: readonly FeaturedProduct[] = [
     {
-      id: 'fp-1',
-      name: 'Organic Food Combo 1 Basket',
-      image: 'steinpilze.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -27,
-      weight: '1KG',
+      id: 'zen',
+      name: 'Men Dress - Slip On - Zen',
+      price: 6990,
+      currency: 'BDT',
+      image: '/asset/products/zen/new_0091__DSC2432%20(1).jpg',
+      alt: 'Men Dress Slip On Zen',
+      path: '/product-details/men-dress---slip-on---zen-238546001',
     },
     {
-      id: 'fp-2',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'basket 2.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -15,
-      weight: '1KG',
+      id: 'softened',
+      name: 'Men Casual - Casual Basic - Softened',
+      price: 3490,
+      currency: 'BDT',
+      image: '/asset/products/softend/DSC4911_000.jpg',
+      alt: 'Men Casual Softened',
+      path: '/product-details/men-casual---casual-basic---softened-238546053',
     },
     {
-      id: 'fp-3',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'basket 3.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -10,
-      weight: '1KG',
+      id: 'steller-mule',
+      name: 'Men Summer - Sandal - Steller',
+      price: 2490,
+      currency: 'BDT',
+      image: '/asset/products/steller/_DSC2291.jpg',
+      alt: 'Men Summer Sandal Steller',
+      path: '/product-details/men-summer---sandal---steller-238546010',
     },
     {
-      id: 'fp-4',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'basket 4.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -27,
-      weight: '1KG',
+      id: 'steller-toe',
+      name: 'Men Summer - Sandal - Steller',
+      price: 1790,
+      currency: 'BDT',
+      image: '/asset/products/sandal/_DSC2285.jpg',
+      alt: 'Men Summer Sandal Steller toe-post',
+      path: '/product-details/men-summer---sandal---steller-238546011',
     },
     {
-      id: 'fp-5',
-      name: 'Organic Food Combo 1 Basket',
-      image: 'basket 5.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -17,
-      weight: '1KG',
-    },
-    {
-      id: 'fp-6',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'basket 2.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -27,
-      weight: '1KG',
-    },
-    {
-      id: 'fp-7',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'tomato.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -27,
-      weight: '1KG',
-    },
-    {
-      id: 'fp-8',
-      name: 'কালোজিরা ফুলের মধু (Premium Blackseed Flower Honey) - 1KG',
-      image: 'tomato slice.png',
-      price: 1100,
-      oldPrice: 1300,
-      discount: -20,
-      weight: '1KG',
+      id: 'perlita',
+      name: 'Ladies Open Heel - Slip On - Perlita',
+      price: 2290,
+      currency: 'BDT',
+      image: '/asset/products/parlita/_DSC2087.jpg',
+      alt: 'Ladies Open Heel Perlita',
+      path: '/product-details/ladies-open-heel---slip-on---perlita-238546020',
     },
   ];
 
-  /**
-   * Mobile product section:
-   * Show or hide the additional products.
-   */
-  toggleMoreProducts(): void {
-    this.showingAll = !this.showingAll;
+  readonly canPrev = computed(() => this.startIndex() > 0);
+
+  readonly canNext = computed(
+    () => this.startIndex() + this.visibleCount < this.products.length,
+  );
+
+  readonly visibleProducts = computed(() => {
+    const start = this.startIndex();
+    return this.products.slice(start, start + this.visibleCount);
+  });
+
+  prev(): void {
+    if (!this.canPrev()) {
+      return;
+    }
+    this.startIndex.update((i) => Math.max(0, i - 1));
   }
 
-  /**
-   * Explore More:
-   * Navigate to Product Listing page.
-   */
-  goToProductListing(): void {
-    this.router.navigate(['/product-listing']);
-  }
-
-  /**
-   * Add product to cart
-   * and navigate to Cart page.
-   */
-  addToCart(product: Product): void {
-    this.cartService.addItem(product);
-    this.router.navigate(['/cart']);
+  next(): void {
+    if (!this.canNext()) {
+      return;
+    }
+    const maxStart = Math.max(0, this.products.length - this.visibleCount);
+    this.startIndex.update((i) => Math.min(maxStart, i + 1));
   }
 }

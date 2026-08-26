@@ -1,0 +1,185 @@
+<section
+  class="brand-products page-shell py-6 md:py-8"
+  aria-label="Brand products"
+  (click)="closeMenus()"
+>
+  <!-- Toolbar — AmarBay products listing -->
+  <div class="toolbar relative flex flex-wrap items-center justify-between gap-3 border-b border-[#e5e5e5] pb-3">
+    <div class="relative" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="toolbar-btn inline-flex items-center gap-1.5 text-sm text-[#333]"
+        [attr.aria-expanded]="filterOpen()"
+        aria-haspopup="listbox"
+        (click)="toggleFilter()"
+      >
+        <span>Sort: Filter</span>
+        <span class="toolbar-caret" aria-hidden="true"></span>
+      </button>
+
+      @if (filterOpen()) {
+        <ul
+          class="toolbar-menu absolute top-full left-0 z-20 mt-2 min-w-[11rem] border border-[#e5e5e5] bg-white py-1 shadow-md"
+          role="listbox"
+          aria-label="Filter by brand"
+        >
+          <li>
+            <a
+              routerLink="/products"
+              [queryParams]="{ shop_our_brand: 'shop-our-brand' }"
+              class="toolbar-menu__item"
+              role="option"
+              [class.is-active]="!activeBrand()"
+              (click)="closeMenus()"
+            >
+              All Brands
+            </a>
+          </li>
+          @for (brand of brands; track brand.id) {
+            <li>
+              <a
+                routerLink="/products"
+                [queryParams]="{ shop_our_brand: brand.id }"
+                class="toolbar-menu__item"
+                role="option"
+                [class.is-active]="activeBrand()?.id === brand.id"
+                (click)="closeMenus()"
+              >
+                {{ brand.name }}
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4 sm:gap-6" (click)="$event.stopPropagation()">
+      <p class="text-sm text-[#333]">{{ productCount() }} Products</p>
+
+      <div class="relative">
+        <button
+          type="button"
+          class="toolbar-btn inline-flex items-center gap-1.5 text-sm text-[#333]"
+          [attr.aria-expanded]="sortOpen()"
+          aria-haspopup="listbox"
+          (click)="toggleSort()"
+        >
+          <span>Sort: {{ sortLabel() }}</span>
+          <span class="toolbar-caret" aria-hidden="true"></span>
+        </button>
+
+        @if (sortOpen()) {
+          <ul
+            class="toolbar-menu absolute top-full right-0 z-20 mt-2 min-w-[12rem] border border-[#e5e5e5] bg-white py-1 shadow-md"
+            role="listbox"
+            aria-label="Sort products"
+          >
+            @for (opt of sortOptions; track opt.id) {
+              <li>
+                <button
+                  type="button"
+                  class="toolbar-menu__item w-full text-left"
+                  role="option"
+                  [class.is-active]="sortId() === opt.id"
+                  (click)="selectSort(opt.id)"
+                >
+                  {{ opt.label }}
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Product grid -->
+  @if (visibleProducts().length > 0) {
+    <div
+      class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4"
+      aria-live="polite"
+    >
+      @for (product of visibleProducts(); track product.id) {
+        <article class="product-card flex flex-col border border-[#e8e8e8] bg-white">
+          <a
+            [routerLink]="['/product-details', product.slug]"
+            class="block overflow-hidden bg-white p-4 sm:p-5"
+          >
+            <div class="aspect-square w-full">
+              <img
+                [src]="product.image"
+                [alt]="product.alt"
+                class="h-full w-full object-contain object-center transition-transform duration-500 ease-out hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+
+          <div class="flex flex-1 flex-col px-3 pb-4 sm:px-4 sm:pb-5">
+            <h2 class="text-center text-[0.9rem] leading-snug text-[#1a1a1a] md:text-[0.95rem]">
+              <a
+                [routerLink]="['/product-details', product.slug]"
+                class="hover:text-brand"
+              >
+                {{ product.name }}
+              </a>
+            </h2>
+
+            <div class="mt-3 flex items-baseline justify-between gap-2">
+              <p class="text-sm font-bold text-[#1a1a1a]">
+                {{ product.currency }} {{ product.price | number: '1.2-2' }}
+              </p>
+              <a
+                [routerLink]="['/product-details', product.slug]"
+                class="shrink-0 text-sm text-[#c0392b] transition-colors hover:text-[#922b21] hover:underline"
+              >
+                Buy Now
+              </a>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <p class="mt-16 text-center text-sm text-[#6b6b6b]">No products found.</p>
+  }
+
+  <!-- Pagination -->
+  @if (productCount() > 0) {
+    <nav class="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+      <button
+        type="button"
+        class="page-btn"
+        aria-label="Previous page"
+        [disabled]="!canPrev()"
+        (click)="prevPage()"
+      >
+        ‹
+      </button>
+
+      @for (n of pageNumbers(); track n) {
+        <button
+          type="button"
+          class="page-btn"
+          [class.is-active]="page() === n"
+          [attr.aria-current]="page() === n ? 'page' : null"
+          [attr.aria-label]="'Page ' + n"
+          (click)="goToPage(n)"
+        >
+          {{ n }}
+        </button>
+      }
+
+      <button
+        type="button"
+        class="page-btn"
+        aria-label="Next page"
+        [disabled]="!canNext()"
+        (click)="nextPage()"
+      >
+        ›
+      </button>
+    </nav>
+  }
+</section>

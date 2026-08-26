@@ -1,94 +1,119 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  inject,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
-import { CartService } from '../../../core/services/cart.service';
+export interface NavChild {
+  readonly label: string;
+  readonly path: string;
+}
+
+export interface NavItem {
+  readonly label: string;
+  readonly path: string;
+  readonly children: readonly NavChild[];
+}
 
 @Component({
   selector: 'app-header',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
-  readonly categories = [
-    { id: 'fruits-vegetables', label: 'Fruits & Vegetables' },
-    { id: 'grocery-staples', label: 'Grocery Staples' },
+  private readonly platformId = inject(PLATFORM_ID);
+
+  readonly menuOpen = signal(false);
+  readonly openDropdown = signal<string | null>(null);
+  readonly cartCount = signal(0);
+
+  readonly navItems: readonly NavItem[] = [
+    {
+      label: 'Men',
+      path: '/shop/men',
+      children: [
+        { label: 'Bags', path: '/shop/men/bags' },
+        { label: 'Wallets', path: '/shop/men/wallets' },
+        { label: 'Belts', path: '/shop/men/belts' },
+        { label: 'Shoes', path: '/shop/men/shoes' },
+      ],
+    },
+    {
+      label: 'Women',
+      path: '/shop/women',
+      children: [
+        { label: 'Handbags', path: '/shop/women/handbags' },
+        { label: 'Wallets', path: '/shop/women/wallets' },
+        { label: 'Accessories', path: '/shop/women/accessories' },
+      ],
+    },
+    {
+      label: 'Bags',
+      path: '/shop/bags',
+      children: [
+        { label: 'Tote', path: '/shop/bags/tote' },
+        { label: 'Messenger', path: '/shop/bags/messenger' },
+        { label: 'Travel', path: '/shop/bags/travel' },
+      ],
+    },
+    {
+      label: 'Accessories',
+      path: '/shop/accessories',
+      children: [
+        { label: 'Belts', path: '/shop/accessories/belts' },
+        { label: 'Card holders', path: '/shop/accessories/card-holders' },
+        { label: 'Care kits', path: '/shop/accessories/care' },
+      ],
+    },
   ];
 
-  readonly categoryMenuOpen = signal(false);
-  readonly suggestionsVisible = signal(false);
-  readonly productSuggestions = [
-    'Organic Food Combo 1 Basket',
-    'Fresh Seasonal Vegetable Box',
-    'Natural Wildflower Honey',
-    'Premium Garden Fresh Pack',
-    'Organic Family Grocery Pack',
-    'Sweet Fresh Mango Selection',
-    'Farm Pick Mango Basket',
-    'Mango Lovers Collection',
-    'Daily Kitchen Essentials',
-    'Healthy Breakfast Pantry Box',
-  ];
-  searchTerm = '';
-
-  get searchSuggestions(): string[] {
-    const query = this.searchTerm.trim().toLowerCase();
-
-    if (!query || !this.suggestionsVisible()) {
-      return [];
-    }
-
-    return this.productSuggestions
-      .filter(product => product.toLowerCase().includes(query))
-      .slice(0, 5);
-  }
-
-  constructor(
-    public cartService: CartService,
-    private readonly router: Router,
-  ) {}
-
-  goToCart(): void {
-    this.router.navigate(['/cart']);
-  }
-
-  toggleCategoryMenu(): void {
-    this.categoryMenuOpen.update(isOpen => !isOpen);
-  }
-
-  closeCategoryMenu(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-
-    if (!target.closest('.category-nav')) {
-      this.categoryMenuOpen.set(false);
+  toggleMenu(): void {
+    this.menuOpen.update((open) => !open);
+    if (!this.menuOpen()) {
+      this.openDropdown.set(null);
     }
   }
 
-  goToCategory(categoryId: string): void {
-    this.categoryMenuOpen.set(false);
-    void this.router.navigate(['/product-listing'], {
-      queryParams: { category: categoryId, search: null },
-    });
+  closeMenu(): void {
+    this.menuOpen.set(false);
+    this.openDropdown.set(null);
   }
 
-  searchProducts(): void {
-    const search = this.searchTerm.trim();
-    this.suggestionsVisible.set(false);
-
-    void this.router.navigate(['/product-listing'], {
-      queryParams: { search: search || null, category: null },
-    });
+  toggleDropdown(label: string): void {
+    this.openDropdown.update((current) => (current === label ? null : label));
   }
 
-  onSearchInput(event: Event): void {
-    this.searchTerm = (event.target as HTMLInputElement).value;
-    this.suggestionsVisible.set(true);
+  openDropdownOnHover(label: string): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      this.openDropdown.set(label);
+    }
   }
 
-  selectSuggestion(suggestion: string): void {
-    this.searchTerm = suggestion;
-    this.searchProducts();
+  closeDropdownOnLeave(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      this.openDropdown.set(null);
+    }
+  }
+
+  onSearchSubmit(event: Event): void {
+    event.preventDefault();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeMenu();
   }
 }

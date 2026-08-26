@@ -1,0 +1,118 @@
+:host {
+  display: block;
+  background: #fff;
+}
+
+/*
+ * Measured from AmarBay Latest Arrivals screenshot (1024×414):
+ * Left  0–350px   → 34.2%
+ * Middle 350–743px → 38.4%
+ * Right 743–1024px → 27.4%
+ * Aspect ratio ≈ 2.473 : 1
+ * Corner radius ≈ 14px
+ */
+.latest-card {
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e8e8;
+}
+
+.latest-row {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.latest-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+}
+
+.latest-media-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.latest-video-wrap,
+.latest-video {
+  pointer-events: none;
+  user-select: none;
+}
+
+.latest-video::-webkit-media-controls,
+.latest-video::-webkit-media-controls-enclosure,
+.latest-video::-webkit-media-controls-panel,
+.latest-video::-webkit-media-controls-play-button,
+.latest-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+}
+
+/* Mobile stacked */
+.latest-media {
+  height: 220px;
+}
+
+.latest-panel {
+  min-height: 140px;
+  padding-block: 1.75rem;
+}
+
+@media (min-width: 576px) {
+  .latest-media {
+    height: 260px;
+  }
+
+  .latest-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Desktop — screenshot proportions */
+@media (min-width: 992px) {
+  .latest-row {
+    grid-template-columns: 34.2% 38.4% 27.4%;
+    aspect-ratio: 1024 / 414;
+    height: auto;
+    width: 100%;
+  }
+
+  .latest-media,
+  .latest-panel {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    padding-block: 0;
+  }
+
+  .latest-media-fill {
+    position: absolute;
+    inset: 0;
+  }
+
+  .latest-title {
+    font-size: clamp(1.35rem, 1.6vw, 1.85rem);
+  }
+}
+
+@media (min-width: 1200px) {
+  .latest-title {
+    font-size: clamp(1.5rem, 1.7vw, 2rem);
+  }
+}
+
+.latest-nav {
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.latest-product-card {
+  min-width: 0;
+  background: #fff;
+}

@@ -1,160 +1,156 @@
-<footer class="relative overflow-hidden bg-[#F7F6F2] border-t border-gray-200">
-
-  <!-- Main Container -->
-  <div class="relative z-10 mx-auto w-full px-4 md:px-6 lg:px-10 xl:px-16 2xl:px-20 py-10 md:py-12 lg:py-14">
-
-    <!-- Background Watermark -->
-    <img
-      src="8 [Converted] 2.png"
-      alt="Watermark"
-      class="absolute top-8 md:top-10 left-1/2 -translate-x-1/2 w-[280px] md:w-[420px] lg:w-[620px] xl:w-[820px] 2xl:w-[980px] h-auto opacity-30 md:opacity-40 lg:opacity-50 pointer-events-none select-none"
-    />
-
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col lg:flex-row gap-10 md:gap-12 lg:gap-16 xl:gap-24 2xl:gap-40">
-
-      <!-- LEFT: Logo + Description + Social -->
-      <div class="w-full lg:w-auto lg:max-w-sm xl:max-w-md shrink-0">
-        <!-- Logo -->
-        <img
-          src="8 [Converted] 1.png"
-          alt="Leaf Gradient"
-          class="h-12 md:h-14 lg:h-16 w-auto"
-        />
-
-        <!-- Description -->
-        <p class="mt-5 md:mt-6 lg:mt-8 max-w-md text-sm md:text-[15px] lg:text-[16px] leading-7 md:leading-8 lg:leading-10 text-[#687188]">
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo. Build your online store with WooCommerce the most popular
-        </p>
-
-        <!-- Social Icons -->
-        <div class="mt-6 md:mt-8 lg:mt-10 flex items-center gap-3 md:gap-4 lg:gap-5">
-          <a href="#"
-             class="flex h-10 w-10 md:h-11 md:w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-[#62A403] hover:text-white text-[#687188]">
-            <i class="fa-brands fa-twitter"></i>
-          </a>
-          <a href="#"
-             class="flex h-10 w-10 md:h-11 md:w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-[#62A403] hover:text-white text-[#687188]">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-          <a href="#"
-             class="flex h-10 w-10 md:h-11 md:w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-[#62A403] hover:text-white text-[#687188]">
-            <i class="fa-brands fa-youtube"></i>
-          </a>
-          <a href="#"
-             class="flex h-10 w-10 md:h-11 md:w-11 lg:h-12 lg:w-12 items-center justify-center rounded-full bg-white shadow-sm transition hover:bg-[#62A403] hover:text-white text-[#687188]">
-            <i class="fa-brands fa-google-plus-g"></i>
-          </a>
-        </div>
+<footer class="footer mt-auto bg-[#f2f2f2]">
+  <!-- Shell: max 1440px = 1280px content + 80px gutters; text 16px -->
+  <div class="page-shell py-12 lg:py-14">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 xl:gap-12">
+      <!-- Company -->
+      <div>
+        <h2 class="text-base font-bold text-ink">
+          {{ companyColumn.title }}
+        </h2>
+        <ul class="mt-4 space-y-2.5 md:mt-5 md:space-y-3">
+          @for (link of companyColumn.links; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                class="text-base text-ink-secondary transition-colors hover:text-ink"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
       </div>
 
-      <!-- RIGHT COLUMNS -->
-      <div class="flex flex-col sm:flex-row flex-wrap lg:flex-nowrap gap-8 md:gap-10 lg:gap-12 xl:gap-16 2xl:gap-25 w-full">
+      <!-- Customer Care -->
+      <div>
+        <h2 class="text-base font-bold text-ink">
+          {{ careColumn.title }}
+        </h2>
+        <ul class="mt-4 space-y-2.5 md:mt-5 md:space-y-3">
+          @for (link of careColumn.links; track link.path) {
+            <li>
+              @if (link.external) {
+                <a
+                  [href]="link.path"
+                  class="text-base text-ink-secondary transition-colors hover:text-ink"
+                >
+                  {{ link.label }}
+                </a>
+              } @else {
+                <a
+                  [routerLink]="link.path"
+                  class="text-base text-ink-secondary transition-colors hover:text-ink"
+                >
+                  {{ link.label }}
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
 
-        <!-- INFORMATION -->
-        <div class="min-w-[140px]">
-          <h3 class="mb-5 md:mb-6 lg:mb-8 text-lg md:text-[18px] lg:text-[20px] font-bold text-[#1F2937]">
-            Information
-          </h3>
-          <ul class="space-y-3 md:space-y-4 lg:space-y-5">
+      <!-- Customer Information -->
+      <div>
+        <h2 class="text-base font-bold text-ink">
+          {{ infoColumn.title }}
+        </h2>
+        <ul class="mt-4 space-y-2.5 md:mt-5 md:space-y-3">
+          @for (link of infoColumn.links; track link.path) {
             <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                About Us
+              <a
+                [routerLink]="link.path"
+                class="text-base text-ink-secondary transition-colors hover:text-ink"
+              >
+                {{ link.label }}
               </a>
             </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Delivery Information
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Terms & Conditions
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Return Policy
-              </a>
-            </li>
-          </ul>
+          }
+        </ul>
+      </div>
+
+      <!-- Follow Us -->
+      <div>
+        <h2 class="text-base font-bold text-ink">Follow Us</h2>
+
+        <div class="mt-4 flex flex-wrap items-center gap-2.5 md:mt-5">
+          @for (social of socialLinks; track social.label) {
+            <a
+              [href]="social.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social flex h-9 w-9 items-center justify-center rounded-full bg-white text-ink"
+              [attr.aria-label]="social.label"
+            >
+              @switch (social.icon) {
+                @case ('instagram') {
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#f58529" />
+                        <stop offset="50%" stop-color="#dd2a7b" />
+                        <stop offset="100%" stop-color="#515bd4" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="3" y="3" width="18" height="18" rx="5" fill="url(#ig)" />
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="1.75" />
+                    <circle cx="17.2" cy="6.8" r="1.1" fill="#fff" />
+                  </svg>
+                }
+                @case ('facebook') {
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2" aria-hidden="true">
+                    <path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z" />
+                  </svg>
+                }
+                @case ('twitter') {
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#1DA1F2" aria-hidden="true">
+                    <path d="M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.5-1.3 1.8-2.2-.8.5-1.7.8-2.6 1A4 4 0 0 0 12 8.7c0 .3 0 .6.1.9-3.3-.2-6.3-1.8-8.3-4.2-.3.6-.5 1.3-.5 2 0 1.4.7 2.6 1.8 3.3-.6 0-1.3-.2-1.8-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.7.1-1.1.1-.3 0-.5 0-.8-.1.5 1.6 2 2.8 3.8 2.8A8 8 0 0 1 2 18.4 11.3 11.3 0 0 0 8.1 20c7.4 0 11.4-6.1 11.4-11.4v-.5c.8-.5 1.5-1.3 2-2.1z" />
+                  </svg>
+                }
+                @case ('pinterest') {
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#E60023" aria-hidden="true">
+                    <path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.2-.1-.8-.2-2 0-2.9.2-.8 1.3-5.5 1.3-5.5s-.3-.7-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.4.7 1.4 1.5 0 .9-.6 2.3-.9 3.5-.3 1.1.5 1.9 1.5 1.9 1.8 0 3.2-1.9 3.2-4.7 0-2.4-1.8-4.2-4.3-4.2-2.9 0-4.6 2.2-4.6 4.4 0 .9.3 1.8.8 2.3.1.1.1.2.1.3l-.3 1.1c0 .2-.1.2-.3.1-1.2-.6-2-2.3-2-3.7 0-3 2.2-5.8 6.3-5.8 3.3 0 5.9 2.4 5.9 5.5 0 3.3-2.1 6-4.9 6-1 0-1.9-.5-2.2-1.1l-.6 2.3c-.2.8-.8 1.8-1.2 2.4.9.3 1.8.4 2.8.4 5.5 0 10-4.5 10-10S17.5 2 12 2z" />
+                  </svg>
+                }
+                @case ('youtube') {
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF0000" aria-hidden="true">
+                    <path d="M22 12.2s0-3.2-.4-4.7c-.2-.8-.8-1.4-1.6-1.6C18.5 5.5 12 5.5 12 5.5s-6.5 0-8 .4c-.8.2-1.4.8-1.6 1.6C2 9 2 12.2 2 12.2s0 3.2.4 4.7c.2.8.8 1.4 1.6 1.6 1.5.4 8 .4 8 .4s6.5 0 8-.4c.8-.2 1.4-.8 1.6-1.6.4-1.5.4-4.7.4-4.7zM10 15.2v-6l5.2 3-5.2 3z" />
+                  </svg>
+                }
+              }
+            </a>
+          }
         </div>
 
-        <!-- MY ACCOUNT -->
-        <div class="min-w-[140px]">
-          <h3 class="mb-5 md:mb-6 lg:mb-8 text-lg md:text-[18px] lg:text-[20px] font-bold text-[#1F2937]">
-            My Account
-          </h3>
-          <ul class="space-y-3 md:space-y-4 lg:space-y-5">
+        <ul class="mt-4 space-y-2.5 md:space-y-3">
+          @for (link of followLinks; track link.path) {
             <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                My Account
+              <a
+                [routerLink]="link.path"
+                class="text-base text-ink-secondary transition-colors hover:text-ink"
+              >
+                {{ link.label }}
               </a>
             </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Shopping Cart
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Wishlist
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                Order History
-              </a>
-            </li>
-            <li>
-              <a href="#" class="text-sm md:text-[15px] lg:text-[16px] text-[#687188] hover:text-[#62A403] transition-colors">
-                International Orders
-              </a>
-            </li>
-          </ul>
+          }
+        </ul>
+
+        <div class="mt-5 grid max-w-[220px] grid-cols-3 gap-2">
+          @for (method of paymentMethods; track method.label) {
+            <div
+              class="footer__pay flex h-9 items-center justify-center rounded bg-white px-1 text-center text-[10px] font-bold tracking-wide"
+              [style.color]="method.tone"
+            >
+              {{ method.label }}
+            </div>
+          }
         </div>
-
-        <!-- CONTACT US -->
-        <div class="min-w-[180px] sm:min-w-[220px]">
-          <h3 class="mb-5 md:mb-6 lg:mb-8 text-lg md:text-[18px] lg:text-[20px] font-bold text-[#1F2937]">
-            Contact Us
-          </h3>
-
-          <div class="space-y-4 md:space-y-5 lg:space-y-6">
-            <p class="text-sm md:text-[15px] lg:text-[16px] leading-relaxed text-[#687188]">
-              <strong class="text-[#1F2937]">Address:</strong>
-              1429 Netus Rd, NY 48247
-            </p>
-            <p class="text-sm md:text-[15px] lg:text-[16px] text-[#687188]">
-              <strong class="text-[#1F2937]">Email:</strong>
-              Organi@gmail.com
-            </p>
-            <p class="text-sm md:text-[15px] lg:text-[16px] text-[#687188]">
-              <strong class="text-[#1F2937]">Phone:</strong>
-              (+87) 4886-4174
-            </p>
-          </div>
-
-          <!-- Payment Accepted -->
-          <div class="mt-5 md:mt-6 lg:mt-7">
-            <h4 class="mb-3 md:mb-4 lg:mb-5 text-sm md:text-[14px] lg:text-[15px] font-bold text-[#1F2937]">
-              Payment Accepted
-            </h4>
-            <img
-              src="Payment.png"
-              alt="Payment"
-              class="h-auto w-[160px] md:w-[180px] lg:w-[200px] xl:w-[220px] 2xl:w-[240px]"
-            />
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 
+  <div class="border-t border-[#e0e0e0] bg-[#f2f2f2]">
+    <div class="page-shell py-4 text-center text-sm text-ink-secondary">
+      © {{ copyrightYear }} Falaq Leather Ltd. All rights reserved.
+    </div>
+  </div>
 </footer>

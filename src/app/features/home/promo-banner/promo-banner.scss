@@ -1,0 +1,121 @@
+:host {
+  display: block;
+}
+
+/*
+ * AmarBay Outdoor Collection promo — page-shell gutters (same as other home sections).
+ * Art (2460×1176) already includes “Bay” + vertical “OUTDOOR COLLECTION”.
+ * Left copy / CTA positioned to match the live overlay placement.
+ */
+.promo-banner__frame {
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.promo-banner__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
+.promo-banner__copy {
+  position: absolute;
+  z-index: 2;
+  left: 4.5%;
+  top: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  max-width: min(42%, 22rem);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.promo-banner__title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.15rem, 2.6vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+}
+
+.promo-banner__cta {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.35rem;
+  border-radius: 9999px;
+  background: #e8916a;
+  color: #fff;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: clamp(0.7rem, 1.1vw, 0.875rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.promo-banner__cta:hover {
+  background: #d97d55;
+}
+
+.promo-banner__cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .promo-banner__copy {
+    left: 5%;
+    top: 46%;
+    gap: 1.1rem;
+    max-width: min(36%, 26rem);
+  }
+
+  .promo-banner__cta {
+    padding: 0.55rem 1.65rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .promo-banner__copy {
+    left: 5.5%;
+    top: 45%;
+    gap: 1.25rem;
+  }
+
+  .promo-banner__cta {
+    padding: 0.6rem 1.85rem;
+  }
+}
+
+/* Stacked / short phones — keep headline readable over the art */
+@media (max-width: 575px) {
+  .promo-banner__copy {
+    left: 4%;
+    top: auto;
+    bottom: 12%;
+    transform: none;
+    max-width: 70%;
+    gap: 0.65rem;
+  }
+
+  .promo-banner__title {
+    font-size: 1.25rem;
+  }
+
+  .promo-banner__cta {
+    padding: 0.4rem 1.15rem;
+    font-size: 0.75rem;
+  }
+}
