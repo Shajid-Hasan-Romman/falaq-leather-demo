@@ -1,11 +1,15 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  inject,
+  PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { DecimalPipe, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
 
 export interface FeaturedProduct {
   readonly id: string;
@@ -25,7 +29,11 @@ export interface FeaturedProduct {
   styleUrl: './featured-products.scss',
 })
 export class FeaturedProducts {
-  private readonly visibleCount = 4;
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+
+  /** 1 mobile · 2 tablet · 4 desktop — mirrors grid breakpoints. */
+  private readonly visibleCount = signal(4);
 
   readonly startIndex = signal(0);
 
@@ -81,13 +89,37 @@ export class FeaturedProducts {
   readonly canPrev = computed(() => this.startIndex() > 0);
 
   readonly canNext = computed(
-    () => this.startIndex() + this.visibleCount < this.products.length,
+    () => this.startIndex() + this.visibleCount() < this.products.length,
   );
 
   readonly visibleProducts = computed(() => {
     const start = this.startIndex();
-    return this.products.slice(start, start + this.visibleCount);
+    return this.products.slice(start, start + this.visibleCount());
   });
+
+  constructor() {
+    afterNextRender(() => {
+      if (!isPlatformBrowser(this.platformId)) {
+        return;
+      }
+
+      const updateVisibleCount = (): void => {
+        const width = window.innerWidth;
+        const next = width < 576 ? 1 : width < 992 ? 2 : 4;
+        this.visibleCount.set(next);
+        const maxStart = Math.max(0, this.products.length - next);
+        if (this.startIndex() > maxStart) {
+          this.startIndex.set(maxStart);
+        }
+      };
+
+      updateVisibleCount();
+      window.addEventListener('resize', updateVisibleCount);
+      this.destroyRef.onDestroy(() => {
+        window.removeEventListener('resize', updateVisibleCount);
+      });
+    });
+  }
 
   prev(): void {
     if (!this.canPrev()) {
@@ -100,7 +132,7 @@ export class FeaturedProducts {
     if (!this.canNext()) {
       return;
     }
-    const maxStart = Math.max(0, this.products.length - this.visibleCount);
+    const maxStart = Math.max(0, this.products.length - this.visibleCount());
     this.startIndex.update((i) => Math.min(maxStart, i + 1));
   }
 }

@@ -57,8 +57,10 @@
             >
               <a
                 [routerLink]="item.path"
+                [queryParams]="item.queryParams ?? {}"
                 class="inline-flex items-center gap-1.5 py-2 text-base font-semibold tracking-[0.08em] text-[#212529] uppercase transition-colors hover:text-brand"
                 [class.text-brand]="openDropdown() === item.label"
+                (click)="closeMenu()"
               >
                 {{ item.label }}
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -71,11 +73,13 @@
                   class="absolute top-full left-1/2 z-50 min-w-[200px] -translate-x-1/2 border border-border bg-surface py-2 shadow-[0_12px_28px_rgba(33,43,54,0.12)]"
                   role="menu"
                 >
-                  @for (child of item.children; track child.path) {
+                  @for (child of item.children; track child.label) {
                     <a
                       [routerLink]="child.path"
+                      [queryParams]="child.queryParams ?? {}"
                       class="block px-4 py-2.5 text-base text-ink-secondary transition-colors hover:bg-background hover:text-brand"
                       role="menuitem"
+                      (click)="closeMenu()"
                     >
                       {{ child.label }}
                     </a>
@@ -114,10 +118,12 @@
           </button>
         </form>
 
-        <a
-          routerLink="/account"
-          class="flex h-10 w-10 items-center justify-center text-[#212529] transition-colors hover:text-brand"
-          aria-label="Sign in"
+        <button
+          type="button"
+          class="flex h-10 w-10 cursor-default items-center justify-center text-[#212529] opacity-45"
+          aria-label="Sign in unavailable"
+          disabled
+          title="Sign in coming soon"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="12" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5" />
@@ -128,12 +134,13 @@
               stroke-linecap="round"
             />
           </svg>
-        </a>
+        </button>
 
         <a
           routerLink="/cart"
           class="relative flex h-10 w-10 items-center justify-center text-[#212529] transition-colors hover:text-brand"
           aria-label="Cart"
+          (click)="closeMenu()"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect
@@ -216,14 +223,16 @@
                 <div class="pb-3 pl-3">
                   <a
                     [routerLink]="item.path"
+                    [queryParams]="item.queryParams ?? {}"
                     class="block px-3 py-2 text-base font-medium text-brand"
                     (click)="closeMenu()"
                   >
                     Shop all {{ item.label }}
                   </a>
-                  @for (child of item.children; track child.path) {
+                  @for (child of item.children; track child.label) {
                     <a
                       [routerLink]="child.path"
+                      [queryParams]="child.queryParams ?? {}"
                       class="block px-3 py-2 text-base text-ink-secondary"
                       (click)="closeMenu()"
                     >
@@ -235,12 +244,20 @@
             </div>
           }
 
-          <a
-            routerLink="/account"
-            class="block border-b border-line py-3.5 text-base font-semibold text-[#212529]"
-            (click)="closeMenu()"
+          <button
+            type="button"
+            class="block w-full cursor-default border-b border-line py-3.5 text-left text-base font-semibold text-[#212529] opacity-45"
+            disabled
+            title="Sign in coming soon"
           >
             Sign in
+          </button>
+          <a
+            routerLink="/cart"
+            class="block py-3.5 text-base font-semibold text-[#212529]"
+            (click)="closeMenu()"
+          >
+            Cart
           </a>
         </nav>
       </div>

@@ -7,10 +7,11 @@ import {
   signal,
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 
+import { CartService } from '../../core/services/cart.service';
 import {
   findProductBySlug,
   PRODUCT_DETAILS,
@@ -29,6 +30,8 @@ import type {
 })
 export class ProductDetails {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly cart = inject(CartService);
 
   private readonly slug = toSignal(
     this.route.paramMap.pipe(map((params) => params.get('slug') ?? '')),
@@ -40,6 +43,8 @@ export class ProductDetails {
   readonly selectedSize = signal<string | null>(null);
   readonly quantity = signal(1);
   readonly openAccordion = signal<ProductAccordionId | null>(null);
+  readonly sizeError = signal(false);
+  readonly addedMessage = signal<string | null>(null);
 
   constructor() {
     effect(() => {
@@ -47,6 +52,8 @@ export class ProductDetails {
       this.selectedSize.set(null);
       this.quantity.set(1);
       this.openAccordion.set(null);
+      this.sizeError.set(false);
+      this.addedMessage.set(null);
     });
   }
 
@@ -63,6 +70,8 @@ export class ProductDetails {
 
   selectSize(size: string): void {
     this.selectedSize.set(size);
+    this.sizeError.set(false);
+    this.addedMessage.set(null);
   }
 
   toggleAccordion(id: ProductAccordionId): void {
@@ -82,6 +91,39 @@ export class ProductDetails {
   }
 
   addToCart(): void {
-    // Cart feature not wired yet — UI only for storefront demo.
+    const product = this.product();
+    if (!product || !product.inStock) {
+      return;
+    }
+
+    const size = this.selectedSize();
+    if (!size) {
+      this.sizeError.set(true);
+      this.addedMessage.set(null);
+      return;
+    }
+
+    this.cart.addItem({
+      slug: product.slug,
+      name: product.name,
+      size,
+      price: product.price,
+      currency: product.currency,
+      image: product.images[0]?.src ?? '',
+      quantity: this.quantity(),
+    });
+
+    this.sizeError.set(false);
+    this.addedMessage.set(
+      `Added ${this.quantity()} × size ${size} to your cart.`,
+    );
+  }
+
+  buyNow(): void {
+    this.addToCart();
+    if (this.sizeError() || !this.product()?.inStock) {
+      return;
+    }
+    void this.router.navigate(['/cart']);
   }
 }

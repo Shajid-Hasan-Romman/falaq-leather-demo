@@ -1,0 +1,373 @@
+<section class="cart" aria-labelledby="cart-heading">
+  <div class="cart__atmosphere" aria-hidden="true"></div>
+
+  <div class="page-shell cart__shell">
+    @if (lastOrder(); as order) {
+      <!-- ── Order confirmation ── -->
+      <div class="cart-confirm">
+        <div class="cart-confirm__badge" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M5 12.5l4.5 4.5L19 7.5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <p class="cart-eyebrow cart-eyebrow--success">Order confirmed</p>
+        <h1 id="cart-heading" class="font-display cart-confirm__title">
+          Thank you, {{ order.customer.fullName }}
+        </h1>
+        <p class="cart-confirm__lead">
+          We’ve received your Cash on Delivery order
+          <strong>{{ order.id }}</strong>
+          · {{ formatDate(order.placedAt) }}
+        </p>
+
+        <div class="cart-confirm__meta">
+          <div>
+            <span class="cart-meta-label">Phone</span>
+            <span class="cart-meta-value">{{ order.customer.phone }}</span>
+          </div>
+          <div>
+            <span class="cart-meta-label">City</span>
+            <span class="cart-meta-value">{{ order.customer.city }}</span>
+          </div>
+          <div class="cart-confirm__meta-wide">
+            <span class="cart-meta-label">Delivery address</span>
+            <span class="cart-meta-value">{{ order.customer.address }}</span>
+          </div>
+          <div>
+            <span class="cart-meta-label">Payment</span>
+            <span class="cart-meta-value">Cash on Delivery</span>
+          </div>
+          <div>
+            <span class="cart-meta-label">Order total</span>
+            <span class="cart-meta-value cart-meta-value--strong">
+              {{ order.currency }} {{ order.subtotal | number: '1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="cart-confirm__items">
+          <h2 class="cart-section-title">Items ordered</h2>
+          <ul>
+            @for (item of order.items; track item.id) {
+              <li class="cart-confirm__item">
+                <div class="cart-thumb cart-thumb--sm">
+                  <img [src]="item.image" [alt]="item.name" />
+                </div>
+                <div class="cart-confirm__item-copy">
+                  <p class="cart-item-name">{{ item.name }}</p>
+                  <p class="cart-item-meta">
+                    Size {{ item.size }} · Qty {{ item.quantity }}
+                  </p>
+                </div>
+                <p class="cart-item-price">
+                  {{ item.currency }}
+                  {{ item.price * item.quantity | number: '1.2-2' }}
+                </p>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="cart-confirm__actions">
+          <a
+            routerLink="/shop"
+            class="cart-btn cart-btn--primary"
+            (click)="continueShopping()"
+          >
+            Continue shopping
+          </a>
+          <button
+            type="button"
+            class="cart-btn cart-btn--ghost"
+            (click)="continueShopping()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    } @else if (isEmpty()) {
+      <!-- ── Empty cart ── -->
+      <div class="cart-empty">
+        <div class="cart-empty__icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <rect
+              x="5"
+              y="8"
+              width="14"
+              height="13"
+              rx="1.5"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M9 8V6.5a3 3 0 0 1 6 0V8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <p class="cart-eyebrow">Shopping bag</p>
+        <h1 id="cart-heading" class="font-display cart-empty__title">
+          Your cart is empty
+        </h1>
+        <p class="cart-empty__lead">
+          Discover handcrafted leather footwear and add your favourites.
+        </p>
+        <div class="cart-empty__actions">
+          <a routerLink="/shop" class="cart-btn cart-btn--primary">Shop collection</a>
+          <a routerLink="/shop/men" class="cart-btn cart-btn--ghost">Men</a>
+          <a routerLink="/shop/women" class="cart-btn cart-btn--ghost">Women</a>
+        </div>
+      </div>
+    } @else {
+      <!-- ── Active cart ── -->
+      <header class="cart-header">
+        <div>
+          <p class="cart-eyebrow">Checkout</p>
+          <h1 id="cart-heading" class="font-display cart-header__title">
+            Your cart
+          </h1>
+        </div>
+        <p class="cart-header__count">
+          {{ itemCount() }}
+          {{ itemCount() === 1 ? 'item' : 'items' }}
+        </p>
+      </header>
+
+      <div class="cart-layout">
+        <div class="cart-lines">
+          <ul aria-label="Cart items">
+            @for (item of items(); track item.id) {
+              <li class="cart-line">
+                <a
+                  [routerLink]="['/product-details', item.slug]"
+                  class="cart-thumb"
+                >
+                  <img [src]="item.image" [alt]="item.name" />
+                </a>
+
+                <div class="cart-line__body">
+                  <div class="cart-line__top">
+                    <div class="min-w-0">
+                      <a
+                        [routerLink]="['/product-details', item.slug]"
+                        class="cart-item-name cart-item-name--link"
+                      >
+                        {{ item.name }}
+                      </a>
+                      <p class="cart-item-meta">
+                        Size {{ item.size }}
+                        <span class="cart-dot" aria-hidden="true">·</span>
+                        {{ item.currency }} {{ item.price | number: '1.2-2' }} each
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      class="cart-remove"
+                      [attr.aria-label]="'Remove ' + item.name"
+                      (click)="removeItem(item.id)"
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div class="cart-line__bottom">
+                    <div
+                      class="cart-qty"
+                      role="group"
+                      [attr.aria-label]="'Quantity for ' + item.name"
+                    >
+                      <button
+                        type="button"
+                        class="cart-qty__btn"
+                        aria-label="Decrease quantity"
+                        (click)="decreaseQty(item.id)"
+                      >
+                        −
+                      </button>
+                      <span class="cart-qty__value">{{ item.quantity }}</span>
+                      <button
+                        type="button"
+                        class="cart-qty__btn"
+                        aria-label="Increase quantity"
+                        (click)="increaseQty(item.id)"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <p class="cart-item-price">
+                      {{ item.currency }}
+                      {{ item.price * item.quantity | number: '1.2-2' }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            }
+          </ul>
+
+          <a routerLink="/shop" class="cart-continue">
+            <span aria-hidden="true">←</span> Continue shopping
+          </a>
+        </div>
+
+        <aside class="cart-summary" aria-label="Order summary">
+          <div class="cart-summary__inner">
+            <h2 class="cart-section-title">Order summary</h2>
+
+            <div class="cart-delivery">
+              @if (qualifiesFreeDelivery()) {
+                <p class="cart-delivery__ok">You’ve unlocked free delivery</p>
+              } @else {
+                <p class="cart-delivery__hint">
+                  Add
+                  <strong>
+                    {{ currency() }} {{ freeDeliveryRemaining() | number: '1.2-2' }}
+                  </strong>
+                  more for free delivery
+                </p>
+              }
+              <div
+                class="cart-delivery__bar"
+                role="progressbar"
+                [attr.aria-valuenow]="freeDeliveryProgress()"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="Progress toward free delivery"
+              >
+                <span [style.width.%]="freeDeliveryProgress()"></span>
+              </div>
+            </div>
+
+            <dl class="cart-totals">
+              <div>
+                <dt>Subtotal</dt>
+                <dd>{{ currency() }} {{ subtotal() | number: '1.2-2' }}</dd>
+              </div>
+              <div>
+                <dt>Delivery</dt>
+                <dd [class.is-free]="qualifiesFreeDelivery()">
+                  {{ deliveryLabel() }}
+                </dd>
+              </div>
+              <div class="cart-totals__grand">
+                <dt>Total</dt>
+                <dd>{{ currency() }} {{ subtotal() | number: '1.2-2' }}</dd>
+              </div>
+            </dl>
+
+            <p class="cart-pay-note">
+              <span class="cart-pay-note__tag">COD</span>
+              Cash on Delivery — pay when your order arrives.
+            </p>
+
+            @if (!showCheckout()) {
+              <button
+                type="button"
+                class="cart-btn cart-btn--primary cart-btn--block"
+                (click)="openCheckout()"
+              >
+                Proceed to checkout
+              </button>
+            } @else {
+              <form class="cart-form" (submit)="placeOrder($event)">
+                <div class="cart-form__head">
+                  <h3 class="cart-form__title">Delivery details</h3>
+                  <button
+                    type="button"
+                    class="cart-form__back"
+                    (click)="cancelCheckout()"
+                  >
+                    Back
+                  </button>
+                </div>
+
+                <div class="cart-field">
+                  <label for="checkout-name">Full name</label>
+                  <input
+                    id="checkout-name"
+                    type="text"
+                    required
+                    autocomplete="name"
+                    [ngModel]="fullName()"
+                    (ngModelChange)="fullName.set($event)"
+                    name="fullName"
+                  />
+                </div>
+
+                <div class="cart-field">
+                  <label for="checkout-phone">Phone</label>
+                  <input
+                    id="checkout-phone"
+                    type="tel"
+                    required
+                    autocomplete="tel"
+                    placeholder="01XXXXXXXXX"
+                    [ngModel]="phone()"
+                    (ngModelChange)="phone.set($event)"
+                    name="phone"
+                  />
+                </div>
+
+                <div class="cart-field">
+                  <label for="checkout-city">City</label>
+                  <input
+                    id="checkout-city"
+                    type="text"
+                    required
+                    autocomplete="address-level2"
+                    [ngModel]="city()"
+                    (ngModelChange)="city.set($event)"
+                    name="city"
+                  />
+                </div>
+
+                <div class="cart-field">
+                  <label for="checkout-address">Address</label>
+                  <textarea
+                    id="checkout-address"
+                    required
+                    rows="3"
+                    autocomplete="street-address"
+                    [ngModel]="address()"
+                    (ngModelChange)="address.set($event)"
+                    name="address"
+                  ></textarea>
+                </div>
+
+                <div class="cart-field">
+                  <label for="checkout-note">Note <span>(optional)</span></label>
+                  <input
+                    id="checkout-note"
+                    type="text"
+                    [ngModel]="note()"
+                    (ngModelChange)="note.set($event)"
+                    name="note"
+                  />
+                </div>
+
+                @if (formError(); as err) {
+                  <p class="cart-form__error" role="alert">{{ err }}</p>
+                }
+
+                <button
+                  type="submit"
+                  class="cart-btn cart-btn--primary cart-btn--block"
+                >
+                  Place order
+                </button>
+              </form>
+            }
+          </div>
+        </aside>
+      </div>
+    }
+  </div>
+</section>

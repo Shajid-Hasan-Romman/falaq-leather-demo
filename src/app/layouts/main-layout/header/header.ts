@@ -7,16 +7,20 @@ import {
   signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
+import { CartService } from '../../../core/services/cart.service';
 
 export interface NavChild {
   readonly label: string;
   readonly path: string;
+  readonly queryParams?: Readonly<Record<string, string>>;
 }
 
 export interface NavItem {
   readonly label: string;
   readonly path: string;
+  readonly queryParams?: Readonly<Record<string, string>>;
   readonly children: readonly NavChild[];
 }
 
@@ -29,47 +33,67 @@ export interface NavItem {
 })
 export class Header {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly router = inject(Router);
+  private readonly cart = inject(CartService);
 
   readonly menuOpen = signal(false);
   readonly openDropdown = signal<string | null>(null);
-  readonly cartCount = signal(0);
+  readonly cartCount = this.cart.itemCount;
 
+  /** Primary nav — paths match shop catalog + brand listing. */
   readonly navItems: readonly NavItem[] = [
     {
       label: 'Men',
       path: '/shop/men',
       children: [
-        { label: 'Bags', path: '/shop/men/bags' },
-        { label: 'Wallets', path: '/shop/men/wallets' },
-        { label: 'Belts', path: '/shop/men/belts' },
-        { label: 'Shoes', path: '/shop/men/shoes' },
+        { label: 'Formal', path: '/shop/men/formal' },
+        { label: 'Casual', path: '/shop/men/casual' },
+        { label: 'Sandal', path: '/shop/men/sandal' },
       ],
     },
     {
       label: 'Women',
       path: '/shop/women',
       children: [
-        { label: 'Handbags', path: '/shop/women/handbags' },
-        { label: 'Wallets', path: '/shop/women/wallets' },
-        { label: 'Accessories', path: '/shop/women/accessories' },
+        { label: 'Flats', path: '/shop/women/flats' },
+        { label: 'Heels', path: '/shop/women/heels' },
+        { label: 'Closed', path: '/shop/women/closed' },
       ],
     },
     {
-      label: 'Bags',
-      path: '/shop/bags',
+      label: 'Children',
+      path: '/shop/children',
       children: [
-        { label: 'Tote', path: '/shop/bags/tote' },
-        { label: 'Messenger', path: '/shop/bags/messenger' },
-        { label: 'Travel', path: '/shop/bags/travel' },
+        { label: 'Boys Shoes', path: '/shop/children/boys' },
+        { label: 'Girls Shoes', path: '/shop/children/girls' },
+        { label: 'Sports', path: '/shop/children/sports' },
       ],
     },
     {
-      label: 'Accessories',
-      path: '/shop/accessories',
+      label: 'Brands',
+      path: '/products',
+      queryParams: { shop_our_brand: 'shop-our-brand' },
       children: [
-        { label: 'Belts', path: '/shop/accessories/belts' },
-        { label: 'Card holders', path: '/shop/accessories/card-holders' },
-        { label: 'Care kits', path: '/shop/accessories/care' },
+        {
+          label: 'Elegante',
+          path: '/products',
+          queryParams: { shop_our_brand: 'elegante' },
+        },
+        {
+          label: 'Lara Clara',
+          path: '/products',
+          queryParams: { shop_our_brand: 'lara-clara' },
+        },
+        {
+          label: 'Bay Soft',
+          path: '/products',
+          queryParams: { shop_our_brand: 'bay-soft' },
+        },
+        {
+          label: 'Striker',
+          path: '/products',
+          queryParams: { shop_our_brand: 'striker' },
+        },
       ],
     },
   ];
@@ -110,6 +134,16 @@ export class Header {
 
   onSearchSubmit(event: Event): void {
     event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const input = form.querySelector(
+      'input[type="search"]',
+    ) as HTMLInputElement | null;
+    const q = input?.value.trim() ?? '';
+
+    this.closeMenu();
+    void this.router.navigate(['/shop'], {
+      queryParams: q ? { q } : {},
+    });
   }
 
   @HostListener('document:keydown.escape')
