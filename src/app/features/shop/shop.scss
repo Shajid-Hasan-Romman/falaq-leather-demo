@@ -1,0 +1,88 @@
+:host {
+  display: block;
+  background: #fff;
+  min-height: 50vh;
+}
+
+.toolbar-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.toolbar-caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: 2px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #666;
+}
+
+.toolbar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+}
+
+.toolbar-menu__item {
+  display: block;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.8125rem;
+  color: #333;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.toolbar-menu__item:hover,
+.toolbar-menu__item.is-active {
+  background: #f5f5f5;
+  color: #1a2b48;
+}
+
+.product-card {
+  min-width: 0;
+}
+
+.page-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.4rem;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  color: #555;
+  font-size: 0.875rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.page-btn:hover:not(:disabled):not(.is-active) {
+  border-color: #999;
+  color: #222;
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-btn.is-active {
+  border-color: #2f6fed;
+  background: #2f6fed;
+  color: #fff;
+}

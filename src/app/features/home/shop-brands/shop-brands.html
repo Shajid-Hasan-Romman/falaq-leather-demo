@@ -1,15 +1,15 @@
 <section
-  class="shop-brands page-shell py-8 md:py-12"
+  class="shop-brands page-shell py-6 sm:py-8 md:py-12"
   aria-labelledby="shop-brands-heading"
 >
   <h2
     id="shop-brands-heading"
-    class="font-display text-center text-[1.75rem] leading-tight text-[#1a2b48] md:text-[2.15rem] lg:text-[2.35rem]"
+    class="font-display px-2 text-center text-[1.5rem] leading-tight text-[#1a2b48] sm:text-[1.75rem] md:text-[2.15rem] lg:text-[2.35rem]"
   >
     Shop Our Brands
   </h2>
 
-  <div class="brand-grid mt-8 lg:mt-10">
+  <div class="brand-grid mt-6 sm:mt-8 lg:mt-10">
     @for (brand of brands; track brand.id) {
       <a
         routerLink="/products"

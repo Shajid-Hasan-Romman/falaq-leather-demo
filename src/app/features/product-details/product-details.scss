@@ -7,3 +7,7 @@
   background: #1a2b48;
   color: #fff;
 }
+
+.size-btn.is-error:not(.is-selected) {
+  border-color: #d64545;
+}

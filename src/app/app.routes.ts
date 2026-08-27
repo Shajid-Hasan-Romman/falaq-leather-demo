@@ -18,6 +18,24 @@ export const routes: Routes = [
         title: 'Falaq Leather',
       },
       {
+        path: 'shop',
+        loadComponent: () =>
+          import('./features/shop/shop').then((m) => m.Shop),
+        title: 'Shop · Falaq Leather',
+      },
+      {
+        path: 'shop/:category',
+        loadComponent: () =>
+          import('./features/shop/shop').then((m) => m.Shop),
+        title: 'Shop · Falaq Leather',
+      },
+      {
+        path: 'shop/:category/:subcategory',
+        loadComponent: () =>
+          import('./features/shop/shop').then((m) => m.Shop),
+        title: 'Shop · Falaq Leather',
+      },
+      {
         path: 'product-details/:slug',
         loadComponent: () =>
           import('./features/product-details/product-details').then(
@@ -33,6 +51,12 @@ export const routes: Routes = [
             (m) => m.BrandProducts,
           ),
         title: 'Shop Our Brands · Falaq Leather',
+      },
+      {
+        path: 'cart',
+        loadComponent: () =>
+          import('./features/cart/cart').then((m) => m.Cart),
+        title: 'Cart · Falaq Leather',
       },
       {
         path: '**',

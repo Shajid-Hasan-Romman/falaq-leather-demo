@@ -12,9 +12,15 @@
  * Corner radius ≈ 14px
  */
 .latest-card {
-  border-radius: 14px;
+  border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   border: 1px solid #e8e8e8;
+}
+
+@media (min-width: 576px) {
+  .latest-card {
+    border-radius: 14px;
+  }
 }
 
 .latest-row {
@@ -24,7 +30,7 @@
 
 .latest-title {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: 0.04em;
@@ -56,21 +62,47 @@
 
 /* Mobile stacked */
 .latest-media {
-  height: 220px;
+  height: 200px;
 }
 
 .latest-panel {
-  min-height: 140px;
-  padding-block: 1.75rem;
+  min-height: 120px;
+  padding-block: 1.5rem;
 }
 
 @media (min-width: 576px) {
   .latest-media {
-    height: 260px;
+    height: 240px;
+  }
+
+  .latest-panel {
+    min-height: 140px;
+    padding-block: 1.75rem;
   }
 
   .latest-title {
     font-size: 1.5rem;
+  }
+}
+
+/* Tablet — image + video side by side, panel full width below */
+@media (min-width: 768px) and (max-width: 991px) {
+  .latest-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .latest-panel {
+    grid-column: 1 / -1;
+    min-height: 130px;
+    padding-block: 1.75rem;
+  }
+
+  .latest-media {
+    height: 280px;
+  }
+
+  .latest-title {
+    font-size: 1.65rem;
   }
 }
 

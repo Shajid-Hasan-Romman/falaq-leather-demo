@@ -1,0 +1,68 @@
+<section class="account page-shell py-10 md:py-16" aria-labelledby="account-heading">
+  <div class="account__card mx-auto w-full max-w-md border border-[#e8e8e8] bg-white p-6 sm:p-8">
+    <h1
+      id="account-heading"
+      class="font-display text-center text-[1.5rem] text-[#1a2b48] sm:text-[1.75rem]"
+    >
+      Sign in
+    </h1>
+    <p class="mt-2 text-center text-sm text-[#6b6b6b]">
+      Demo storefront — no backend yet. Submit to preview the signed-in state.
+    </p>
+
+    @if (submitted()) {
+      <div class="mt-8 text-center">
+        <p class="text-base text-[#1a1a1a]">You’re signed in (demo).</p>
+        <a
+          routerLink="/shop"
+          class="mt-6 inline-flex items-center justify-center bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+        >
+          Continue shopping
+        </a>
+      </div>
+    } @else {
+      <form class="mt-8 space-y-4" (submit)="onSubmit($event)">
+        <div>
+          <label class="block text-sm font-medium text-[#333]" for="account-email">Email</label>
+          <input
+            id="account-email"
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            class="mt-1.5 w-full border border-[#d0d0d0] bg-white px-3 py-2.5 text-base outline-none focus:border-brand"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-[#333]" for="account-password">
+            Password
+          </label>
+          <input
+            id="account-password"
+            type="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            class="mt-1.5 w-full border border-[#d0d0d0] bg-white px-3 py-2.5 text-base outline-none focus:border-brand"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+        >
+          Sign in
+        </button>
+      </form>
+    }
+
+    <p class="mt-6 text-center text-sm text-[#6b6b6b]">
+      <a routerLink="/" class="text-brand hover:underline">Back to home</a>
+    </p>
+  </div>
+</section>

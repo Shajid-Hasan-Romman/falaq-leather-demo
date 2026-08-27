@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   PLATFORM_ID,
@@ -37,10 +38,12 @@ export interface LatestProduct {
 })
 export class LatestArrivals {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly promoVideo =
     viewChild<ElementRef<HTMLVideoElement>>('promoVideo');
 
-  private readonly visibleCount = 4;
+  /** 1 mobile · 2 tablet · 4 desktop — mirrors grid breakpoints. */
+  private readonly visibleCount = signal(4);
 
   readonly bannerImage = '/asset/latest/29.03.2026.jpeg';
 
@@ -118,12 +121,12 @@ export class LatestArrivals {
   readonly canPrev = computed(() => this.startIndex() > 0);
 
   readonly canNext = computed(
-    () => this.startIndex() + this.visibleCount < this.products.length,
+    () => this.startIndex() + this.visibleCount() < this.products.length,
   );
 
   readonly visibleProducts = computed(() => {
     const start = this.startIndex();
-    return this.products.slice(start, start + this.visibleCount);
+    return this.products.slice(start, start + this.visibleCount());
   });
 
   constructor() {
@@ -131,7 +134,24 @@ export class LatestArrivals {
       if (!isPlatformBrowser(this.platformId)) {
         return;
       }
+
       this.startSilentAutoplay();
+
+      const updateVisibleCount = (): void => {
+        const width = window.innerWidth;
+        const next = width < 576 ? 1 : width < 992 ? 2 : 4;
+        this.visibleCount.set(next);
+        const maxStart = Math.max(0, this.products.length - next);
+        if (this.startIndex() > maxStart) {
+          this.startIndex.set(maxStart);
+        }
+      };
+
+      updateVisibleCount();
+      window.addEventListener('resize', updateVisibleCount);
+      this.destroyRef.onDestroy(() => {
+        window.removeEventListener('resize', updateVisibleCount);
+      });
     });
   }
 
@@ -146,7 +166,7 @@ export class LatestArrivals {
     if (!this.canNext()) {
       return;
     }
-    const maxStart = Math.max(0, this.products.length - this.visibleCount);
+    const maxStart = Math.max(0, this.products.length - this.visibleCount());
     this.startIndex.update((i) => Math.min(maxStart, i + 1));
   }
 
@@ -156,14 +176,35 @@ export class LatestArrivals {
       return;
     }
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.controls = false;
+    const forceMute = (): void => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.controls = false;
+    };
+
+    forceMute();
+
+    // Keep audio off permanently — some browsers briefly unmute on play/seek.
+    const keepSilent = (): void => {
+      if (!video.muted || video.volume > 0) {
+        forceMute();
+      }
+    };
+
+    video.addEventListener('volumechange', keepSilent);
+    video.addEventListener('play', forceMute);
+    video.addEventListener('playing', forceMute);
+    this.destroyRef.onDestroy(() => {
+      video.removeEventListener('volumechange', keepSilent);
+      video.removeEventListener('play', forceMute);
+      video.removeEventListener('playing', forceMute);
+    });
 
     const play = (): void => {
+      forceMute();
       void video.play().catch(() => {
-        video.muted = true;
+        forceMute();
         void video.play().catch(() => undefined);
       });
     };

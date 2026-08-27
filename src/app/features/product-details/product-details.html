@@ -67,6 +67,7 @@
                   role="option"
                   class="size-btn flex h-10 min-w-10 items-center justify-center border border-[#d0d0d0] px-3 text-sm text-[#1a1a1a] transition-colors hover:border-[#1a1a1a]"
                   [class.is-selected]="selectedSize() === size"
+                  [class.is-error]="sizeError()"
                   [attr.aria-selected]="selectedSize() === size"
                   (click)="selectSize(size)"
                 >
@@ -74,6 +75,9 @@
                 </button>
               }
             </div>
+            @if (sizeError()) {
+              <p class="mt-2 text-sm text-[#d64545]" role="alert">Please select a size.</p>
+            }
           </div>
 
           <div class="mt-6">
@@ -110,15 +114,36 @@
             {{ product.inStock ? 'In Stock' : 'Product not available' }}
           </p>
 
-          <div class="mt-6">
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
-              class="w-full bg-[#1a2b48] px-6 py-3.5 text-sm font-semibold tracking-wide text-white uppercase transition-colors hover:bg-[#122033]"
+              class="w-full bg-[#1a2b48] px-6 py-3.5 text-sm font-semibold tracking-wide text-white uppercase transition-colors hover:bg-[#122033] disabled:cursor-not-allowed disabled:opacity-50"
+              [disabled]="!product.inStock"
               (click)="addToCart()"
             >
               Add to Cart
             </button>
+            <button
+              type="button"
+              class="w-full border border-[#1a2b48] px-6 py-3.5 text-sm font-semibold tracking-wide text-[#1a2b48] uppercase transition-colors hover:bg-[#1a2b48] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+              [disabled]="!product.inStock"
+              (click)="buyNow()"
+            >
+              Buy Now
+            </button>
           </div>
+
+          @if (addedMessage(); as message) {
+            <div
+              class="mt-4 flex flex-wrap items-center justify-between gap-2 border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm text-emerald-800"
+              role="status"
+            >
+              <span>{{ message }}</span>
+              <a routerLink="/cart" class="font-semibold underline underline-offset-2">
+                View cart
+              </a>
+            </div>
+          }
 
           <p class="mt-5 text-sm leading-relaxed text-[#555]">
             Free Shipping in B.D. Buy now, get in 2 days
