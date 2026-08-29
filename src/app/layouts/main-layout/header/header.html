@@ -9,15 +9,13 @@
   </div>
 
   <header class="w-full bg-[#f5f5f5] text-[#212529]">
-    <!-- Left: logo | Center: nav (absolute) | Right: search + sign in + cart -->
-    <div
-      class="page-shell relative z-[11] flex h-20 items-center py-[10.24px] leading-6"
-    >
-      <!-- LEFT: burger + logo -->
-      <div class="relative z-10 flex shrink-0 items-center gap-3">
+    <!-- Left: logo | Center: nav (true center under utility text) | Right: search -->
+    <div class="header-bar page-shell">
+      <!-- LEFT -->
+      <div class="header-bar__left">
         <button
           type="button"
-          class="flex h-10 w-10 shrink-0 items-center justify-center text-[#212529] lg:hidden"
+          class="header-bar__burger"
           (click)="toggleMenu()"
           [attr.aria-expanded]="menuOpen()"
           aria-controls="mobile-nav"
@@ -36,19 +34,16 @@
 
         <a
           routerLink="/"
-          class="font-display min-w-0 shrink-0 text-[1.35rem] leading-none tracking-tight text-brand md:text-[1.75rem]"
+          class="header-bar__logo font-display"
           (click)="closeMenu()"
         >
           Falaq Leather
         </a>
       </div>
 
-      <!-- CENTER: nav — true horizontal center of the bar -->
-      <nav
-        class="pointer-events-none absolute inset-x-0 top-0 bottom-0 hidden items-center justify-center lg:flex"
-        aria-label="Primary"
-      >
-        <div class="pointer-events-auto flex items-center gap-5 xl:gap-7 2xl:gap-8">
+      <!-- CENTER — always geometric center of page-shell -->
+      <nav class="header-nav" aria-label="Primary">
+        <div class="header-nav__list">
           @for (item of navItems; track item.label) {
             <div
               class="relative"
@@ -58,8 +53,8 @@
               <a
                 [routerLink]="item.path"
                 [queryParams]="item.queryParams ?? {}"
-                class="inline-flex items-center gap-1.5 py-2 text-base font-semibold tracking-[0.08em] text-[#212529] uppercase transition-colors hover:text-brand"
-                [class.text-brand]="openDropdown() === item.label"
+                class="header-nav__link"
+                [class.is-active]="openDropdown() === item.label"
                 (click)="closeMenu()"
               >
                 {{ item.label }}
@@ -91,10 +86,10 @@
         </div>
       </nav>
 
-      <!-- RIGHT: search + sign in + cart -->
-      <div class="relative z-10 ml-auto flex shrink-0 items-center gap-2 sm:gap-3 xl:gap-4">
+      <!-- RIGHT -->
+      <div class="header-bar__right">
         <form
-          class="hidden min-w-0 w-[14rem] items-center border border-border bg-white md:flex lg:w-[16rem] xl:w-[18rem] 2xl:w-[20rem]"
+          class="header-search"
           role="search"
           (submit)="onSearchSubmit($event)"
         >

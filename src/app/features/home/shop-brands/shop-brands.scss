@@ -57,15 +57,7 @@
 
 @media (min-width: 992px) {
   .brand-card {
-    /* Match AmarBay SS card height (~300px), width from 4-col grid */
-    height: 300px;
-    min-height: 300px;
-    padding: 2rem 1.35rem 1.6rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .brand-card {
+    /* Desktop + laptop share the same card scale */
     height: 320px;
     min-height: 320px;
     padding: 2.25rem 1.5rem 1.75rem;
@@ -107,13 +99,6 @@
   }
 
   .brand-card__logo img {
-    max-width: 72%;
-    max-height: 3.75rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .brand-card__logo img {
     max-width: 70%;
     max-height: 4.5rem;
   }
@@ -153,7 +138,7 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .brand-card__name {
     font-size: 0.875rem;
   }

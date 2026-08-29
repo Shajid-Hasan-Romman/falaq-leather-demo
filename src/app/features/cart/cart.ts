@@ -10,7 +10,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { CartService } from '../../core/services/cart.service';
-import type { CheckoutDetails } from '../../core/models/cart.model';
+import {
+  DELIVERY_ZONES,
+  FREE_DELIVERY_THRESHOLD,
+  deliveryZoneLabel,
+  type CheckoutDetails,
+  type DeliveryZoneId,
+} from '../../core/models/cart.model';
 
 @Component({
   selector: 'app-cart',
@@ -28,7 +34,14 @@ export class Cart {
   readonly currency = this.cart.currency;
   readonly isEmpty = this.cart.isEmpty;
   readonly qualifiesFreeDelivery = this.cart.qualifiesFreeDelivery;
+  readonly deliveryZone = this.cart.deliveryZone;
+  readonly zoneFee = this.cart.zoneFee;
+  readonly deliveryFee = this.cart.deliveryFee;
+  readonly total = this.cart.total;
   readonly lastOrder = this.cart.lastOrder;
+
+  readonly deliveryZones = DELIVERY_ZONES;
+  readonly freeDeliveryThreshold = FREE_DELIVERY_THRESHOLD;
 
   readonly fullName = signal('');
   readonly phone = signal('');
@@ -38,17 +51,35 @@ export class Cart {
   readonly formError = signal<string | null>(null);
   readonly showCheckout = signal(false);
 
-  readonly deliveryLabel = computed(() =>
-    this.qualifiesFreeDelivery() ? 'Free' : 'Standard (COD)',
+  readonly deliveryLabel = computed(() => {
+    if (this.qualifiesFreeDelivery()) {
+      return 'Free';
+    }
+    const fee = this.deliveryFee();
+    return `${this.currency()} ${fee.toFixed(2)}`;
+  });
+
+  readonly selectedZoneLabel = computed(() =>
+    deliveryZoneLabel(this.deliveryZone()),
   );
 
   readonly freeDeliveryRemaining = computed(() =>
-    Math.max(0, 5000 - this.subtotal()),
+    Math.max(0, FREE_DELIVERY_THRESHOLD - this.subtotal()),
   );
 
   readonly freeDeliveryProgress = computed(() =>
-    Math.min(100, Math.round((this.subtotal() / 5000) * 100)),
+    Math.min(
+      100,
+      Math.round((this.subtotal() / FREE_DELIVERY_THRESHOLD) * 100),
+    ),
   );
+
+  selectDeliveryZone(zone: DeliveryZoneId): void {
+    if (this.qualifiesFreeDelivery()) {
+      return;
+    }
+    this.cart.setDeliveryZone(zone);
+  }
 
   increaseQty(id: string): void {
     this.cart.increaseQuantity(id);
@@ -128,6 +159,10 @@ export class Cart {
 
   continueShopping(): void {
     this.cart.clearLastOrder();
+  }
+
+  zoneLabel(zone: DeliveryZoneId): string {
+    return deliveryZoneLabel(zone);
   }
 
   formatDate(iso: string): string {

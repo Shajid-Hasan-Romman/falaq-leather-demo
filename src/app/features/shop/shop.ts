@@ -6,11 +6,11 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs/operators';
 
+import { ProductCardActions } from '../../shared/components/product-card-actions/product-card-actions';
 import {
   buildShopPath,
   filterProductsByQuery,
@@ -24,7 +24,7 @@ export type ProductSortId = 'best-sellers' | 'price-asc' | 'price-desc' | 'name-
 
 @Component({
   selector: 'app-shop',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, ProductCardActions],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './shop.html',
   styleUrl: './shop.scss',

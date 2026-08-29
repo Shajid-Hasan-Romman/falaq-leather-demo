@@ -10,8 +10,11 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { DecimalPipe, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
+import { productSlugFromPath } from '../../../core/utils/product-slug';
+import { ProductCardActions } from '../../../shared/components/product-card-actions/product-card-actions';
 
 export interface LatestCategory {
   readonly id: string;
@@ -31,7 +34,7 @@ export interface LatestProduct {
 
 @Component({
   selector: 'app-latest-arrivals',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, ProductCardActions],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './latest-arrivals.html',
   styleUrl: './latest-arrivals.scss',
@@ -52,6 +55,8 @@ export class LatestArrivals {
     encodeURIComponent('Shoes by 2GO - Theatrical Ad Film _ Commercial.mp4');
 
   readonly startIndex = signal(0);
+
+  readonly slugFromPath = productSlugFromPath;
 
   readonly categories: readonly LatestCategory[] = [
     { id: 'mens', label: 'MENS', path: '/shop/men' },

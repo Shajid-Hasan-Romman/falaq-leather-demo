@@ -45,9 +45,23 @@
             <span class="cart-meta-value">Cash on Delivery</span>
           </div>
           <div>
+            <span class="cart-meta-label">Delivery area</span>
+            <span class="cart-meta-value">{{ zoneLabel(order.deliveryZone) }}</span>
+          </div>
+          <div>
+            <span class="cart-meta-label">Delivery charge</span>
+            <span class="cart-meta-value">
+              @if (order.deliveryFee === 0) {
+                Free
+              } @else {
+                {{ order.currency }} {{ order.deliveryFee | number: '1.2-2' }}
+              }
+            </span>
+          </div>
+          <div>
             <span class="cart-meta-label">Order total</span>
             <span class="cart-meta-value cart-meta-value--strong">
-              {{ order.currency }} {{ order.subtotal | number: '1.2-2' }}
+              {{ order.currency }} {{ order.total | number: '1.2-2' }}
             </span>
           </div>
         </div>
@@ -231,7 +245,8 @@
                   <strong>
                     {{ currency() }} {{ freeDeliveryRemaining() | number: '1.2-2' }}
                   </strong>
-                  more for free delivery
+                  more for free delivery (orders from
+                  {{ currency() }} {{ freeDeliveryThreshold | number: '1.0-0' }})
                 </p>
               }
               <div
@@ -246,20 +261,68 @@
               </div>
             </div>
 
+            <div
+              class="cart-zone"
+              [class.is-frozen]="qualifiesFreeDelivery()"
+              role="radiogroup"
+              aria-label="Delivery area"
+            >
+              <p class="cart-zone__title">Delivery area</p>
+              <div class="cart-zone__options">
+                @for (zone of deliveryZones; track zone.id) {
+                  <button
+                    type="button"
+                    class="cart-zone__option"
+                    role="radio"
+                    [attr.aria-checked]="
+                      !qualifiesFreeDelivery() && deliveryZone() === zone.id
+                    "
+                    [class.is-selected]="
+                      !qualifiesFreeDelivery() && deliveryZone() === zone.id
+                    "
+                    [disabled]="qualifiesFreeDelivery()"
+                    (click)="selectDeliveryZone(zone.id)"
+                  >
+                    <span class="cart-zone__label">{{ zone.label }}</span>
+                    <span class="cart-zone__fee">
+                      {{ currency() }} {{ zone.fee | number: '1.0-0' }}
+                    </span>
+                  </button>
+                }
+              </div>
+              @if (qualifiesFreeDelivery()) {
+                <p class="cart-zone__note">
+                  Free delivery unlocked — delivery area is locked and unmarked
+                  until the order drops below
+                  {{ currency() }} {{ freeDeliveryThreshold | number: '1.0-0' }}.
+                </p>
+              } @else {
+                <p class="cart-zone__note">
+                  {{ selectedZoneLabel() }} delivery will be added to your total.
+                </p>
+              }
+            </div>
+
             <dl class="cart-totals">
               <div>
                 <dt>Subtotal</dt>
                 <dd>{{ currency() }} {{ subtotal() | number: '1.2-2' }}</dd>
               </div>
               <div>
-                <dt>Delivery</dt>
+                <dt>
+                  @if (qualifiesFreeDelivery()) {
+                    Delivery
+                  } @else {
+                    Delivery ({{ selectedZoneLabel() }})
+                  }
+                </dt>
                 <dd [class.is-free]="qualifiesFreeDelivery()">
                   {{ deliveryLabel() }}
                 </dd>
               </div>
               <div class="cart-totals__grand">
                 <dt>Total</dt>
-                <dd>{{ currency() }} {{ subtotal() | number: '1.2-2' }}</dd>
+                <dd>{{ currency() }} {{ total() | number: '1.2-2' }}</dd>
               </div>
             </dl>
 

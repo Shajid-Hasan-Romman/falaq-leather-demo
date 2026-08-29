@@ -8,8 +8,11 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import { DecimalPipe, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
+import { productSlugFromPath } from '../../../core/utils/product-slug';
+import { ProductCardActions } from '../../../shared/components/product-card-actions/product-card-actions';
 
 export interface FeaturedProduct {
   readonly id: string;
@@ -23,7 +26,7 @@ export interface FeaturedProduct {
 
 @Component({
   selector: 'app-featured-products',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, ProductCardActions],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './featured-products.html',
   styleUrl: './featured-products.scss',
@@ -36,6 +39,8 @@ export class FeaturedProducts {
   private readonly visibleCount = signal(4);
 
   readonly startIndex = signal(0);
+
+  readonly slugFromPath = productSlugFromPath;
 
   /** Card images match the primary shot in each product folder. */
   readonly products: readonly FeaturedProduct[] = [

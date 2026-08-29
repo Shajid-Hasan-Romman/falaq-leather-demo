@@ -1,0 +1,22 @@
+<div class="product-card-actions">
+  <p class="product-card-actions__price">
+    {{ currency() }} {{ price() | number: '1.2-2' }}
+  </p>
+
+  <div class="product-card-actions__buttons">
+    <button
+      type="button"
+      class="product-card-actions__btn product-card-actions__btn--add"
+      (click)="addToCart($event)"
+    >
+      Add to Cart
+    </button>
+    <button
+      type="button"
+      class="product-card-actions__btn product-card-actions__btn--buy"
+      (click)="buyNow($event)"
+    >
+      Buy Now
+    </button>
+  </div>
+</div>

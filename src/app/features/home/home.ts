@@ -6,8 +6,6 @@ import { FeaturedProducts } from './featured-products/featured-products';
 import { LatestArrivals } from './latest-arrivals/latest-arrivals';
 import { PromoBanner } from './promo-banner/promo-banner';
 import { ShopBrands } from './shop-brands/shop-brands';
-import { BestSellers } from './best-sellers/best-sellers';
-import { PriceOffers } from './price-offers/price-offers';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +16,6 @@ import { PriceOffers } from './price-offers/price-offers';
     LatestArrivals,
     PromoBanner,
     ShopBrands,
-    BestSellers,
-    PriceOffers,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',

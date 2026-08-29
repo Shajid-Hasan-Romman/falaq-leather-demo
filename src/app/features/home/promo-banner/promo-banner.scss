@@ -129,7 +129,8 @@
   }
 }
 
-@media (min-width: 1200px) {
+/* Laptop + desktop share the same promo overlay scale */
+@media (min-width: 992px) {
   .promo-banner__copy {
     left: 5.5%;
     top: 45%;

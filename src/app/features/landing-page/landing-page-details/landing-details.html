@@ -1,0 +1,528 @@
+<div class="lp">
+  <header class="lp-top">
+    <div class="lp-top__inner page-shell">
+      <a routerLink="/" class="lp-logo font-display">Falaq Leather</a>
+
+      <ul class="lp-trust" aria-label="Why shop with us">
+        <li>
+          <span class="lp-trust__icon" aria-hidden="true">
+            <svg lucideSparkles [size]="20" [strokeWidth]="1.75"></svg>
+          </span>
+          Premium Leather
+        </li>
+        <li>
+          <span class="lp-trust__icon" aria-hidden="true">
+            <svg lucideShoppingBag [size]="20" [strokeWidth]="1.75"></svg>
+          </span>
+          Cash on Delivery
+        </li>
+        <li>
+          <span class="lp-trust__icon" aria-hidden="true">
+            <svg lucideTruck [size]="20" [strokeWidth]="1.75"></svg>
+          </span>
+          Fast Delivery
+        </li>
+        <li>
+          <span class="lp-trust__icon" aria-hidden="true">
+            <svg lucideHeart [size]="20" [strokeWidth]="1.75"></svg>
+          </span>
+          Trusted by 10,000+ Customers
+        </li>
+      </ul>
+
+      <div class="lp-contact">
+        <a class="lp-contact__item" href="tel:09613821489">
+          <span class="lp-contact__icon" aria-hidden="true">
+            <svg lucidePhone [size]="18" [strokeWidth]="1.75"></svg>
+          </span>
+          <span class="lp-contact__text">
+            <span class="lp-contact__label">Order Now</span>
+            <span class="lp-contact__value">09613-821489</span>
+          </span>
+        </a>
+        <a
+          class="lp-contact__item lp-contact__item--wa"
+          href="https://wa.me/8801765890646"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="lp-contact__icon" aria-hidden="true">
+            <svg lucideMessageCircle [size]="18" [strokeWidth]="1.75"></svg>
+          </span>
+          <span class="lp-contact__text">
+            <span class="lp-contact__label">Order Via WhatsApp</span>
+            <span class="lp-contact__value">+880 1765-890646</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="lp-main">
+    <div class="page-shell">
+      @if (orderPlaced()) {
+        <div class="lp-success" role="status">
+          <h2 class="font-display">Order received</h2>
+          <p>
+            Thank you{{ fullName() ? ', ' + fullName() : '' }}. We will call
+            {{ phone() }} to confirm your Cash on Delivery order.
+          </p>
+          <a routerLink="/shop" class="lp-btn lp-btn--primary">Continue shopping</a>
+        </div>
+      } @else if (item(); as item) {
+        <div class="lp-checkout">
+          <figure class="lp-media">
+            <img
+              [src]="item.image"
+              [alt]="item.name"
+              width="640"
+              height="640"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+
+          <section class="lp-product" aria-labelledby="lp-product-title">
+            @if (fromCart()) {
+              <p class="lp-eyebrow">From your cart</p>
+            }
+
+            <h1 id="lp-product-title" class="font-display lp-product__title">
+              {{ item.name }}
+            </h1>
+
+            <div class="lp-price-row">
+              <span class="lp-price-row__sale">
+                BDT {{ salePrice() | number: '1.0-0' }}
+              </span>
+              <span class="lp-price-row__was">
+                BDT {{ compareAt() | number: '1.0-0' }}
+              </span>
+              <span class="lp-price-row__save">
+                Save BDT {{ savings() | number: '1.0-0' }}
+              </span>
+            </div>
+
+            <div class="lp-qty">
+              <span class="lp-qty__label">Quantity</span>
+              <div class="lp-qty__control" role="group" aria-label="Quantity">
+                <button
+                  type="button"
+                  class="lp-qty__btn"
+                  aria-label="Decrease quantity"
+                  (click)="decreaseQty()"
+                >
+                  −
+                </button>
+                <span class="lp-qty__value">{{ quantity() }}</span>
+                <button
+                  type="button"
+                  class="lp-qty__btn"
+                  aria-label="Increase quantity"
+                  (click)="increaseQty()"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div class="lp-form">
+              <h2 class="lp-form__heading">
+                <span class="lp-form__icon" aria-hidden="true">
+                  <svg lucideUser [size]="22" [strokeWidth]="1.75"></svg>
+                </span>
+                Enter your information
+              </h2>
+
+              <label class="lp-field">
+                <span>Full Name *</span>
+                <input
+                  type="text"
+                  [ngModel]="fullName()"
+                  (ngModelChange)="fullName.set($event)"
+                  placeholder="Enter your full name"
+                  autocomplete="name"
+                />
+              </label>
+
+              <label class="lp-field">
+                <span>Phone Number *</span>
+                <input
+                  type="tel"
+                  [ngModel]="phone()"
+                  (ngModelChange)="phone.set($event)"
+                  placeholder="01xxxxxxxxx"
+                  autocomplete="tel"
+                />
+              </label>
+
+              <label class="lp-field">
+                <span>Address *</span>
+                <input
+                  type="text"
+                  [ngModel]="address()"
+                  (ngModelChange)="address.set($event)"
+                  placeholder="Enter your delivery address"
+                  autocomplete="street-address"
+                />
+              </label>
+
+              <label class="lp-field">
+                <span>Order Notes (Optional)</span>
+                <textarea
+                  rows="3"
+                  [ngModel]="note()"
+                  (ngModelChange)="note.set($event)"
+                  placeholder="Share your notes"
+                ></textarea>
+              </label>
+
+              @if (formError(); as err) {
+                <p class="lp-form__error" role="alert">{{ err }}</p>
+              }
+            </div>
+          </section>
+
+          <aside class="lp-summary" aria-label="Order summary">
+            <div class="lp-summary__card">
+              <div class="lp-delivery">
+                @if (qualifiesFreeDelivery()) {
+                  <p class="lp-delivery__ok">You have unlocked free delivery</p>
+                } @else {
+                  <p class="lp-delivery__hint">
+                    Add
+                    <strong>BDT {{ freeDeliveryRemaining() | number: '1.0-0' }}</strong>
+                    more for free delivery (orders from BDT {{
+                      freeDeliveryThreshold | number: '1.0-0'
+                    }})
+                  </p>
+                }
+                <div
+                  class="lp-delivery__bar"
+                  role="progressbar"
+                  [attr.aria-valuenow]="freeDeliveryProgress()"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-label="Progress toward free delivery"
+                >
+                  <span [style.width.%]="freeDeliveryProgress()"></span>
+                </div>
+              </div>
+
+              <h2 class="lp-summary__heading">
+                <span class="lp-summary__icon" aria-hidden="true">
+                  <svg lucideMapPin [size]="20" [strokeWidth]="1.75"></svg>
+                </span>
+                Select your delivery area
+              </h2>
+
+              <div
+                class="lp-zones"
+                [class.is-frozen]="qualifiesFreeDelivery()"
+                role="radiogroup"
+                aria-label="Delivery area"
+              >
+                @for (zone of deliveryZones; track zone.id) {
+                  <button
+                    type="button"
+                    class="lp-zone"
+                    role="radio"
+                    [attr.aria-checked]="
+                      !qualifiesFreeDelivery() && deliveryZone() === zone.id
+                    "
+                    [class.is-selected]="
+                      !qualifiesFreeDelivery() && deliveryZone() === zone.id
+                    "
+                    [disabled]="qualifiesFreeDelivery()"
+                    (click)="selectZone(zone.id)"
+                  >
+                    <span class="lp-zone__label">{{ zone.label }}</span>
+                    <span class="lp-zone__fee">
+                      BDT {{ zone.fee | number: '1.0-0' }}
+                    </span>
+                    @if (
+                      !qualifiesFreeDelivery() && deliveryZone() === zone.id
+                    ) {
+                      <span class="lp-zone__check" aria-hidden="true">
+                        <svg lucideCheck [size]="16" [strokeWidth]="2.25"></svg>
+                      </span>
+                    }
+                  </button>
+                }
+              </div>
+
+              @if (qualifiesFreeDelivery()) {
+                <p class="lp-zones__note">
+                  Free delivery unlocked — delivery area is locked and unmarked
+                  until the order drops below BDT {{
+                    freeDeliveryThreshold | number: '1.0-0'
+                  }}.
+                </p>
+              }
+
+              <div class="lp-line">
+                <img [src]="item.image" [alt]="''" width="64" height="64" />
+                <div class="lp-line__copy">
+                  <p class="lp-line__name">{{ item.name }}</p>
+                  <p class="lp-line__meta">{{ quantity() }}x</p>
+                </div>
+                <p class="lp-line__price">
+                  BDT {{ salePrice() * quantity() | number: '1.0-0' }}
+                </p>
+              </div>
+
+              @if (selectedUpsell(); as upsell) {
+                <div class="lp-line lp-line--upsell">
+                  <img [src]="upsell.image" [alt]="''" width="64" height="64" />
+                  <div class="lp-line__copy">
+                    <p class="lp-line__name">{{ upsell.name }}</p>
+                    <p class="lp-line__meta">1x</p>
+                  </div>
+                  <p class="lp-line__price">
+                    BDT {{ upsell.price | number: '1.0-0' }}
+                  </p>
+                </div>
+              }
+
+              <dl class="lp-totals">
+                <div>
+                  <dt>Subtotal</dt>
+                  <dd>BDT {{ subtotal() | number: '1.0-0' }}</dd>
+                </div>
+                <div>
+                  <dt>Delivery Charge</dt>
+                  <dd [class.is-free]="qualifiesFreeDelivery()">
+                    @if (qualifiesFreeDelivery()) {
+                      Free
+                    } @else {
+                      BDT {{ deliveryFee() | number: '1.0-0' }}
+                    }
+                  </dd>
+                </div>
+                <div class="lp-totals__grand">
+                  <dt>Total Price</dt>
+                  <dd>BDT {{ total() | number: '1.0-0' }}</dd>
+                </div>
+              </dl>
+
+              <p class="lp-privacy">
+                Your personal data will be used to process your order, support
+                your experience, and for other purposes described in our
+                <a href="#">privacy policy</a>.
+              </p>
+
+              <div class="lp-upsell">
+                <h3 class="lp-upsell__title">Best Match For Your Order</h3>
+                <ul>
+                  @for (upsell of upsells(); track upsell.slug) {
+                    <li>
+                      <button
+                        type="button"
+                        class="lp-upsell__row"
+                        [class.is-on]="selectedUpsellSlug() === upsell.slug"
+                        (click)="toggleUpsell(upsell.slug)"
+                      >
+                        <span
+                          class="lp-upsell__radio"
+                          [attr.aria-checked]="
+                            selectedUpsellSlug() === upsell.slug
+                          "
+                          role="radio"
+                        ></span>
+                        <img
+                          [src]="upsell.image"
+                          [alt]="upsell.name"
+                          width="52"
+                          height="52"
+                        />
+                        <span class="lp-upsell__copy">
+                          <span class="lp-upsell__name">{{ upsell.name }}</span>
+                          <span class="lp-upsell__size">{{ upsell.sizeLabel }}</span>
+                        </span>
+                        <span class="lp-upsell__pricing">
+                          <span class="lp-upsell__price">
+                            BDT {{ upsell.price | number: '1.0-0' }}
+                          </span>
+                          <span class="lp-upsell__save">
+                            Save BDT {{
+                              upsell.compareAt - upsell.price | number: '1.0-0'
+                            }}
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                class="lp-btn lp-btn--confirm"
+                (click)="submitOrder()"
+              >
+                <svg
+                  lucideShoppingBag
+                  [size]="22"
+                  [strokeWidth]="1.75"
+                  aria-hidden="true"
+                ></svg>
+                Confirm Order
+              </button>
+            </div>
+          </aside>
+        </div>
+      }
+    </div>
+  </main>
+
+  <footer class="lp-foot">
+    <div class="page-shell lp-foot__grid">
+      <div class="lp-foot__brand">
+        <p class="lp-logo font-display">Falaq Leather</p>
+        <p>
+          Handcrafted leather footwear and accessories — premium quality for
+          everyday elegance.
+        </p>
+        <ul class="lp-social" aria-label="Social">
+          <li>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                  <linearGradient id="lp-ig" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f58529" />
+                    <stop offset="50%" stop-color="#dd2a7b" />
+                    <stop offset="100%" stop-color="#515bd4" />
+                  </linearGradient>
+                </defs>
+                <rect x="3" y="3" width="18" height="18" rx="5" fill="url(#lp-ig)" />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.75"
+                />
+                <circle cx="17.2" cy="6.8" r="1.1" fill="#fff" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="#1877F2"
+                aria-hidden="true"
+              >
+                <path
+                  d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="#1DA1F2"
+                aria-hidden="true"
+              >
+                <path
+                  d="M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.5-1.3 1.8-2.2-.8.5-1.7.8-2.6 1A4 4 0 0 0 12 8.7c0 .3 0 .6.1.9-3.3-.2-6.3-1.8-8.3-4.2-.3.6-.5 1.3-.5 2 0 1.4.7 2.6 1.8 3.3-.6 0-1.3-.2-1.8-.5v.1c0 2 1.4 3.6 3.3 4-.3.1-.7.1-1.1.1-.3 0-.5 0-.8-.1.5 1.6 2 2.8 3.8 2.8A8 8 0 0 1 2 18.4 11.3 11.3 0 0 0 8.1 20c7.4 0 11.4-6.1 11.4-11.4v-.5c.8-.5 1.5-1.3 2-2.1z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://pinterest.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pinterest"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="#E60023"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.2-.1-.8-.2-2 0-2.9.2-.8 1.3-5.5 1.3-5.5s-.3-.7-.3-1.6c0-1.5.9-2.6 2-2.6.9 0 1.4.7 1.4 1.5 0 .9-.6 2.3-.9 3.5-.3 1.1.5 1.9 1.5 1.9 1.8 0 3.2-1.9 3.2-4.7 0-2.4-1.8-4.2-4.3-4.2-2.9 0-4.6 2.2-4.6 4.4 0 .9.3 1.8.8 2.3.1.1.1.2.1.3l-.3 1.1c0 .2-.1.2-.3.1-1.2-.6-2-2.3-2-3.7 0-3 2.2-5.8 6.3-5.8 3.3 0 5.9 2.4 5.9 5.5 0 3.3-2.1 6-4.9 6-1 0-1.9-.5-2.2-1.1l-.6 2.3c-.2.8-.8 1.8-1.2 2.4.9.3 1.8.4 2.8.4 5.5 0 10-4.5 10-10S17.5 2 12 2z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="#FF0000"
+                aria-hidden="true"
+              >
+                <path
+                  d="M22 12.2s0-3.2-.4-4.7c-.2-.8-.8-1.4-1.6-1.6C18.5 5.5 12 5.5 12 5.5s-6.5 0-8 .4c-.8.2-1.4.8-1.6 1.6C2 9 2 12.2 2 12.2s0 3.2.4 4.7c.2.8.8 1.4 1.6 1.6 1.5.4 8 .4 8 .4s6.5 0 8-.4c.8-.2 1.4-.8 1.6-1.6.4-1.5.4-4.7.4-4.7zM10 15.2v-6l5.2 3-5.2 3z"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a routerLink="/">About us</a></li>
+          <li><a routerLink="/shop">Shop</a></li>
+          <li><a routerLink="/cart">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Contact Support</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul class="lp-foot__contact">
+          <li>Dhaka, Bangladesh</li>
+          <li>
+            <a href="mailto:hello@falaqleather.com">hello@falaqleather.com</a>
+          </li>
+          <li><a href="tel:09613821489">09613-821489</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lp-foot__copy">
+      Copyright © Falaq Leather 2026 – All Rights Reserved
+    </div>
+  </footer>
+</div>

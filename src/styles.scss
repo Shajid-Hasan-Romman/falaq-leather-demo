@@ -8,4 +8,5 @@
 // terminal so new classes used in templates are emitted and HMR picks them up.
 //
 // The file is git-ignored and regenerated on `postinstall` / `prebuild`.
+@use "./app/shared/styles/product-card";
 @import "./styles/tailwind.generated.css";

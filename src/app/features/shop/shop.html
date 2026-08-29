@@ -53,47 +53,38 @@
 
   @if (visibleProducts().length > 0) {
     <div
-      class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4"
+      class="product-card-grid mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4"
       aria-live="polite"
     >
       @for (product of visibleProducts(); track product.id) {
-        <article class="product-card flex flex-col border border-[#e8e8e8] bg-white">
+        <article class="product-card">
           <a
             [routerLink]="['/product-details', product.slug]"
-            class="block overflow-hidden bg-white p-4 sm:p-5"
+            class="product-card__media"
           >
-            <div class="aspect-square w-full">
+            <div class="product-card__image aspect-square">
               <img
                 [src]="product.image"
                 [alt]="product.alt"
-                class="h-full w-full object-contain object-center transition-transform duration-500 ease-out hover:scale-[1.03]"
                 loading="lazy"
                 decoding="async"
               />
             </div>
           </a>
 
-          <div class="flex flex-1 flex-col px-3 pb-4 sm:px-4 sm:pb-5">
-            <h2 class="text-center text-[0.9rem] leading-snug text-[#1a1a1a] md:text-[0.95rem]">
-              <a
-                [routerLink]="['/product-details', product.slug]"
-                class="hover:text-brand"
-              >
+          <div class="product-card__body">
+            <h2 class="product-card__title">
+              <a [routerLink]="['/product-details', product.slug]">
                 {{ product.name }}
               </a>
             </h2>
 
-            <div class="mt-3 flex items-baseline justify-between gap-2">
-              <p class="text-sm font-bold text-[#1a1a1a]">
-                {{ product.currency }} {{ product.price | number: '1.2-2' }}
-              </p>
-              <a
-                [routerLink]="['/product-details', product.slug]"
-                class="shrink-0 text-sm text-[#c0392b] transition-colors hover:text-[#922b21] hover:underline"
-              >
-                Buy Now
-              </a>
-            </div>
+            <app-product-card-actions
+              class="product-card__actions"
+              [slug]="product.slug"
+              [price]="product.price"
+              [currency]="product.currency"
+            />
           </div>
         </article>
       }

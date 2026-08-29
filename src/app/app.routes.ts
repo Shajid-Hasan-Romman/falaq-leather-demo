@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    // Campaign landing — own header/footer (no MainLayout chrome).
+    path: 'landing',
+    loadComponent: () =>
+      import('./features/landing-page/landing').then((m) => m.Landing),
+    title: 'Landing · Falaq Leather',
+  },
+  {
     // Every page renders inside the main layout (header + footer).
     // Features are lazy-loaded and do not import each other.
     path: '',

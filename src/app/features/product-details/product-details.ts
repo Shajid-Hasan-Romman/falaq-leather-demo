@@ -12,18 +12,20 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 
 import { CartService } from '../../core/services/cart.service';
+import { ProductCardActions } from '../../shared/components/product-card-actions/product-card-actions';
 import {
   findProductBySlug,
   PRODUCT_DETAILS,
-} from './data/products.data';
+} from '../../core/data/products.data';
 import type {
   ProductAccordionId,
   ProductDetail,
-} from './models/product-detail.model';
+  ProductImage,
+} from '../../core/data/product-detail.model';
 
 @Component({
   selector: 'app-product-details',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, ProductCardActions],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss',
@@ -45,6 +47,7 @@ export class ProductDetails {
   readonly openAccordion = signal<ProductAccordionId | null>(null);
   readonly sizeError = signal(false);
   readonly addedMessage = signal<string | null>(null);
+  readonly activeImageIndex = signal(0);
 
   constructor() {
     effect(() => {
@@ -54,8 +57,37 @@ export class ProductDetails {
       this.openAccordion.set(null);
       this.sizeError.set(false);
       this.addedMessage.set(null);
+      this.activeImageIndex.set(0);
     });
   }
+
+  readonly activeImage = computed((): ProductImage | null => {
+    const product = this.product();
+    if (!product || product.images.length === 0) {
+      return null;
+    }
+    const index = Math.min(
+      this.activeImageIndex(),
+      product.images.length - 1,
+    );
+    return product.images[index] ?? null;
+  });
+
+  /** Up to 5 product shots in the gallery slider. */
+  readonly galleryImages = computed((): readonly ProductImage[] => {
+    const product = this.product();
+    if (!product) {
+      return [];
+    }
+    return product.images.slice(0, 5);
+  });
+
+  readonly canPrevGallery = computed(() => this.activeImageIndex() > 0);
+
+  readonly canNextGallery = computed(() => {
+    const images = this.galleryImages();
+    return images.length > 0 && this.activeImageIndex() < images.length - 1;
+  });
 
   readonly similarProducts = computed(() => {
     const current = this.product();
@@ -88,6 +120,23 @@ export class ProductDetails {
 
   decreaseQty(): void {
     this.quantity.update((q) => Math.max(1, q - 1));
+  }
+
+  selectGalleryImage(index: number): void {
+    this.activeImageIndex.set(index);
+  }
+
+  prevGallerySlide(): void {
+    if (this.activeImageIndex() > 0) {
+      this.activeImageIndex.update((index) => index - 1);
+    }
+  }
+
+  nextGallerySlide(): void {
+    const maxIndex = this.galleryImages().length - 1;
+    if (this.activeImageIndex() < maxIndex) {
+      this.activeImageIndex.update((index) => index + 1);
+    }
   }
 
   addToCart(): void {
